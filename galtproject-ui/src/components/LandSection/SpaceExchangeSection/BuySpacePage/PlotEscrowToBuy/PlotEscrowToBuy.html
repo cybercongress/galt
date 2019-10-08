@@ -1,0 +1,111 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+                
+                <div class="padding">
+                    <md-field>
+                        <label v-locale="localeKey + '.filter_by_status'"></label>
+                        <md-select v-model="filterByStatus">
+                            <md-option v-for="(status, index) in orderStatuses" :value="status.name" :key="index">{{status.title}}</md-option>
+                        </md-select>
+                    </md-field>
+                </div>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+                <div v-locale="[localeKey + '.count', {value: filteredOrders.length}]" v-if="!loading" class="count-label"></div>
+
+                <plot-escrow-order-card v-for="order in filteredOrders"
+                                        :order="order"
+                                        :full="false"
+                                        @click.native="showSpaceToken(order)">
+
+                    <div class="md-layout" style="flex-direction: column; flex: 1; margin: 0px 10px 0;">
+                        <div class="md-layout-item" v-if="order.buyer.address === user_wallet">
+                            <label v-locale="'order_info.bid'"></label> {{order.buyer.bid}}<br>
+                            <label v-locale="'order_info.space_token_attached'"></label> <span v-locale="'boolean.' + order.spaceTokenAttached"></span><br>
+                            <label v-locale="'order_info.payment_attached'"></label> <span v-locale="'boolean.' + order.buyer.paymentAttached"></span><br>
+                            <label v-locale="'order_info.seller_resolved'"></label> <span v-locale="'boolean.' + order.buyer.sellerResolved"></span><br>
+                            <label v-locale="'order_info.buyer_resolved'"></label> <span v-locale="'boolean.' + order.buyer.buyerResolved"></span><br>
+                        </div>
+                        <div class="md-layout-item">
+                            <label class="warn" v-locale="localeKey + '.need_to_wait_until_select'"
+                                   v-if="order.offersObj[user_wallet] && order.statusName === 'open'"></label>
+                        </div>
+                        <div class="md-layout-item">
+                            <div class="md-layout md-alignment-top-right" v-if="order.seller !== user_wallet">
+                                <md-button @click="placeBid(order)" class="md-raised md-accent" v-if="!order.offersObj[user_wallet] && order.statusName === 'open'">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="localeKey + '.place_bid'"></span>
+                                </md-button>
+                                
+                                <md-button @click="changeBid(order)" class="md-raised md-accent" v-if="order.offersObj[user_wallet] && order.statusName === 'open'">
+                                    <md-icon>create</md-icon>
+                                    <span v-locale="localeKey + '.change_bid'"></span>
+                                </md-button>
+
+                                <md-button @click="cancelBid(order)" class="md-raised" v-if="order.offersObj[user_wallet] && order.statusName === 'match'">
+                                    <md-icon>highlight_off</md-icon>
+                                    <span v-locale="localeKey + '.cancel_bid'"></span>
+                                </md-button>
+                                
+                                <md-button @click="attachPayment(order)" class="md-raised md-accent" v-if="order.buyer.address === user_wallet && order.buyer.statusName === 'match' && !order.buyer.paymentAttached">
+                                    <md-icon>call_made</md-icon>
+                                    <span v-locale="localeKey + '.attach_payment'"></span>
+                                </md-button>
+
+                                <md-button @click="cancelRequest(order)" class="md-raised" v-if="order.buyer.address === user_wallet && order.buyer.statusName === 'escrow'">
+                                    <md-icon>highlight_off</md-icon>
+                                    <span v-locale="localeKey + '.cancel_request'"></span>
+                                </md-button>
+
+                                <md-button @click="withdrawPayment(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'cancelled' && order.buyer.paymentAttached">
+                                    <md-icon>publish</md-icon>
+                                    <span v-locale="localeKey + '.withdraw_payment'"></span>
+                                </md-button>
+                                
+                                <md-button @click="resolve(order)" class="md-raised md-accent" v-if="order.buyer.address === user_wallet && order.buyer.statusName === 'escrow' && !order.buyer.buyerResolved">
+                                    <md-icon>done_all</md-icon>
+                                    <span v-locale="localeKey + '.resolve'"></span>
+                                </md-button>
+
+                                <md-button @click="claimSpaceToken(order)" class="md-raised md-accent" v-if="order.buyer.address === user_wallet && order.buyer.statusName === 'resolved' && order.spaceTokenAttached">
+                                    <md-icon>publish</md-icon>
+                                    <span v-locale="localeKey + '.claim_space_token'"></span>
+                                </md-button>
+                            </div>
+                        </div>
+                        
+                        <div class="md-layout-item"
+                             v-if="order.offersList && order.offersList.length && (!order.lastBuyerActive || order.showAllOrders)"
+                             style="margin-top: 25px;">
+                            <div class="md-layout">
+                                <div :class="{'md-layout-item': true, 'content-accent': offer.address == user_wallet}" style="padding: 5px 10px; flex: initial;" v-for="offer in order.offersList">
+                                    <pretty-hex :hex="offer.address"></pretty-hex>
+                                    <br>
+                                    <label v-locale="'order_info.ask'"></label> {{offer.ask}}<br>
+                                    <label v-locale="'order_info.bid'"></label> {{offer.bid}}<br>
+                                    <span v-locale="'plot_escrow_offer_statuses.' + offer.statusName"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md-layout-item" v-if="order.lastBuyerActive">
+                            <div class="md-layout md-alignment-top-center">
+                                <md-button class="md-icon-button md-raised" @click="toggleAllOffers(order)">
+                                    <md-icon>{{order.showAllOrders ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
+                                    </md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                    </div>
+                </plot-escrow-order-card>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+<div class="md-layout">
+    <div class="md-layout-item md-size-50">
+
+        <md-card>
+            <md-card-header>
+                <div class="md-title" v-locale="localeKey + '.title'"></div>
+            </md-card-header>
+
+            <md-card-content>
+                <md-list>
+                    <md-subheader v-locale="localeKey + '.general_data'"></md-subheader>
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.galt_balance'"></span> 
+                            <span>{{galtBalance}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.space_price_on_sale_sum'"></span> 
+                            <span>{{spacePriceOnSaleSum}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.space_balance'"></span> 
+                            <span>{{spaceBalance}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-subheader v-locale="localeKey + '.fee.title'"></md-subheader>
+
+                    <md-list-item class="right-button-container">
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.fee.sell_percent'"></span> 
+                            <span>{{sellFee}}%</span>
+                        </span>
+                        <md-button class="md-icon-button md-list-action md-raised" @click="editFee('sell')">
+                            <md-icon class="md-accent">edit</md-icon>
+                        </md-button>
+                    </md-list-item>
+
+                    <md-list-item class="right-button-container">
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.fee.buy_percent'"></span> 
+                            <span>{{buyFee}}%</span>
+                        </span>
+                        <md-button class="md-icon-button md-list-action md-raised" @click="editFee('buy')">
+                            <md-icon class="md-accent">edit</md-icon>
+                        </md-button>
+                    </md-list-item>
+
+                    <md-list-item class="right-button-container">
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.fee.payout'"></span> 
+                            <span>{{feePayout}} GALT</span>
+                        </span>
+                        <md-button class="md-icon-button md-list-action md-raised" v-if="feePayout" @click="withdrawFee()">
+                            <md-icon class="md-accent">cake</md-icon>
+                        </md-button>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.fee.total_payout'"></span> 
+                            <span>{{feeTotalPayout}} GALT</span>
+                        </span>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div class="md-layout-item md-size-40" v-if="showOperation">
+        <md-card>
+            <md-card-header>
+                <div class="md-title" v-locale="localeKey + '.operation.title'"></div>
+            </md-card-header>
+
+            <md-card-content>
+                <md-list>
+                    <md-subheader v-locale="localeKey + '.operation.general_data'"></md-subheader>
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.total_count'"></span> 
+                            <span>{{operationsCount}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-subheader v-locale="localeKey + '.operation.specific_operation'"></md-subheader>
+                    <md-list-item>
+                        <div class="md-layout">
+                            <div class="md-layout-item md-size-65">
+                                <span v-locale="localeKey + '.operation.number'"></span>
+                            </div>
+                            <div class="md-layout-item md-size-35">
+                                <div class="md-layout">
+                                    <div class="md-layout-item md-size-30">
+                                        <md-button class="md-icon-button md-list-action md-raised margin-none" :disabled="showOperationNumber < 2" @click="prevOperation()">
+                                            <md-icon class="md-accent">skip_previous</md-icon>
+                                        </md-button>
+                                    </div>
+                                    <div class="md-layout-item md-size-40">
+                                        <md-field class="margin-none">
+                                            <md-input v-model="showOperationNumber" @change="showOperationByNumber(showOperationNumber)"></md-input>
+                                        </md-field>
+                                    </div>
+                                    <div class="md-layout-item md-size-30">
+                                        <md-button class="md-icon-button md-list-action md-raised margin-none" :disabled="showOperationNumber >= operationsCount" @click="nextOperation()">
+                                            <md-icon class="md-accent">skip_next</md-icon>
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.id'"></span> 
+                            <span><pretty-hex :hex="showOperation.id"></pretty-hex></span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.direction'"></span> 
+                            <span v-locale="localeKey + '.operation.direction_' + (showOperation.direction == '0' ? 'sell' : 'buy')"></span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.date'"></span> 
+                            <span>{{showOperation.timestamp | beautyDate}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.space_token'"></span> 
+                            <span>{{showOperation.spaceTokenId}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.user'"></span> 
+                            <span><pretty-hex :hex="showOperation.user"></pretty-hex></span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.galt_amount'"></span> 
+                            <span>{{showOperation.galtAmount | ether}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.fee_amount'"></span> 
+                            <span>{{showOperation.feeAmount | ether}}</span>
+                        </span>
+                    </md-list-item>
+
+                    <md-list-item>
+                        <span class="md-list-item-text text-row">
+                            <span v-locale="localeKey + '.operation.custodian'"></span> 
+                            <span><pretty-hex :hex="showOperation.custodian"></pretty-hex></span>
+                        </span>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

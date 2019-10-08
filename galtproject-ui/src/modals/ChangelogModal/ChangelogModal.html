@@ -1,0 +1,24 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="ok">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="'changelog.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <md-card>
+      <md-card-content>
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="!changelogHtml"></md-progress-bar>
+        
+        <div v-html="changelogHtml"></div>
+      </md-card-content>
+    </md-card>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="ok" class="md-raised md-accent"><span v-locale="'changelog.ok'"></span></md-button>
+  </template>
+</modal-item>

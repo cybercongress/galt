@@ -1,0 +1,21 @@
+<div xmlns:v-on="" style="padding: 15px;">
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+    
+    <div class="md-title">Technical info</div>
+    
+    <div class="md-layout" v-if="contractsConfig">
+        <div class="md-layout-item md-size-50">
+            <div style="margin-top: 10px;">
+                <div class="md-subheading bold">Galt Token Contract</div>
+
+                <label class="bold">Address: </label> <pretty-hex :hex="contractsConfig.galtTokenAddress"></pretty-hex>
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <div class="md-subheading bold">Space Token Contract</div>
+
+                <label class="bold">Address: </label> <pretty-hex :hex="contractsConfig.spaceTokenAddress"></pretty-hex>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<div style="display: flex;">
+    <div style="flex: 2;">
+        <div class="row">
+            <div class="col-md-12">
+                <!--<md-button class="md-raised md-accent" to="/reputation/new-space-locker">-->
+                    <!--<md-icon>undo</md-icon>-->
+                    <!--<span v-locale="localeKey + '.back'"></span>-->
+                <!--</md-button>-->
+
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="spaceTokenLoading"></md-progress-bar>
+
+                <md-card v-if="spaceToken.tokenId">
+                    <md-card-header>
+                        <div class="md-title" v-locale="[localeKey + '.token_for_lock']"></div>
+                        <md-button class="md-primary" @click="drawContour(true)">
+                            <md-icon>explore</md-icon>
+                            <span v-locale="localeKey + '.show_on_map'"></span></md-button>
+                    </md-card-header>
+
+                    <md-card-content>
+                        <div class="col-md-12">
+                            <label v-locale="localeKey + '.token_id'"></label>{{spaceToken.tokenId}}<br><br>
+                            <label v-locale="localeKey + '.reputation'"></label>{{spaceToken.area | beautyNumber}}<br>
+                            <label v-locale="localeKey + '.contour'"></label>
+                            <div style="white-space: normal;">{{spaceToken.contour.join(', ')}}</div>
+                            
+                            <div class="warn full-width" v-locale="localeKey + '.lock_attention'"
+                                 style="margin-top: 15px;"></div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                
+                <div v-if="spaceLocker.address && !hideSpaceLocker">
+                    <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.space_locker'"></div>
+                    
+                    <space-locker-card :address="spaceLocker.address"></space-locker-card>
+                </div>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="spaceLocker.approvingGalt || spaceLocker.creatingLocker || spaceLocker.approvingSpace || spaceLocker.depositing"></md-progress-bar>
+
+                <div style="margin: 20px;" class="md-layout" v-if="!spaceLocker.created">
+                    <div class="md-layout-item md-size-50">
+                        <fee-input v-model="spaceLocker" :disabled="spaceLocker.created || spaceLocker.creatingLocker" application-type="spaceLockerFactory"></fee-input>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <md-button @click="approveGaltFee()" class="md-raised md-accent" v-if="spaceLocker.feeCurrency === 'galt'" :disabled="spaceLocker.approvedGalt || spaceLocker.approvingGalt">
+                        <md-icon>check</md-icon>
+                        <span v-locale="localeKey + '.approve_galt'"></span>
+                    </md-button>
+                    
+                    <md-button @click="createSpaceLocker()" class="md-raised md-accent" :disabled="spaceLocker.created || spaceLocker.creatingLocker || (spaceLocker.feeCurrency === 'galt' && !spaceLocker.approvedGalt)">
+                        <md-icon>description</md-icon>
+                        <span v-locale="localeKey + '.create_space_locker'"></span>
+                    </md-button>
+                    <br>
+                    <md-button @click="approveSpaceToken()" class="md-raised md-accent" :disabled="spaceLocker.approvedSpace || spaceLocker.approvingSpace || !spaceLocker.created">
+                        <md-icon>done_all</md-icon>
+                        <span v-locale="localeKey + '.approve_space'"></span>
+                    </md-button>
+
+                    <md-button @click="depositSpaceToken()" class="md-raised md-accent" :disabled="spaceLocker.deposited || spaceLocker.depositing || !spaceLocker.approvedSpace">
+                        <md-icon>vertical_align_bottom</md-icon>
+                        <span v-locale="localeKey + '.deposit'"></span>
+                    </md-button>
+                </div>
+
+                <div class="md-success" v-if="ended" v-locale="localeKey + '.end'"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

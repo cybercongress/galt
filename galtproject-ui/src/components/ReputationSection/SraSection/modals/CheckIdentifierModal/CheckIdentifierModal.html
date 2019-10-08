@@ -1,0 +1,39 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+
+      <md-field>
+        <label v-locale="localeKey + '.full_name'"></label>
+        <md-input v-model="userData.fullName" required></md-input>
+      </md-field>
+      
+      <md-card>
+        <md-card-header>
+          <h3><span v-locale="localeKey + '.status.title'"></span>
+            <span v-if="validateResult === 'waiting'" v-locale="localeKey + '.status.waiting'"></span>
+            <span v-if="validateResult === 'invalid'" class="md-error" v-locale="localeKey + '.status.invalid'"></span>
+            <span v-if="validateResult === 'valid'" class="md-success" v-locale="localeKey + '.status.valid'"></span>
+          </h3>
+        </md-card-header>
+      </md-card>
+
+      <p v-locale="localeKey + '.description'"></p>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="ok" class="md-raised md-accent">
+      <md-icon>done</md-icon>
+      <span v-locale="localeKey + '.ok'"></span>
+    </md-button>
+  </template>
+</modal-item>

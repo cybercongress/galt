@@ -1,0 +1,11 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="[localeKey + '.title', {address: cutAccountAddress}]"></div>
+
+        <md-tabs md-sync-route>
+            <md-tab v-for="tab in visibleTabs" :id="'tab-' + tab.route" :md-label="tab.title" :to="'/account/' + $route.params.userAddress + '/' + tab.route"></md-tab>
+        </md-tabs>
+
+        <router-view></router-view>
+    </div>
+</div>

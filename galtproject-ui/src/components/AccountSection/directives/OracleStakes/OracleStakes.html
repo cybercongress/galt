@@ -1,0 +1,45 @@
+<md-card v-if="roles.length">
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+        
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.roles_with_stakes'"></md-subheader>-->
+
+            <md-list-item>
+                <md-field>
+                    <label v-locale="localeKey + '.multisig_address'"></label>
+                    <md-select v-model="multisigAddress">
+                        <md-option v-for="multisig in multisigList" :value="multisig.address">{{multisig.address}}</md-option>
+                    </md-select>
+                </md-field>
+            </md-list-item>
+            
+            <md-list-item>
+                <md-table>
+                    <md-table-row>
+                        <md-table-head><span v-locale="localeKey + '.role_title'"></span></md-table-head>
+                        <md-table-head md-numeric><span v-locale="localeKey + '.minimal_stake_title'"></span></md-table-head>
+                        <md-table-head md-numeric><span v-locale="localeKey + '.current_stake_title'"></span></md-table-head>
+                        <md-table-head></md-table-head>
+                    </md-table-row>
+
+                    <md-table-row v-for="item in rolesWithStakes">
+                        <md-table-cell><span v-locale="'admin_validation_roles.' + item.role"></span></md-table-cell>
+                        <md-table-cell md-numeric>{{item.minimal_stake}} GALT</md-table-cell>
+                        <md-table-cell md-numeric :class="{'md-error': item.minimal_stake > item.stake}">{{item.stake}} GALT</md-table-cell>
+                        <md-table-cell>
+                            <md-button class="md-icon-button" @click="addStake(item.role)">
+                                <md-icon class="md-accent">control_point</md-icon>
+                            </md-button>
+                        </md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

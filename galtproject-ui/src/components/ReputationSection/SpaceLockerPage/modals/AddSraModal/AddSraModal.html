@@ -1,0 +1,38 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <p v-locale="[localeKey + '.description', {spaceLockerAddress: spaceLockerAddress}]"></p>
+
+    <md-autocomplete v-model="sra" :md-options="srasList" @md-opened="getSras" :disabled="approvedDisabled"><!--@md-changed="getCountries"-->
+      <label v-locale="localeKey + '.sra'"></label>
+
+      <template slot="md-autocomplete-item" slot-scope="{ item }"><span v-if="item.isPrivate" v-locale="localeKey + '.private_mark'"></span>{{ item.title || '...' }}&nbsp;<small>({{ item.address }})</small></template>
+    </md-autocomplete>
+    
+    <md-field v-if="isPrivateSra && !isMintApprovedSra">
+      <label><span v-locale="localeKey + '.new_member_proposal_description'"></span></label>
+      <md-textarea v-model="newMemberProposalDescription" required></md-textarea>
+    </md-field>
+    
+    <div class="warn" v-if="!approved" v-locale="localeKey + '.need_to_approve_first'"></div>
+    
+    <div class="warn" v-if="approved && !isMintApprovedSra" v-locale="localeKey + '.need_description_for_private_sra'"></div>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="minting || approving"></md-progress-bar>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="approve" class="md-raised md-accent" :disabled="!sra || approvedDisabled"><span v-locale="localeKey + '.approve'"></span></md-button>
+    <md-button @click="mint" v-if="isMintApprovedSra" class="md-raised md-accent" :disabled="mintDisabled"><span v-locale="localeKey + '.mint'"></span></md-button>
+    <md-button @click="newMemberProposal" v-if="!isMintApprovedSra" class="md-raised md-accent" :disabled="newMemberProposalDisabled"><span v-locale="localeKey + '.new_member_proposal'"></span></md-button>
+  </template>
+</modal-item>

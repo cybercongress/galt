@@ -1,0 +1,82 @@
+<div xmlns:v-on="">
+    <md-field>
+        <label v-locale="localeKey + '.ledger_identifier'"></label>
+        <md-input v-model="value.ledgerIdentifier" required @change="onInputChange()"></md-input>
+    </md-field>
+    
+    <div v-if="showCredentials">
+        <md-checkbox v-model="value.editCredentials"><span
+                v-locale="localeKey + '.edit_credentials'"></span></md-checkbox>
+
+        <md-field v-if="value.editCredentials">
+            <label v-locale="localeKey + '.document_id'"></label>
+            <md-input v-model="value.documentId" required @change="onInputChange()"></md-input>
+        </md-field>
+
+        <md-field v-if="value.editCredentials">
+            <label v-locale="localeKey + '.full_name'"></label>
+            <md-input v-model="value.fullName" required @change="onInputChange()"></md-input>
+        </md-field>
+    </div>
+
+    <md-field>
+        <label v-locale="localeKey + '.type'"></label>
+        <md-select v-model="value.type" @change="onInputChange()">
+            <md-option v-for="type in tokenTypes" :value="type.name">{{type.title}}</md-option>
+        </md-select>
+    </md-field>
+
+    <div class="warn" v-if="value.type === 'building'" v-locale="localeKey + '.building_tip'" style="padding-bottom: 10px;"></div>
+
+    <div class="warn" v-if="predefinedType" v-locale="localeKey + '.predefined_tip'" style="padding-bottom: 10px;"></div>
+    
+    <div v-if="value.additionalDescription.length">
+        <md-field v-for="(descriptionItem) in value.additionalDescription">
+            <label>{{allAdditionalDescriptionLocalesDict[value.type + '.' + descriptionItem.name]}}</label>
+            <md-input v-model="descriptionItem.value" @change="onInputChange()"></md-input>
+        </md-field>
+    </div>
+    <div v-else>
+        <md-field v-for="(locale, index) in additionalDescriptionLocalesByType[value.type]">
+            <label>{{locale.value}}</label>
+            <md-input v-model="value.additionalDescription[locale.name]" @change="onInputChange()"></md-input>
+        </md-field>
+    </div>
+
+    <!--<md-field>-->
+        <!--<label v-locale="localeKey + '.view_config'"></label>-->
+        <!--<md-input v-model="value.viewConfig" required @change="onInputChange()"></md-input>-->
+    <!--</md-field>-->
+
+    <md-field>
+        <label v-locale="localeKey + '.description'"></label>
+        <md-input v-model="value.description" @change="onInputChange()"></md-input>
+    </md-field>
+
+    <md-field v-if="value.type !== 'plot' && value.type !== 'predefined_building'">
+        <label v-locale="localeKey + '.level'"></label>
+        <md-input v-model="value.level" required @change="onInputChange()"></md-input>
+    </md-field>
+    
+    <md-field v-if="predefinedType">
+        <label v-locale="localeKey + '.custom_area'"></label>
+        <md-input v-model="value.customArea" required @change="onInputChange()"></md-input>
+    </md-field>
+
+    <contour-input v-model="value.contour" :geo-type="value.type" :heights.sync="value.heights" @change="onContourChange()" v-on:clear-contour="onClearContour()" :explorer-name="explorerName"></contour-input>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+    
+    <div v-if="notCachedGeohashes.length">
+        <md-button @click="cacheGeohashes()" class="md-raised md-accent" v-if="!predefinedType" :disabled="cacheGeohashesDisabled">
+            <md-icon>cached</md-icon>
+            <span v-locale="localeKey + '.cache_geohashes'"></span>
+        </md-button>
+    </div>
+    
+    <div>
+        <div style="margin-top: 20px;" v-if="!hideFee && value.contour.length >= 3 && (geohashesCached || predefinedType)">
+            <fee-input v-model="value" :disabled="loading" :invalid-fee.sync="invalidFee" :application-type="applicationType" :for-validation="true" @change="onInputChange()"></fee-input>
+        </div>
+    </div>
+</div>

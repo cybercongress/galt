@@ -1,0 +1,33 @@
+<md-menu md-direction="bottom-end" class="user-menu">
+    <span md-menu-trigger class="avatar" :style="{'background-image': avatarImage}"></span>
+
+    <md-menu-content class="user-menu">
+        <div>
+            <b v-locale="'user_menu.eth_address'"></b><br>
+            <small>{{user_wallet}}</small><br>
+
+            <b v-locale="'user_menu.eth_balance'"></b>{{user_eth_balance}}<br>
+
+            <md-icon class="small-icon">ev_station</md-icon><a href="http://faucet-dev.galtproject.io/" target="_blank" v-locale="'user_menu.eth_faucet'"></a><br>
+            
+            <b v-locale="'user_menu.galt_balance'"></b> {{user_galt_balance === null ? "..." : user_galt_balance}} <md-icon class="small-icon">language</md-icon><br>
+            <b v-locale="'user_menu.space_balance'"></b> {{user_space_balance === null ? "..." : user_space_balance}} <md-icon class="small-icon">map</md-icon><br>
+            <br>
+
+            <b v-locale="'user_menu.internal_wallet.address'"></b><a href @click.prevent.stop="copyInternalWalletToClipboard()" v-locale="'user_menu.internal_wallet.export'"></a><br>
+            <small>{{internal_wallet}}</small>
+            <a href @click.prevent.stop="regenerateInternalWallet()"><md-icon class="small-icon">cached</md-icon></a><br>
+            <a href @click.prevent.stop="copyInternalWalletPrivateToClipboard()" v-locale="'user_menu.internal_wallet.export_private'"></a><br>
+            <!--<b>Активен:</b> {{internal_wallet_active ? "Да" : "Нет"}}<br>-->
+            <b v-locale="'user_menu.internal_wallet.eth_balance'"></b> {{internal_wallet_eth_balance}}<br>
+            <b v-locale="'user_menu.internal_wallet.galt_balance'"></b> {{internal_wallet_galt_balance}}<br>
+            <b v-locale="'user_menu.internal_wallet.space_balance'"></b> {{internal_wallet_space_balance}}<br>
+            <!--Owns parcels:-->
+            <!--<ul>-->
+            <!--<li v-for="parcel in ownerOfParcels">-->
+            <!--<router-link :to="'/map/' + parcel.token">{x: {{parcel.x}}, y: {{parcel.y}}}</router-link>-->
+            <!--</li>-->
+            <!--</ul>-->
+        </div>
+    </md-menu-content>
+</md-menu>

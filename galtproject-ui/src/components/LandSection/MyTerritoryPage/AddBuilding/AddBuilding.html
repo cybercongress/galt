@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-12">
+        <md-button class="md-raised md-accent" to="/land/my-territory/list">
+            <md-icon>undo</md-icon>
+            <span v-locale="localeKey + '.back'"></span>
+        </md-button>
+        
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <space-token-card :spaceToken="basePack" v-if="basePack">
+            <div class="actions-container">
+
+            </div>
+        </space-token-card>
+
+        <md-card>
+            <md-card-header>
+                <div class="md-title" v-locale="[localeKey + '.new_building.title', {area: newBuilding.area}]"></div>
+                <md-button class="md-primary" @click="drawContour(true)"><md-icon>explore</md-icon> <span v-locale="localeKey + '.new_building.show_on_map'"></span></md-button>
+            </md-card-header>
+
+            <md-card-content>
+                <md-field>
+                    <label v-locale="localeKey + '.new_building.ledger_identifier'"></label>
+                    <md-input v-model="newBuilding.ledgerIdentifier" required :disabled="newBuilding.readyToAddGeohash"></md-input>
+                </md-field>
+                
+                <md-field>
+                    <label v-locale="localeKey + '.new_building.level'"></label>
+                    <md-input v-model="newBuilding.level" required :disabled="newBuilding.creating"></md-input>
+                </md-field>
+
+                <md-field>
+                    <label v-locale="localeKey + '.new_building.height'"></label>
+                    <md-input v-model="newBuilding.height" required :disabled="newBuilding.creating"></md-input>
+                </md-field>
+                
+                <contour-input v-model="newBuilding.contour" @change="drawContour()" v-on:clear-contour="onClearContour()" :disabled="newBuilding.creating" :explorer-name="explorerName"></contour-input>
+
+                <div>
+                    <div style="margin-top: 20px;" v-if="!newBuilding.ended">
+                        <fee-input v-model="newBuilding" :disabled="submitApplicationDisabled" :invalid-fee.sync="invalidFee" application-type="plotManager" :for-validation="true"></fee-input>
+                    </div>
+
+                    <md-button @click="sendApplication()" class="md-raised md-accent" :disabled="submitApplicationDisabled">
+                        <md-icon>arrow_upward</md-icon>
+                        <span v-locale="localeKey + '.new_building.send'"></span>
+                    </md-button>
+
+                    <div class="md-success" v-if="newBuilding.ended" v-locale="localeKey + '.new_building.end'"></div>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

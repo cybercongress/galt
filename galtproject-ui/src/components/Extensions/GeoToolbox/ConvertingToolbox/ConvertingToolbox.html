@@ -1,0 +1,97 @@
+<div>
+    <div class="md-layout" style="height: 100%;">
+        <div class="md-layout-item md-size-30">
+            <div class="padding">
+                <md-field>
+                    <label v-locale="localeKey + '.input_type'"></label>
+                    <md-select v-model="inputType">
+                        <md-option v-for="inputTypeItem in inputsList" :value="inputTypeItem">{{inputTypeItem}}</md-option>
+                    </md-select>
+                </md-field>
+            </div>
+            
+            <md-card>
+                <md-card-header>
+                    <h3 v-locale="localeKey + '.input_title'"></h3>
+                </md-card-header>
+
+                <md-card-content>
+                    <md-field>
+                        <label v-locale="localeKey + '.input_placeholder'"></label>
+                        <md-textarea v-model="input"></md-textarea>
+                    </md-field>
+
+                    <div v-if="invalidInput" class="md-error" v-locale="localeKey + '.invalid_input'"></div>
+
+                    <div v-if="input && !inputForCache.length && solOutput.length && !loading" class="md-success" v-locale="localeKey + '.already_cached'"></div>
+
+                    <md-button v-if="inputForCache.length" @click="convert()" class="md-raised md-accent" :disabled="loading">
+                        <md-icon>storage</md-icon>
+                        <span v-locale="localeKey + '.convert'"></span>
+                    </md-button>
+
+                    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <!--<div class="md-layout-item md-size-5 md-layout md-alignment-center-center">-->
+        <!--<div class="md-layout-item"><md-icon>navigate_next</md-icon></div>-->
+        <!--</div>-->
+
+        <div class="md-layout-item md-size-25">
+            <div class="padding">
+                <md-field>
+                    <label v-locale="localeKey + '.output_type'"></label>
+                    <md-select v-model="outputType">
+                        <md-option v-for="outputTypeItem in outputsListByInputType[inputType]" :value="outputTypeItem">{{outputTypeItem}}</md-option>
+                    </md-select>
+                </md-field>
+            </div>
+            
+            <md-card>
+                <md-card-header>
+                    <h3 v-locale="localeKey + '.solidity_output_title'"></h3>
+                </md-card-header>
+
+                <md-card-content>
+                    <div>
+                        <div v-for="(outputItem, index) in solOutput">
+                            {{outputItem}} <span v-if="needToBeCachedWarn[index]" class="warn">Need to convert</span>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <div class="md-layout-item md-size-25">
+            <md-card style="margin-top: 95px;">
+                <md-card-header>
+                    <h3 v-locale="localeKey + '.javascript_output_title'"></h3>
+                </md-card-header>
+
+                <md-card-content>
+                    <div>
+                        <div v-for="(outputItem, index) in jsOutput">
+                            {{outputItem}}
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+
+    <div class="md-layout" style="height: 100%;" v-if="lastTxHash">
+        <div class="md-layout-item md-size-30">
+            <md-card>
+                <md-card-header>
+                    <h3 v-locale="localeKey + '.transaction.title'"></h3>
+                </md-card-header>
+
+                <md-card-content>
+                    <span v-locale="localeKey + '.transaction.description'"></span><pretty-hex :hex="lastTxHash"></pretty-hex>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</div>

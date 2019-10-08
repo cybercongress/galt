@@ -1,0 +1,26 @@
+<div>
+    <md-card :class="['proposal-manager-card']">
+        <md-card-header>
+            <md-avatar>
+                <md-icon>pan_tool</md-icon>
+            </md-avatar>
+
+            <div class="md-title"><span v-locale="localeKey + '.title'"></span><pretty-hex :hex="address" :to="'/reputation/community/' + sraAddress + '/voting/' + address + '/overview'"></pretty-hex></div>
+        </md-card-header>
+        
+        <div></div>
+
+        <md-card-content v-if="proposalManager">
+            <div>
+                <b v-locale="localeKey + '.type'"></b> {{proposalManager.contractTypeStr}}<br>
+                <b v-locale="localeKey + '.description'"></b> {{proposalManager.description}}<br><br>
+                <b v-locale="localeKey + '.active_proposals_count'"></b> {{activeProposalCount}}<br>
+                <b v-locale="localeKey + '.threshold'"></b> {{threshold}}%
+            </div>
+        </md-card-content>
+
+        <md-card-content v-if="!proposalManager || loading">
+            <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+        </md-card-content>
+    </md-card>
+</div>

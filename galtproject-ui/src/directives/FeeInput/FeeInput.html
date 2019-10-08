@@ -1,0 +1,36 @@
+<div xmlns:v-on="">
+    <label v-locale="localeKey + '.title'"></label>
+    
+    <hint :content="help"></hint>
+    
+    <div class="md-layout md-gutter" v-if="paymentMethod">
+        <div class="md-layout-item md-size-60">
+            <md-field>
+                <label v-locale="localeKey + '.currency'"></label>
+                <md-select v-model="value.feeCurrency" required :disabled="disabled || currencyDisabled">
+                    <md-option value="eth" v-if="paymentMethod.indexOf('eth') !== -1">ETH</md-option>
+                    <md-option value="galt" v-if="paymentMethod.indexOf('galt') !== -1">GALT</md-option>
+                </md-select>
+            </md-field>
+        </div>
+
+        <div class="md-layout-item md-size-40">
+            <md-field :class="{'md-invalid': invalidFee}">
+                <label v-locale="localeKey + '.amount'"></label>
+                <md-input v-model="value.fee" required v-on:keyup="changeFee()" :disabled="disabled || amountDisabled"></md-input>
+            </md-field>
+        </div>
+    </div>
+
+    <!--<div v-if="ethPledge">-->
+        <!--<span class="warn" v-locale="[localeKey + '.pledge_warning', {value: ethPledge}]"></span>-->
+        <!---->
+        <!--<md-menu md-direction="bottom-end">-->
+            <!--<a md-menu-trigger class="icon-link"><md-icon>help</md-icon></a>-->
+            <!---->
+            <!--<md-menu-content class="info-menu">-->
+                <!--<div v-locale="localeKey + '.pledge_warning_help'"></div>-->
+            <!--</md-menu-content>-->
+        <!--</md-menu>-->
+    <!--</div>-->
+</div>

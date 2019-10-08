@@ -1,0 +1,31 @@
+<div>
+    <md-card :class="['proposal-card']">
+        <md-card-header>
+            <md-avatar>
+                <md-icon>pan_tool</md-icon>
+            </md-avatar>
+            <!--<router-link :to="'/reputation/community/' + sraAddress + '/proposals/' + managerAddress + '/' + proposalId"></router-link>-->
+            <div class="md-title"><span v-locale="localeKey + '.title'"></span>{{proposalId}}</div>
+        </md-card-header>
+
+        <div></div>
+
+        <md-card-content v-if="proposal">
+            <proposal-field-output v-for="field in fields" :field="field" 
+                    :value="proposal[field.name]" 
+                    :contract-type="proposalContract.contractType" 
+                    :sra-address="sraAddress" 
+                    :manager-address="managerAddress"
+                    :proposal="proposal"
+            ></proposal-field-output>
+        </md-card-content>
+
+        <md-card-actions v-if="proposal">
+            <proposal-control :proposal-id="proposalId" :manager-address="managerAddress" :sra-address="sraAddress" :loading.sync="loading"></proposal-control>
+        </md-card-actions>
+
+        <md-card-content v-if="loading">
+            <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+        </md-card-content>
+    </md-card>
+</div>

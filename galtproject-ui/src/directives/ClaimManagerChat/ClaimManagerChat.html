@@ -1,0 +1,34 @@
+<div>
+    <md-button @click="toggleChat()">
+        <md-icon>chat</md-icon>
+        <span v-locale="[localeKey + '.title', {messagesCount: messagesCount}]"></span>
+    </md-button>
+
+    <div v-if="showChat && application">
+        <div class="chat-messages-list">
+            <md-card v-for="message in application.messages" :class="{'chat-message': true, 'current-user-message': message.from == user_wallet}">
+                <md-card-header>
+                    <div class="md-subhead"><pretty-hex :hex="message.from"></pretty-hex></div>
+                </md-card-header>
+
+                <md-card-content>
+                    {{message.text}}
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="!application.resolved || sending"></md-progress-bar>
+
+        <md-field>
+            <label v-locale="localeKey + '.new_message'"></label>
+
+            <md-input v-model="newMessageText" required :disabled="sending"></md-input>
+
+            <md-button class="md-icon-button" @click="sendMessage()" :disabled="sending">
+                <md-icon>send</md-icon>
+            </md-button>
+        </md-field>
+    </div>
+    
+    <md-progress-bar v-if="showChat && !application" class="md-accent" md-mode="indeterminate"></md-progress-bar>
+</div>

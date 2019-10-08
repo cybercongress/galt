@@ -1,0 +1,58 @@
+<md-card :class="['space-token-card', 'space-level-' + order.spaceToken.colorLevel]">
+    <md-card-header v-if="order.spaceToken">
+        <md-avatar>
+            <md-icon v-if="order.spaceToken.type === 'plot'">public</md-icon>
+            <md-icon v-if="order.spaceToken.type === 'building'">select_all</md-icon>
+            <md-icon v-if="order.spaceToken.type.indexOf('predefined') !==_ -1">domain</md-icon>
+        </md-avatar>
+
+        <div class="md-title"><pretty-hex :hex="order.id"></pretty-hex></div>
+    </md-card-header>
+
+    <div></div>
+
+    <md-card-content>
+        <div class="row">
+            <div class="col-md-12">
+                <label v-locale="localeKey + '.status'"></label> <span v-locale="'order_statuses.' + order.statusName"></span>
+            </div>
+            
+            <div class="col-md-12">
+                <div v-if="order.spaceToken">
+                    <label v-locale="localeKey + '.package_token'"></label> {{order.spaceToken.tokenId}}<br>
+                    <label v-locale="localeKey + '.space_token_type'"></label> <span v-locale="['territory_types.' + order.spaceToken.type, {level: order.spaceToken.level}]"></span>
+
+                    <div v-if="order.spaceToken.additionalDescription" v-for="ad in order.spaceToken.additionalDescription">
+                        <label v-locale="'space_token_info.description_' + ad.name"></label> {{ad.value}}
+                    </div>
+                    <div v-if="order.spaceToken.description">
+                        <label v-locale="'space_token_info.description'"></label><pre>{{order.spaceToken.description}}</pre>
+                    </div>
+                </div>
+                <label v-locale="localeKey + '.seller'"></label> <pretty-hex :hex="order.seller" :to="'/account/' + order.seller + '/overview'"></pretty-hex><br>
+                <label v-locale="localeKey + '.ask'"></label> {{order.ask}}<br>
+                <label v-locale="localeKey + '.currency'"></label> {{order.escrowCurrencyName}}<br>
+                <label v-locale="localeKey + '.documents'"></label><br/><pretty-doc v-for="document in order.attachedDocuments" :doc="document"></pretty-doc>
+                <div v-if="order.custodians && order.custodians.length">
+                    <label v-locale="localeKey + '.custodian'"></label><br/><div v-for="custodian in order.custodians"><oracle-popup :address="custodian"></oracle-popup></div>
+                </div>
+            </div>
+            
+            <div class="col-md-12" v-if="full">
+                <div class="md-layout" v-if="order.offersList && order.offersList.length" style="margin-top: 25px;">
+                    <div :class="{'md-layout-item': true, 'content-accent': offer.address == user_wallet}" v-for="offer in order.offersList">
+                        <pretty-hex :hex="offer.address" :to="'/account/' + order.seller + '/overview'"></pretty-hex><br>
+                        <label v-locale="localeKey + '.ask'"></label> {{offer.ask}}<br>
+                        <label v-locale="localeKey + '.bid'"></label> {{offer.bid}}<br>
+                        <span v-locale="'plot_escrow_offer_statuses.' + offer.statusName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </md-card-content>
+
+    <md-card-actions>
+        <slot></slot>
+    </md-card-actions>
+</md-card>

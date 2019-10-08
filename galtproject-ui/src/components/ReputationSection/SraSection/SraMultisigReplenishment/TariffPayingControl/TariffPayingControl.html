@@ -1,0 +1,15 @@
+<div style="width: 100%;">
+    <!--<div class="md-success full-width" v-locale="localeKey + '.join_proposal_already_sent'" v-if="userSentJoinProposal && !spaceLockerMintedToSra && sraApprovedToSpaceLocker"></div>-->
+
+    <div v-if="payData && showSumForPay" style="padding-left: 10px;">
+        <label v-locale="localeKey + '.sum_for_pay'"></label> {{payData.sum}} {{feeContract.currencyStr}}
+    </div>
+    
+    <div style="display: flex; justify-content: flex-end;" v-if="payData && payData.tokensIds.length">
+        
+        <md-button @click="pay()" class="md-accent md-raised" :disabled="loading || !payData.sum">
+            <md-icon>credit_card</md-icon>
+            <span v-locale="localeKey + '.pay'"></span>
+        </md-button>
+    </div>
+</div>

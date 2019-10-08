@@ -1,0 +1,82 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <md-subheader v-locale="localeKey + '.general_data'"></md-subheader>
+            <md-list-item>
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.galt_balance'"></span> 
+                    <span>{{galtBalance}}</span>
+                </span>
+            </md-list-item>
+            
+            <md-list-item>
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.eth_balance'"></span> 
+                    <span>{{ethBalance}}</span>
+                </span>
+            </md-list-item>
+
+            <md-subheader v-locale="localeKey + '.eth_fee.title'"></md-subheader>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.eth_fee.percent'"></span> 
+                    <span>{{ethFee}}%</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editFee('eth')">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.eth_fee.payout'"></span> 
+                    <span>{{ethFeePayout}} ETH</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" v-if="ethFeePayout" @click="withdrawEthFee()">
+                    <md-icon class="md-accent">cake</md-icon>
+                </md-button>
+            </md-list-item>
+            
+            <md-list-item>
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.eth_fee.total_payout'"></span> 
+                    <span>{{ethFeeTotalPayout}} ETH</span>
+                </span>
+            </md-list-item>
+
+            <md-subheader v-locale="localeKey + '.galt_fee.title'"></md-subheader>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.galt_fee.percent'"></span> 
+                    <span>{{galtFee}}%</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editFee('galt')">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.galt_fee.payout'"></span> 
+                    <span>{{galtFeePayout}} GALT</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" v-if="galtFeePayout" @click="withdrawGaltFee()">
+                    <md-icon class="md-accent">cake</md-icon>
+                </md-button>
+            </md-list-item>
+            
+            <md-list-item>
+                <span class="md-list-item-text text-row">
+                    <span v-locale="localeKey + '.galt_fee.total_payout'"></span> 
+                    <span>{{galtFeeTotalPayout}} GALT</span>
+                </span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

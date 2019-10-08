@@ -1,0 +1,33 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="[localeKey + '.title']"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <p v-locale="[localeKey + '.description']"></p>
+    
+    <b v-locale="localeKey + '.new_owners'"></b><div v-for="manager in multisigManagers"><pretty-hex :hex="manager"></pretty-hex></div>
+
+    <md-field style="margin-top: 20px;">
+      <label v-locale="localeKey + '.new_required'"></label>
+      <md-input v-model="newRequired" required type="number"></md-input>
+    </md-field>
+
+    <md-field>
+      <label v-locale="localeKey + '.new_description'"></label>
+      <md-textarea v-model="description" required></md-textarea>
+    </md-field>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading || sending"></md-progress-bar>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="propose" class="md-raised md-accent" :disabled="loading || sending || isInputsInvalid"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

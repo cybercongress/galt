@@ -1,0 +1,53 @@
+<md-card>
+    <md-card-header>
+        <md-button class="md-icon-button md-raised md-accent" style="float: right;" @click="addWithdrawalLimit()" :disabled="!changeMsWithdrawalLimitsManager">
+            <md-icon>add</md-icon>
+        </md-button>
+        
+        <div class="md-title" v-locale="[localeKey + '.title', {period: periodLengthStr}]"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <md-table style="width: 100%;">
+                    <md-table-row>
+                        <md-table-head><span v-locale="localeKey + '.amount_title'"></span></md-table-head>
+                        
+                        <md-table-head><span v-locale="localeKey + '.currency_title'"></span></md-table-head>
+                        
+                        <md-table-head><span></span></md-table-head>
+                    </md-table-row>
+
+                    <md-table-row v-for="limit in withdrawalLimits">
+                        <md-table-cell>{{limit.amount}}</md-table-cell>
+                        
+                        <md-table-cell>{{limit.currencyStr}}</md-table-cell>
+                        
+                        <md-table-cell>
+                            <md-button class="md-icon-button md-primary" @click="removeWithdrawalLimit(limit)" :disablec="!changeMsWithdrawalLimitsManager">
+                                <md-icon>clear</md-icon>
+                            </md-button>
+                        </md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </md-list-item>
+
+            <md-list-item v-if="loading">
+                <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+            </md-list-item>
+
+            <md-list-item v-if="!loading && !withdrawalLimits.length">
+                <span class="md-list-item-text row-direction">
+                    <span v-locale="localeKey + '.not_found'"></span>
+                </span>
+            </md-list-item>
+        </md-list>
+        
+        <router-link v-if="changeMsWithdrawalLimitsManager" :to="{name: 'reputation-sra-voting-overview', params: {managerAddress: changeMsWithdrawalLimitsManager}}">
+            <span v-locale="localeKey + '.voting_link'"></span>
+        </router-link>
+    </md-card-content>
+</md-card>

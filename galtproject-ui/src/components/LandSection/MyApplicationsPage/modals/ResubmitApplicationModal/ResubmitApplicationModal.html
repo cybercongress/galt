@@ -1,0 +1,51 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group" v-if="application">
+      
+      <md-field>
+        <label v-locale="localeKey + '.level'"></label>
+        <md-input v-model="application.level" required></md-input>
+      </md-field>
+      
+      <md-field>
+        <label v-locale="localeKey + '.ledger_identifier'"></label>
+        <md-input v-model="application.ledgerIdentifier" required></md-input>
+      </md-field>
+
+      <md-checkbox v-model="application.editCredentials"><span v-locale="localeKey + '.edit_credentials'"></span></md-checkbox>
+      
+      <md-field v-if="application.editCredentials">
+        <label v-locale="localeKey + '.document_id'"></label>
+        <md-input v-model="application.documentId" required></md-input>
+      </md-field>
+
+      <md-field v-if="application.editCredentials">
+        <label v-locale="localeKey + '.full_name'"></label>
+        <md-input v-model="application.fullName" required></md-input>
+      </md-field>
+
+      <!--<md-field>-->
+        <!--<label v-locale="localeKey + '.country'"></label>-->
+        <!--<md-select v-model="application.country">-->
+          <!--<md-option v-for="county in countryList" :value="county[0]">{{county[1]}}</md-option>-->
+        <!--</md-select>-->
+      <!--</md-field>-->
+
+      <div class="warn" v-if="warnText">{{warnText}}</div>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="sendDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

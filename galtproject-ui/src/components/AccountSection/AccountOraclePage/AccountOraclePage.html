@@ -1,0 +1,28 @@
+<div id="oracle-page" style="height: 100%;" xmlns:v-on="">
+    <md-app-content class="padding">
+        <!--<div class="md-title" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>-->
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="!oracle"></md-progress-bar>
+
+        <div class="md-layout">
+            <div class="md-layout-item md-size-55">
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title" v-locale="localeKey + '.info'"></div>
+                    </md-card-header>
+    
+                    <md-card-content v-if="oracle">
+                        <oracle-description :oracle="oracle"></oracle-description>
+                    </md-card-content>
+                </md-card>
+                
+                <custodian-space-tokens :user-wallet="$route.params.userAddress"></custodian-space-tokens>
+            </div>
+            
+            <div class="md-layout-item md-size-45">
+                <oracle-stakes :user-wallet="$route.params.userAddress"></oracle-stakes>
+            </div>
+        </div>
+
+    </md-app-content>
+</div>

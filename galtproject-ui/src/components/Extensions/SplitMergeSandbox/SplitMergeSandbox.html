@@ -1,0 +1,107 @@
+<div class="md-layout" style="height: 100%;">
+    <div class="md-layout-item md-size-50">
+        <md-button class="md-raised md-accent" @click="reset()" style="float: right;">
+            <md-icon>loop</md-icon>
+            <span v-locale="localeKey + '.reset'"></span>
+        </md-button>
+        
+        <md-button class="md-raised md-accent" to="/extensions/list">
+            <md-icon>undo</md-icon>
+            <span v-locale="localeKey + '.back'"></span>
+        </md-button>
+
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+        
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <div v-if="!loading && !spaceSplitOperation">
+            <div class="md-layout">
+                <div class="md-layout-item">
+                    <md-card>
+                        <md-card-header>
+                            <div class="md-title" v-locale="[localeKey + '.subject_contour', {area: subject.area}]"></div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <contour-input v-model="subject.contour" @change="drawInput()"
+                                           v-on:clear-contour="onClearContour()"
+                                           :explorer-name="explorerName"></contour-input>
+                        </md-card-content>
+                    </md-card>
+                </div>
+                <div class="md-layout-item">
+                    <md-card>
+                        <md-card-header>
+                            <div class="md-title" v-locale="[localeKey + '.clipping_contour', {area: clipping.area}]"></div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <contour-input v-model="clipping.contour" @change="drawInput()"
+                                           v-on:clear-contour="onClearContour()"
+                                           :explorer-name="explorerName"></contour-input>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+
+            <div>
+                <md-button @click="runSplit()" class="md-raised md-accent" :disabled="splitSpaceTokenDisabled">
+                    <md-icon>check</md-icon>
+                    <span v-locale="localeKey + '.run_split'"></span>
+                </md-button>
+            </div>
+            
+            <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="inProcess"></md-progress-bar>
+        </div>
+
+        <md-card v-if="spaceSplitOperation">
+            <md-card-header>
+                <h3><span v-locale="localeKey + '.split_operation.title'"></span>
+                    <span v-if="spaceSplitOperation.doneStage && spaceSplitOperation.active" class="warn"
+                          v-locale="localeKey + '.split_operation.status.' + spaceSplitOperation.doneStage"></span>
+                    <span v-if="spaceSplitOperation.doneStage === 'polygons_finish' && !spaceSplitOperation.active" class="warn"
+                          v-locale="localeKey + '.split_operation.status.finished'"></span>
+                </h3>
+                <h4><span v-locale="localeKey + '.split_operation.address'"></span><pretty-hex :hex="spaceSplitOperation.address"></pretty-hex></h4>
+            </md-card-header>
+            
+            <md-card-content v-if="spaceSplitOperation.doneStage === 'polygons_finish'">
+                <md-button @click="drawInput()" :class="{'md-raised': true, 'md-accent': showMode == 'input'}">
+                    <md-icon>vertical_align_bottom</md-icon>
+                    <span v-locale="localeKey + '.show_input'"></span>
+                </md-button>
+                
+                <md-button @click="drawOutput()" :class="{'md-raised': true, 'md-accent': showMode == 'output'}">
+                    <md-icon>vertical_align_top</md-icon>
+                    <span v-locale="localeKey + '.show_output'"></span>
+                </md-button>
+            </md-card-content>
+
+            <md-card-content v-if="spaceSplitOperation.active">
+                <div v-if="spaceSplitOperation.doneStage !== 'polygons_finish'">
+                    <md-button @click="processSplitOperation()" class="md-raised md-accent">
+                        <md-icon>check</md-icon>
+                        <span v-locale="localeKey + '.continue_split_token'"></span>
+                    </md-button>
+                </div>
+
+                <div v-else>
+                    <md-button @click="finishSplitToken()" class="md-raised md-accent">
+                        <md-icon>check</md-icon>
+                        <span v-locale="localeKey + '.finish_split_token'"></span>
+                    </md-button>
+                </div>
+
+                <md-button @click="cancelSplitToken()" class="md-raised">
+                    <md-icon>clear</md-icon>
+                    <span v-locale="localeKey + '.cancel_split_token'"></span>
+                </md-button>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="inProcess"></md-progress-bar>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div class="md-layout-item md-size-50">
+        <explorer name="main" :hide-surroundings="true"></explorer>
+    </div>
+</div>

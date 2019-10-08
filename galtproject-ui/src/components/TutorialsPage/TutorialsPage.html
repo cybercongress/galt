@@ -1,0 +1,22 @@
+<div id="galtdex" style="height: 100%;" xmlns:v-on="">
+    <md-app-content>
+        <div class="md-layout">
+            <div class="md-layout-item md-size-15"></div>
+            
+            <div class="md-layout-item md-size-70">
+                <div class="md-title" style="margin-top: 40px;" v-locale="'tutorials.title'"></div>
+
+                <h3 v-locale="'tutorials.description'"></h3>
+                
+                <div class="md-layout" style="justify-content: space-between;">
+                    <div class="md-layout-item md-size-30" v-for="tutorial in tutorials" style="margin-bottom: 40px;">
+                        <h4>{{tutorial.title}}</h4>
+                        <iframe width="560" height="315" :src="'https://www.youtube.com/embed/' + tutorial.youtubeUri" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md-layout-item md-size-15"></div>
+        </div>
+    </md-app-content>
+</div>

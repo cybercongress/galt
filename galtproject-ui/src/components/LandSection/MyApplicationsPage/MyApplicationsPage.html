@@ -1,0 +1,132 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 2;">
+        <div id="my-applications-page" class="inner-scroll">
+            <md-app-content>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-title padding" v-locale="'my_applications.title'"></div>
+
+                        <md-menu md-direction="bottom-start">
+                            <md-button class="md-primary" md-menu-trigger><md-icon>add</md-icon><span v-locale="'my_applications.make_proposal'"></span></md-button>
+
+                            <md-menu-content>
+                                <md-menu-item @click="createClaimManagerApplication()"><md-icon>sentiment_very_dissatisfied</md-icon><span v-locale="'my_applications.claim_manager_proposal'"></span></md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+
+                        <div class="padding">
+                            <md-field>
+                                <label v-locale="'my_applications.filter_by_contract'"></label>
+                                <md-select v-model="filterByContractType">
+                                    <md-option v-for="(contractType, index) in applicationContratsTypes" :value="contractType.name" :key="index">{{contractType.title}}</md-option>
+                                </md-select>
+                            </md-field>
+
+                            <md-field>
+                                <label v-locale="'my_applications.filter_by_status'"></label>
+                                <md-select v-model="filterByStatus">
+                                    <md-option v-for="(status, index) in applicationStatuses" :value="status.name" :key="index">{{status.title}}</md-option>
+                                </md-select>
+                            </md-field>
+                        </div>
+
+                        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+                        <div v-locale="['my_applications.count', {value: filtered_applications.length}]" v-if="!loading" class="count-label"></div>
+
+                        <application-card v-for="(application, index) in filtered_applications"
+                                          :application="application"
+                                          @click.native="showApplication(application)" 
+                                          :key="index">
+
+                            <div class="warn full-width"
+                                 v-locale="'my_applications.withdraw_token_on_plot_escrow'"
+                                 v-if="application.contractType === 'plotCustodian' && application.statusName === 'approved' && application.throughEscrow">
+                            </div>
+
+                            <md-button v-if="application.contractType === 'plotManager' && application.statusName === 'new'" @click="submitApplication(application)" class="md-raised md-accent">
+                                <md-icon>arrow_upward</md-icon>
+                                <span v-locale="'my_applications.submit_application'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotManager' && application.statusName === 'approved' && !application.claimed" @click="claimSpaceToken(application)" class="md-raised md-accent">
+                                <md-icon>done_all</md-icon>
+                                <span v-locale="'my_applications.claim_token'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotManager' && application.statusName === 'reverted'" :to="'/land/my-applications/resubmit-plot/' + application.id" class="md-raised md-accent">
+                                <md-icon>arrow_upward</md-icon>
+                                <span v-locale="'my_applications.resubmit_application'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotCustodian' && application.readyForAttachToken && !application.tokenAttached" @click="attachToken(application)" class="md-raised md-accent">
+                                <md-icon>arrow_upward</md-icon>
+                                <span v-locale="'my_applications.attach_space_token'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotCustodian' && (application.statusName === 'rejected' || application.statusName === 'locked')" @click="closeApplication(application)" class="md-raised md-accent">
+                                <md-icon>not_interested</md-icon>
+                                <span v-locale="'my_applications.cancel_application'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotCustodian' && application.statusName === 'review' && application.tokenAttached && application.custodianDocuments && application.custodianDocuments.length && !application.approvedByApplicant" @click="approveApplication(application)" class="md-raised md-accent">
+                                <md-icon>done_outline</md-icon>
+                                <span v-locale="'my_applications.approve_application'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotCustodian' && application.statusName === 'approved' && !application.throughEscrow" @click="withdrawToken(application)" class="md-raised md-accent">
+                                <md-icon>arrow_upward</md-icon>
+                                <span v-locale="'my_applications.withdraw_token'"></span>
+                            </md-button>
+
+                            <md-button v-if="application.contractType === 'plotClarification' && application.statusName === 'approved' && !application.tokenWithdrawn" @click="withdrawToken(application)" class="md-raised md-accent">
+                                <md-icon>arrow_upward</md-icon>
+                                <span v-locale="'my_applications.withdraw_token'"></span>
+                            </md-button>
+
+                            <!--<md-button v-if="application.contractType === 'plotManager' && (application.statusName === 'approved' || application.statusName === 'disassembled_by_applicant') && !application.gasDepositRedeemed" @click="claimGasDeposit(application)" class="md-raised md-accent">-->
+                                <!--<md-icon>cake</md-icon>-->
+                                <!--<span v-locale="'my_applications.claim_gas_deposit'"></span>-->
+                            <!--</md-button>-->
+
+                            <!--<md-menu md-direction="bottom-start" v-if="application.contractType === 'plotManager'">-->
+                                <!--<md-button md-menu-trigger class="md-icon-button md-raised md-accent" style="margin-left: 15px;"><md-icon>menu</md-icon></md-button>-->
+
+                                <!--<md-menu-content>-->
+                                    <!--<md-menu-item v-if="application.statusName === 'new' || application.statusName === 'reverted'" @click="askForPecisionToCheckGeohashes(application)">-->
+                                        <!--<md-icon>find_replace</md-icon>-->
+                                        <!--<span v-locale="'my_applications.check_geohashes'"></span>-->
+                                    <!--</md-menu-item>-->
+
+                                    <!--<md-menu-item v-if="application.statusName === 'new' || application.statusName === 'reverted'" @click="editDetails(application)">-->
+                                        <!--<md-icon>create</md-icon>-->
+                                        <!--<span v-locale="'my_applications.edit'"></span>-->
+                                    <!--</md-menu-item>-->
+
+                                    <!--<md-menu-item v-if="application.statusName === 'new' || application.statusName === 'reverted'" @click="editGeohashes('add', application)">-->
+                                        <!--<md-icon>present_to_all</md-icon>-->
+                                        <!--<span v-locale="'my_applications.add_geohashes'"></span>-->
+                                    <!--</md-menu-item>-->
+
+                                    <!--<md-menu-item v-if="application.statusName === 'new' || application.statusName === 'reverted'" @click="editGeohashes('remove', application)">-->
+                                        <!--<md-icon>cancel_presentation</md-icon>-->
+                                        <!--<span v-locale="'my_applications.remove_geohashes'"></span>-->
+                                    <!--</md-menu-item>-->
+
+                                    <!--<md-menu-item v-if="application.statusName === 'reverted'" @click="disassemblePackConfirm(application)">-->
+                                        <!--<md-icon>dialpad</md-icon>-->
+                                        <!--<span v-locale="'my_applications.disassemble_application'"></span>-->
+                                    <!--</md-menu-item>-->
+                                <!--</md-menu-content>-->
+                            <!--</md-menu>-->
+                        </application-card>
+                    </div>
+                </div>
+
+            </md-app-content>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

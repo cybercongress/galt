@@ -1,0 +1,70 @@
+<div>
+    <md-card :class="['space-token-card', 'space-level-' + spaceToken.colorLevel, {'space-info': infoMark, 'selectable': selectable}]">
+        <md-card-header>
+            <md-avatar>
+                <md-icon v-if="spaceToken.type === 'plot'">public</md-icon>
+                <md-icon v-if="spaceToken.type === 'building'">select_all</md-icon>
+                <md-icon v-if="spaceToken.type.indexOf('predefined') !== -1">domain</md-icon>
+            </md-avatar>
+
+            <div class="md-title"><router-link :to="'/land/space-token/' + spaceToken.tokenId"><span v-locale="'space_token_info.title'"></span>{{spaceToken.tokenId}}</router-link></div>
+        </md-card-header>
+        
+        <div></div>
+
+        <md-card-content>
+            <div>
+                <div>
+                    <label v-locale="'space_token_info.type'"></label><span v-locale="['territory_types.' + spaceToken.type, {level: spaceToken.level}]"></span><br>
+                    <label v-locale="'space_token_info.area'"></label>{{spaceToken.area | beautyNumber}}
+                    <div v-if="spaceToken.contour">
+                        <label v-locale="'space_token_info.contour_length'"></label>{{spaceToken.contour.length}}<br>
+                        <label v-locale="'space_token_info.contour'"></label>
+                        <space-token-contour :space-token="spaceToken"></space-token-contour>
+                    </div>
+                    <div v-if="spaceToken.additionalDescription" v-for="ad in spaceToken.additionalDescription">
+                        <label v-locale="'space_token_info.description_' + ad.name"></label> {{ad.value}}
+                    </div>
+                    <div v-if="spaceToken.type === 'predefined_room'">
+                        <label v-locale="'space_token_info.level'"></label> {{spaceToken.level}}
+                    </div>
+                    <div v-if="spaceToken.description">
+                        <label v-locale="'space_token_info.description'"></label><pre>{{spaceToken.description}}</pre>
+                    </div>
+                </div>
+                <!--<div class="col-md-12" v-if="geohashesCount">-->
+                    <!--<label v-locale="'space_token_info.geohashes_count'"></label>{{geohashesCount}}-->
+                <!--</div>-->
+                <div v-if="spaceToken.price">
+                    <label v-locale="'space_token_info.price'"></label>{{spaceToken.price}} GALT
+                </div>
+                <div v-if="spaceToken.custodians && spaceToken.custodians.length">
+                    <label v-locale="'space_token_info.custodian'"></label><br/>
+                    <div v-for="custodian in spaceToken.custodians">
+                        <oracle-popup :address="custodian"></oracle-popup>
+                    </div>
+                    
+                    <label v-locale="'space_token_info.custodian_documents'"></label><br/>
+                    <div v-for="document in spaceToken.documents"><pretty-doc :doc="document"></pretty-doc></div>
+                </div>
+                <div v-if="full">
+                    <label v-locale="'space_token_info.owner'"></label><pretty-hex :hex="spaceToken.owner" :to="'/account/' + spaceToken.owner + '/overview'"></pretty-hex>
+                </div>
+                <div class="md-error" v-if="spaceToken.notFound" v-locale="'space_token_info.not_found'"></div>
+            </div>
+
+            <!--<div class="row" v-if="!spaceToken.isPack">-->
+                <!--<div class="col-md-12">-->
+                    <!--<label v-locale="'space_token_info.type'"></label><span v-locale="'territory_types.geohash'"></span>-->
+                <!--</div>-->
+                <!--<div class="col-md-12">-->
+                    <!--<label v-locale="'space_token_info.geohash'"></label>{{spaceToken.geohash}}-->
+                <!--</div>-->
+            <!--</div>-->
+        </md-card-content>
+
+        <md-card-actions>
+            <slot></slot>
+        </md-card-actions>
+    </md-card>
+</div>

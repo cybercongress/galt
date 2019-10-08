@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-12">
+        <md-button class="md-raised md-accent" to="/land/my-territory/list">
+            <md-icon>undo</md-icon>
+            <span v-locale="localeKey + '.back'"></span>
+        </md-button>
+        
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="basePackLoading"></md-progress-bar>
+        
+        <md-card v-if="basePack.tokenId">
+            <md-card-header>
+                <div class="md-title" v-locale="[localeKey + '.source_package']"></div>
+                <md-button class="md-primary" @click="drawContour(true)"><md-icon>explore</md-icon> <span v-locale="localeKey + '.show_on_map'"></span></md-button>
+            </md-card-header>
+
+            <md-card-content>
+                <div class="col-md-12">
+                    <label v-locale="localeKey + '.token_id'"></label>{{basePack.tokenId}}<br><br>
+                    <label v-locale="localeKey + '.area'"></label>{{basePack.area | beautyNumber}}<br>
+                    <label v-locale="localeKey + '.contour'"></label><div style="white-space: normal;">{{basePack.contour.join(', ')}}</div>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.possible_merge_packs'"></div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="mergePacksLoading"></md-progress-bar>
+
+        <div v-locale="[localeKey + '.possible_merge_packs_count', {value: possibleForMergePacks.length}]" v-if="!mergePacksLoading" class="count-label"></div>
+
+        <space-token-card v-for="spaceToken in possibleForMergePacks"
+                          :spaceToken="spaceToken"
+                          @click.native="showSpaceToken(spaceToken)">
+            
+            <div class="actions-container">
+                <div class="full-width">
+                    Will expand area to: {{spaceToken.expandAreaTo | beautyNumber}}<br>
+                    Will expand contour to: <div style="white-space: normal;">{{spaceToken.expandContourTo.join(', ')}}</div>
+                </div>
+                
+                <div class="warn full-width" v-locale="localeKey + '.merge_attention'" style="margin-top: 15px;"></div>
+
+                <md-button @click="mergePack(spaceToken)" class="md-raised md-accent">
+                    <md-icon>present_to_all</md-icon>
+                    <span v-locale="localeKey + '.merge_pack'"></span>
+                </md-button>
+            </div>
+        </space-token-card>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div id="wait-screen" :style="{'display': isShowed ? 'flex': 'none'}">
+    <div id="wait-screen-center-text">{{centerText}}</div>
+    <div id="wait-screen-center-sub-text">{{centerSubText}}</div>
+    <div id="wait-screen-right-top-text">{{rightTopText}}</div>
+    <div id="wait-screen-transactions">
+        <div v-if="operationState.totalTxCount">
+            <span v-locale="['wait_screen.transactions.sent_count', {actual_value: operationState.sentTxCount, full_value: operationState.totalTxCount}]"></span>
+        </div>
+        <div v-if="operationState.totalTxCount">
+            <span v-locale="['wait_screen.transactions.confirmed_count', {actual_value: operationState.confirmedTxCount, full_value: operationState.totalTxCount}]"></span>
+        </div>
+        <div v-if="operationState.rejectedTxCount">
+            <span v-locale="['wait_screen.transactions.rejected_count', {actual_value: operationState.rejectedTxCount, full_value: operationState.totalTxCount}]"></span>
+        </div>
+        <div id="wait-screen-transactions-list">
+            <div v-for="(tx, index) in operationTransactionsReversed">
+                <span v-locale="['wait_screen.transactions.tx_row', {number: transactionsCount - index}]"></span>
+                <pretty-hex :hex="tx.hash" :full="true"></pretty-hex>:&nbsp;
+                {{tx.statusText}}
+            </div>
+        </div>
+    </div>
+</div>

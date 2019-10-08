@@ -1,0 +1,32 @@
+<div style="width: 100%;">
+    <!--<div class="md-success full-width" v-locale="localeKey + '.join_proposal_already_sent'" v-if="userSentJoinProposal && !spaceLockerMintedToSra && sraApprovedToSpaceLocker"></div>-->
+
+    <div v-if="proposalShares" style="padding-left: 10px;">
+        <label v-locale="localeKey + '.accept_share'"></label> {{proposalShares.acceptShare}}/{{proposalShares.threshold}}%<br>
+        <label v-locale="localeKey + '.decline_share'"></label> {{proposalShares.declineShare}}/{{proposalShares.threshold}}%<br>
+        <label v-locale="localeKey + '.user_choice'"></label> {{userChoice}}
+    </div>
+    
+    <div style="display: flex; justify-content: flex-end;" v-if="isSraMember && proposal && proposal.status === 'active'">
+        
+        <md-button @click="accept()" :class="{'md-accent': true, 'md-raised': userChoice === 'pending'}" :disabled="loading" v-if="userChoice !== 'accepted'">
+            <md-icon>done</md-icon>
+            <span v-locale="localeKey + '.accept'"></span>
+        </md-button>
+
+        <md-button @click="decline()" :class="{'md-accent': true, 'md-raised': userChoice === 'pending'}" :disabled="loading" v-if="userChoice !== 'declined'">
+            <md-icon>close</md-icon>
+            <span v-locale="localeKey + '.decline'"></span>
+        </md-button>
+
+        <md-button @click="triggerApprove()" class="md-accent md-raised" :disabled="loading" v-if="proposalShares && proposalShares.acceptShare >= proposalShares.threshold">
+            <md-icon>publish</md-icon>
+            <span v-locale="localeKey + '.trigger_approve'"></span>
+        </md-button>
+
+        <md-button @click="triggerReject()" class="md-accent md-raised" :disabled="loading" v-if="proposalShares && proposalShares.declineShare >= proposalShares.threshold">
+            <md-icon>publish</md-icon>
+            <span v-locale="localeKey + '.trigger_reject'"></span>
+        </md-button>
+    </div>
+</div>

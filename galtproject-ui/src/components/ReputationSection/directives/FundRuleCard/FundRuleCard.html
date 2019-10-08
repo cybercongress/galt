@@ -1,0 +1,27 @@
+<div>
+    <md-card :class="['fund-rule-card']">
+        <md-card-header>
+            <md-avatar>
+                <md-icon>assignment_turned_in</md-icon>
+            </md-avatar>
+
+            <div class="md-title"><router-link :to="{name: 'reputation-sra-fund-rule-page', params: {ruleId: id}}"><span v-locale="localeKey + '.title'"></span>{{id}}</router-link></div>
+        </md-card-header>
+        
+        <div></div>
+
+        <md-card-content v-if="fundRule">
+            <div>
+                <label v-locale="localeKey + '.description'"></label> {{fundRule.description}}<br><br>
+                <label v-locale="localeKey + '.ipfs_hash'"></label> <pretty-doc :doc="fundRule.ipfsHash"></pretty-doc>
+                <!--<pre>-->
+                    <!---->
+                <!--</pre>-->
+            </div>
+        </md-card-content>
+
+        <md-card-content v-if="!fundRule || loading">
+            <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+        </md-card-content>
+    </md-card>
+</div>

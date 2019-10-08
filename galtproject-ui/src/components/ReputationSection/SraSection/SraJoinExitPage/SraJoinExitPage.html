@@ -1,0 +1,17 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 2;" class="inner-scroll">
+        <div class="md-title padding" v-locale="localeKey + '.title'"></div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <space-locker-card v-for="locker in spaceLockers" :address="locker" :sraAddress="$route.params.sraAddress"></space-locker-card>
+
+        <div v-if="!loading && !spaceLockers.length" style="margin-top: 15px;">
+            <div v-locale="localeKey + '.not_found'" class="count-label"></div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

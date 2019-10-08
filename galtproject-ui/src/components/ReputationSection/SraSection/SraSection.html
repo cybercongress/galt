@@ -1,0 +1,9 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="[localeKey + '.title', {sraAddress: $route.params.sraAddress}]"></div>
+    
+        <sra-tabs :display-tabs="displayTabs" :tabs-class="{'md-accent':true}"></sra-tabs>
+        
+        <router-view style="margin-top: 10px;"></router-view>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div>
+    <div>
+        <label v-locale="localeKey + '.name' " style="font-weight: bold;"></label> {{oracle.name}}
+    </div>
+    <div v-if="oracle.additionalDescription" v-for="ad in oracle.additionalDescription">
+        <label v-locale="localeKey + '.description_' + ad.name" style="font-weight: bold;"></label> {{ad.value}}
+    </div>
+</div>

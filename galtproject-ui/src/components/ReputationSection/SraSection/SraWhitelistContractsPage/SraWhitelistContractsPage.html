@@ -1,0 +1,22 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <div class="md-layout">
+            <div class="md-layout-item md-size-30" v-for="contract in whitelistContracts">
+                <proposal-manager-card :address="contract.address" :sra-address="$route.params.sraAddress">
+                </proposal-manager-card>
+            </div>
+        </div>
+
+        <div v-if="!loading && !whitelistContracts.length" style="margin-top: 15px;">
+            <div v-locale="localeKey + '.not_found'" class="count-label"></div>
+        </div>
+    </div>
+
+    <!--<div style="flex: 2;">-->
+        <!---->
+    <!--</div>-->
+</div>

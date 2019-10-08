@@ -1,0 +1,15 @@
+<div>
+    <md-button class="md-raised md-accent" to="/extensions/list">
+        <md-icon>undo</md-icon>
+        <span v-locale="localeKey + '.back'"></span>
+    </md-button>
+    
+    <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+    
+    <md-tabs md-sync-route>
+        <md-tab md-label="Converting" to="/extensions/geo-toolbox/converting"></md-tab>
+        <md-tab md-label="Area" to="/extensions/geo-toolbox/area"></md-tab>
+    </md-tabs>
+
+    <div style="padding: 10px;"><router-view></router-view></div>
+</div>

@@ -1,0 +1,24 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 2;" class="inner-scroll">
+        <div class="row">
+            <div class="col-md-12">
+                <md-button :to="'/reputation/create-community'" class="md-primary" style="float:right;">
+                    <md-icon>add</md-icon>
+                    <span v-locale="localeKey + '.create_community'"></span>
+                </md-button>
+                
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+                <div v-if="!loading && !srasAddresses.length" class="padding" v-locale="localeKey + '.not_found'"></div>
+
+                <sra-card v-for="sraAddress in srasAddresses" :address="sraAddress" :show-join-control="true"></sra-card>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

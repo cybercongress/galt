@@ -1,0 +1,47 @@
+<div style="display: flex;">
+    <div style="flex: 2;" class="inner-scroll">
+        <div class="row">
+            <div class="col-md-12">
+                
+                <md-button class="md-accent" :to="{name: 'reputation-sra-whitelist-contracts'}">
+                    <md-icon>undo</md-icon>
+                    <span v-locale="localeKey + '.back'"></span>
+                </md-button>
+                
+                <div class="padding" style="margin-bottom: 10px;">
+                    <span class="md-title" v-locale="[localeKey + '.title', {address: $route.params.managerAddress}]"></span>
+                    <hint :locale="localeKey + '.description'" style="position: relative; top: -2px;"></hint>
+                </div>
+                
+                <md-button @click="addProposal()" class="md-raised md-accent" v-if="isSraMember">
+                    <md-icon>add</md-icon>
+                    <span v-locale="localeKey + '.new_proposal'"></span>
+                </md-button>
+                
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="[localeKey + '.proposals_title', {count: proposalsCount === null ? '...' : proposalsCount}]"></div>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+                <proposal-card v-for="proposal in proposalsList" :proposal-id="proposal.id" :manager-address="$route.params.managerAddress" :sra-address="$route.params.sraAddress">
+                </proposal-card>
+
+                <div v-if="!loading && !proposalsList.length" style="margin-top: 15px;">
+                    <div v-locale="localeKey + '.not_found'" class="count-label"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <md-tabs class="md-accent" md-sync-route style="margin-right: 16px;">
+            <md-tab v-for="tab in tabs" 
+                    :id="'tab-voting-' + tab.route" 
+                    :md-label="tab.title" 
+                    :to="'/reputation/community/' + $route.params.sraAddress + '/voting/' + $route.params.managerAddress + '/' + tab.route"></md-tab>
+        </md-tabs>
+
+        <div style="margin-top: 10px;">
+            <router-view></router-view>
+        </div>
+    </div>
+</div>

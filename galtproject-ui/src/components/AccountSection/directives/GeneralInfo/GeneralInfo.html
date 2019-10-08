@@ -1,0 +1,30 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.wallet'"></span> <pretty-hex :hex="userWallet" :to="'/account/' + userWallet + '/overview'"></pretty-hex></span>
+            </md-list-item>
+            
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.galt_balance'"></span> <span>{{galtBalance}} GALT</span></span>
+                
+                <md-button class="md-icon-button md-list-action" @click="sendGalt()" v-if="user_wallet === userWallet">
+                    <md-icon class="md-accent">call_made</md-icon>
+                </md-button>
+            </md-list-item>
+            
+            <md-list-item>
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.space_balance'"></span> <span>{{spaceBalance}} SPACE</span></span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

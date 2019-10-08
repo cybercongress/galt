@@ -1,0 +1,44 @@
+<div xmlns:v-on="">
+    <div>
+        <label v-locale="['pack_contour.title', {value: inputContour.length}]"></label>
+        <a v-if="inputContour.length && !disabled" href @click.prevent.stop="clearContour()" v-locale="'pack_contour.clear'"></a>
+    </div>
+    
+    <div v-for="(geohash, index) in inputContour">
+        <div class="md-layout">
+            <div class="md-layout-item md-size-5" style="display: flex;align-items: center;">
+                <div>{{index}}:</div>
+            </div>
+            
+            <div :class="{'md-layout-item': true, 'md-size-50': heights}">
+                <md-field :class="{'md-invalid': invalidGeohashes[geohash]}">
+                    <label v-locale="'pack_contour.geohash.placeholder'"></label>
+
+                    <md-input v-model="inputContour[index]" v-on:keyup="onChangeInputGeohash(index)" @focus="highlightInputContourGeohashOnMap(index)" :disabled="disabled"></md-input>
+                </md-field>
+            </div>
+            
+            <div class="md-layout-item md-size-35" v-if="heights" style="padding-left: 5px;">
+                <md-field :class="{'md-invalid': invalidGeohashes[geohash]}">
+                    <label v-locale="'pack_contour.altitude'"></label>
+                    <md-input v-model="inputHeights[index]" v-on:keyup="onChangeInputHeight(index)" :disabled="disabled || heightsDisabled"></md-input>
+                </md-field>
+            </div>
+
+            <div class="md-layout-item md-size-10" style="padding-top: 15px;">
+                <md-button class="md-icon-button" @click="removeContourGeohash(index)" :disabled="disabled">
+                    <md-icon>clear</md-icon>
+                </md-button>
+            </div>
+        </div>
+        <div class="md-layout">
+            <div class="md-layout-item">
+                <a href @click.prevent.stop="clickOnMap(index, geohash)" class="field-help" v-if="!disabled"> <span v-locale="'pack_contour.geohash.select_on_map'"></span></a>
+            </div>
+        </div>
+    </div>
+
+    <md-button class="md-icon-button md-raised" @click="addContourGeohash()" :disabled="disabled">
+        <md-icon>add</md-icon>
+    </md-button>
+</div>

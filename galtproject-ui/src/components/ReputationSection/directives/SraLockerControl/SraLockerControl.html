@@ -1,0 +1,31 @@
+<div v-if="showLockerControl" style="width: 100%;">
+    <div class="md-success full-width" v-locale="localeKey + '.join_proposal_already_sent'" v-if="userSentJoinProposal && !spaceLockerMintedToSra && sraApprovedToSpaceLocker"></div>
+
+    <div style="display: flex; justify-content: flex-end;">
+        
+        <md-button @click="reputationMint()" class="md-accent md-raised" v-if="!spaceLockerMintedToSra && sraApprovedToSpaceLocker && isMintApprovedSra" :disabled="loading">
+            <md-icon>add_circle_outline</md-icon>
+            <span v-locale="localeKey + '.reputation_mint'"></span>
+        </md-button>
+        
+        <md-button @click="newMemberProposal()" class="md-accent md-raised" v-if="!spaceLockerMintedToSra && sraApprovedToSpaceLocker && !isMintApprovedSra" :disabled="loading || userSentJoinProposal">
+            <md-icon>exit_to_app</md-icon>
+            <span v-locale="localeKey + '.new_member_proposal'"></span>
+        </md-button>
+
+        <md-button @click="reputationBurn()" class="md-accent" v-if="spaceLockerMintedToSra" :disabled="loading">
+            <md-icon>keyboard_capslock</md-icon>
+            <span v-locale="localeKey + '.reputation_burn'"></span>
+        </md-button>
+
+        <md-button @click="approveMint()" class="md-accent md-raised" v-if="!sraApprovedToSpaceLocker" :disabled="loading">
+            <md-icon>add_box</md-icon>
+            <span v-locale="localeKey + '.approve_mint'"></span>
+        </md-button>
+        
+        <md-button @click="approveBurn()" class="md-accent" v-if="sraApprovedToSpaceLocker" :disabled="!sraApprovedToSpaceLocker || spaceLockerMintedToSra || loading">
+            <md-icon>whatshot</md-icon>
+            <span v-locale="localeKey + '.approve_burn'"></span>
+        </md-button>
+    </div>
+</div>

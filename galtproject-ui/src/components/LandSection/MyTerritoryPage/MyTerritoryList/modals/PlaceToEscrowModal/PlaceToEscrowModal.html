@@ -1,0 +1,49 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-locale="[localeKey + '.description', {tokenId: tokenIdToHex}]"></p>
+
+      <price-and-currency-input v-model="order" :disabled="sending" :invalid-price.sync="invalidPrice" :label="priceLabel"></price-and-currency-input>
+      
+      <fee-input v-model="order" :disabled="sending" :invalid-fee.sync="invalidFee" application-type="plotEscrow"></fee-input>
+
+      <md-card>
+        <md-card-header>
+          <label v-locale="localeKey + '.documents'"></label>
+        </md-card-header>
+
+        <md-card-content>
+          <md-field v-for="(description, index) in order.documents">
+            <label v-locale="localeKey + '.document_item'"></label>
+            
+            <md-input v-model="order.documents[index]" required></md-input>
+            
+            <md-button class="md-icon-button" @click="order.documents.splice(index, 1)">
+              <md-icon>clear</md-icon>
+            </md-button>
+          </md-field>
+
+          <md-button class="md-icon-button md-raised" @click="order.documents.push('')">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-card-content>
+      </md-card>
+      
+      <div class="warn" v-if="warnText">{{warnText}}</div>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="sendDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

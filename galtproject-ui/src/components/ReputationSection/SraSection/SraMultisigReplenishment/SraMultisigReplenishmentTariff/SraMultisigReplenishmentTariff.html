@@ -1,0 +1,67 @@
+<div class="md-layout">
+    <div class="md-layout-item md-size-100">
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <div class="md-layout">
+            <div class="md-layout-item md-size-50">
+                <fee-contract-card 
+                        :fee-contract-address="$route.params.feeContractAddress" 
+                        :sra-address="$route.params.sraAddress"
+                        @update="getMyFee()"
+                >
+                    <md-button class="md-accent" @click="disableTariff">Propose for disable</md-button>
+                </fee-contract-card>
+            </div>
+            <div class="md-layout-item md-size-50">
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title" v-locale="[localeKey + '.my_fee.title', {address: cutAddress}]"></div>
+                        <!--<div class="md-subhead">1 YAL = {{tokensRate}} руб.</div>-->
+                    </md-card-header>
+
+                    <md-card-content v-if="payData">
+                        <h3>
+                            <span v-locale="localeKey + '.my_fee.pay_sum'"></span>
+                            <span class="md-warn">{{payData.sum}} {{currency}}</span>
+                        </h3>
+                        
+                        <h4>
+                            <span v-locale="localeKey + '.my_fee.paid_until'"></span>
+                            <span class="md-warn" v-if="payData.minPaidUntil">{{payData.minPaidUntil | beautyDate}}</span>
+                            <span class="md-warn" v-else v-locale="localeKey + '.my_fee.not_paid_value'"></span>
+                        </h4>
+                        
+                        <h4>
+                            <span v-locale="localeKey + '.my_fee.tokens_count'"></span>
+                            <span class="md-warn">{{tokensCount}}</span>
+                        </h4>
+
+                        <h4>
+                            <span v-locale="localeKey + '.my_fee.pay_per_period'"></span>
+                            <span class="md-warn">{{payData.payPerPeriod}} {{currency}}</span>
+                        </h4>
+
+                        <h4>
+                            <span v-locale="localeKey + '.my_fee.total_paid'"></span>
+                            <span class="md-warn">{{payData.totalPaidSum}} {{currency}}</span>
+                        </h4>
+
+                        <!--<div class="md-error" v-if="error">{{error}}</div>-->
+
+                        <!--<md-button @click="pay()" class="md-raised md-accent" :disabled="!payData.sum">-->
+                            <!--<md-icon>credit_card</md-icon>-->
+                            <!--<span v-locale="localeKey + '.my_fee.pay'"></span>-->
+                        <!--</md-button>-->
+
+                        <tariff-paying-control :tariff-address="$route.params.feeContractAddress" :sra-address="$route.params.sraAddress" :loading.sync="loading" @update="getMyFee()"></tariff-paying-control>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="md-layout-item md-size-100">
+        <sra-members-fees :sra-address="$route.params.sraAddress" :fee-contract-address="$route.params.feeContractAddress"></sra-members-fees>
+    </div>
+</div>

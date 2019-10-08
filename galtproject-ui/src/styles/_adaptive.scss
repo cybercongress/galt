@@ -1,0 +1,81 @@
+/*!
+ * Copyright ©️ 2018 Galt•Space Society Construction and Terraforming Company 
+ * (Founded by [Nikolai Popeka](https://github.com/npopeka),
+ * [Dima Starodubcev](https://github.com/xhipster), 
+ * [Valery Litvin](https://github.com/litvintech) by 
+ * [Basic Agreement](http://cyb.ai/QmSAWEG5u5aSsUyMNYuX2A2Eaz4kEuoYWUkVBRdmu9qmct:ipfs)).
+ * ​
+ * Copyright ©️ 2018 Galt•Core Blockchain Company 
+ * (Founded by [Nikolai Popeka](https://github.com/npopeka) and 
+ * Galt•Space Society Construction and Terraforming Company by 
+ * [Basic Agreement](http://cyb.ai/QmaCiXUmSrP16Gz8Jdzq6AJESY1EAANmmwha15uR3c1bsS:ipfs)).
+ */
+
+.show-only-xs {
+  display: none;
+}
+
+@media (max-width: 63.9em){
+  body, html {
+    overflow-y: hidden !important;
+  }
+  body {
+    position: relative;
+  }
+  * {
+    //font-size: 24pt;
+  }
+
+  .mobile-button-container {
+    position: fixed;
+    top: 200px;
+    right: 0;
+    .vertical-button {
+      span {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+      }
+    }
+  }
+  .hide-xs {
+    display: none;
+  }
+  .show-only-xs {
+    display: block;
+  }
+  .sidenav {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    bottom: 0;
+    right: -100%;
+    width: 80%;
+    transition: right .25s linear;
+    background: white;
+    &.opened {
+      right: 0;
+    }
+  }
+  .sidenav-overlay {
+    display: none;
+    position: fixed;
+    z-index: 900;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: gray;
+    opacity: 0.4;
+    &.opened {
+      display: block;
+    }
+  }
+
+  .ribbon-content > .tabs {
+    overflow: scroll;
+  }
+
+  .worlds-flag {
+    width: 100px;
+  }
+}

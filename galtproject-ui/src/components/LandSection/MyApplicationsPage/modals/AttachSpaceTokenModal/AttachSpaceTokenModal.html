@@ -1,0 +1,21 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <p v-locale="[localeKey + '.description', {tokenId: tokenId}]"></p>
+    <div class="warn" v-if="!approved && !withoutApprove" v-locale="localeKey + '.need_to_approve_first'"></div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="approve" class="md-raised md-accent" :disabled="approvedDisabled" v-if="!withoutApprove"><span v-locale="localeKey + '.approve'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="attachDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

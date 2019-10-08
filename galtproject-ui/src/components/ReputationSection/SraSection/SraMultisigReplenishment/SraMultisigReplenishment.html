@@ -1,0 +1,40 @@
+<div>
+    <div class="md-title padding" style="margin-bottom: 10px;" v-locale="[localeKey + '.title_actual']"></div>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loadingActual"></md-progress-bar>
+    
+    <div class="md-layout">
+        <div class="md-layout-item md-size-30" v-for="item in feeContracts">
+            <fee-contract-card :fee-contract-address="item.address" :sra-address="$route.params.sraAddress">
+                <tariff-paying-control :tariff-address="item.address" :sra-address="$route.params.sraAddress" :loading.sync="itemLoading[item.address]" :show-sum-for-pay="true"></tariff-paying-control>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="itemLoading[item.address]"></md-progress-bar>
+            </fee-contract-card>
+        </div>
+    </div>
+
+
+    <div class="md-title padding" style="margin-bottom: 10px;" v-locale="[localeKey + '.title_proposals']"></div>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loadingProposals"></md-progress-bar>
+
+    <div class="md-layout">
+        <div class="md-layout-item md-size-30">
+            <md-card>
+                <md-card-content>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="md-title">New tariff proposal</div>
+                        
+                        <md-button class="md-fab md-accent" style="margin-top: 30px;" :to="{name: 'multisig-create-tariff-contract'}">
+                            <md-icon>add</md-icon>
+                        </md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        
+        <div class="md-layout-item md-size-30" v-for="item in proposals">
+            <fee-contract-card :fee-contract-address="item.address" :proposal-id="item.proposalId" :sra-address="$route.params.sraAddress"></fee-contract-card>
+        </div>
+    </div>
+</div>

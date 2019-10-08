@@ -1,0 +1,54 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="'use_internal_wallet.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-locale="['use_internal_wallet.introduction', {value: txCount}]"></p>
+      <p v-for="description in descriptionParts" v-html="description"></p>
+      <br>
+      <md-card>
+        <md-card-header>
+          <h3 v-locale="'use_internal_wallet.send_eth.title'"></h3>
+        </md-card-header>
+
+        <md-card-content>
+          <label v-locale="'use_internal_wallet.send_eth.address'"></label> {{internal_wallet}}<br>
+          <label v-locale="'use_internal_wallet.send_eth.balance'"></label> {{internal_wallet_eth_balance}} ETH<br>
+          <label v-locale="'use_internal_wallet.send_eth.need_eth'"></label> {{needEthForTransactions}} ETH<br>
+          <a href @click.prevent.stop="copyInternalWalletPrivateToClipboard()" v-locale="'use_internal_wallet.send_eth.export_private_key'"></a><br>
+
+          <div v-if="enoughEthForTransactions">
+            <label v-locale="'use_internal_wallet.send_eth.enough'"></label>
+          </div>
+
+          <md-field v-if="!enoughEthForTransactions">
+            <label v-locale="'use_internal_wallet.send_eth.input'"></label>
+            <md-input v-model="ethToInternalWallet" required></md-input>
+          </md-field>
+        </md-card-content>
+
+        <md-card-actions v-if="!enoughEthForTransactions">
+          <md-button class="md-raised md-accent" :disabled="waitForSentTransactionEth || !ethToInternalWallet || ethTransactionSent" @click="sendEthToInternal()">
+            <span v-locale="['use_internal_wallet.send_eth.button', {value: ethToInternalWallet}]"></span>
+          </md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+
+    <p class="warn" v-if="ethTransactionSent && !enoughEthForTransactions" v-locale="'use_internal_wallet.warn.wait_for_fulfill'"></p>
+    <p class="warn" v-if="waitingForApprove" v-locale="'use_internal_wallet.warn.wait_for_approve'"></p>
+    <p class="warn" v-if="waitForSentTransactionEth" v-locale="'use_internal_wallet.warn.wait_for_sent_transaction'"></p>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="useMetaMask" class="md-raised"><span v-locale="'use_internal_wallet.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="waitForSentTransactionEth || !enoughEthForTransactions || waitingForApprove"><span v-locale="'use_internal_wallet.ok'"></span></md-button>
+  </template>
+</modal-item>

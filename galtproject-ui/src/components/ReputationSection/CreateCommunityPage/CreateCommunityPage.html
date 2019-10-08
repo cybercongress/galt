@@ -1,0 +1,136 @@
+<div class="md-layout" style="height: 100%;">
+    <div class="md-layout-item md-size-50">
+
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+        
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <div v-if="(!fundCreation || fundCreation.currentStep === 0) && !fundRaAddress">
+            <div class="md-layout">
+                <div class="md-layout-item" style="width: 100%;">
+                    <md-tabs md-sync-route class="simple-tabs">
+                        <md-tab :md-label="tabsLocales.general">
+                            <md-field>
+                                <label v-locale="localeKey + '.form.name'"></label>
+                                <md-input v-model="fundParams.name" required></md-input>
+                            </md-field>
+
+                            <md-field>
+                                <label v-locale="localeKey + '.form.description'"></label>
+                                <md-textarea v-model="fundParams.description" required></md-textarea>
+                            </md-field>
+                            
+                            <period-input v-model="fundParams.feePeriod" :locale-label="localeKey + '.form.fee_period'"></period-input>
+
+                            <md-checkbox v-model="fundParams.isPrivate"><span v-locale="localeKey + '.form.is_private'"></span></md-checkbox>
+                        </md-tab>
+
+                        <md-tab :md-label="tabsLocales.thresholds">
+                            <md-field v-for="(threshold, index) in fundParams.thresholds">
+                                <label v-locale="localeKey + '.form.threshold_' + index"></label>
+                                <md-input v-model="fundParams.thresholds[index]" required></md-input>
+                            </md-field>    
+                        </md-tab>
+
+                        <md-tab :md-label="tabsLocales.initial_owners">
+                            <md-field>
+                                <label v-locale="localeKey + '.form.required_owners'"></label>
+                                <md-input v-model="fundParams.multiSigRequired" required></md-input>
+                            </md-field>
+
+                            <div v-for="(owner, index) in fundParams.multiSigInitialOwners">
+                                <div class="md-layout">
+                                    <div class="md-layout-item md-size-90">
+                                        <md-field :class="{'md-invalid': !fundParams.multiSigInitialOwners[index]}">
+                                            <label v-locale="localeKey + '.form.initial_owner'"></label>
+
+                                            <md-input v-model="fundParams.multiSigInitialOwners[index]"></md-input>
+                                        </md-field>
+                                    </div>
+                                    <div class="md-layout-item md-size-10" style="padding-top: 15px;">
+                                        <md-button class="md-icon-button" @click="fundParams.multiSigInitialOwners.splice(index, 1)">
+                                            <md-icon>clear</md-icon>
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <md-button class="md-icon-button md-raised md-accent" @click="fundParams.multiSigInitialOwners.push('')">
+                                <md-icon>add</md-icon>
+                            </md-button>
+                        </md-tab>
+
+                        <md-tab :md-label="tabsLocales.initial_space_tokens" v-if="fundParams.isPrivate">
+                            <div v-for="(owner, index) in fundParams.initialSpaceTokensToApprove">
+                                <div class="md-layout">
+                                    <div class="md-layout-item md-size-90">
+                                        <md-field :class="{'md-invalid': !fundParams.initialSpaceTokensToApprove[index]}">
+                                            <label v-locale="localeKey + '.form.initial_space_token'"></label>
+
+                                            <md-input v-model="fundParams.initialSpaceTokensToApprove[index]"></md-input>
+                                        </md-field>
+                                    </div>
+                                    <div class="md-layout-item md-size-10" style="padding-top: 15px;">
+                                        <md-button class="md-icon-button" @click="fundParams.initialSpaceTokensToApprove.splice(index, 1)">
+                                            <md-icon>clear</md-icon>
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <md-button class="md-icon-button md-raised md-accent" @click="fundParams.initialSpaceTokensToApprove.push('')">
+                                <md-icon>add</md-icon>
+                            </md-button>
+                        </md-tab>
+                    </md-tabs>
+                </div>
+            </div>
+            
+            <div v-if="fundCreation && fundCreation.currentStep === 0" style="margin: 20px;" class="md-layout">
+                <div class="md-layout-item md-size-50">
+                    <fee-input v-model="fundParams" application-type="fundFactory"></fee-input>
+                </div>
+            </div>
+
+            <div v-if="fundCreation">
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="inProcess || approving"></md-progress-bar>
+                
+                <md-button @click="approveGalt()" v-if="fundParams.feeCurrency === 'galt'" class="md-raised md-accent" :disabled="runCreationDisabled || approved">
+                    <md-icon>check</md-icon>
+                    <span v-locale="localeKey + '.approve_fee'"></span>
+                </md-button>
+                
+                <md-button @click="processCreation()" class="md-raised md-accent" :disabled="runCreationDisabled || (fundParams.feeCurrency === 'galt' && !approved && fundCreation.currentStep === 0)">
+                    <md-icon>check</md-icon>
+                    <span v-locale="localeKey + '.run_creation'"></span>
+                </md-button>
+            </div>
+        </div>
+
+        <div v-if="fundRaAddress">
+            <div class="md-success" v-locale="localeKey + '.success_creation'" v-if="ended"></div>
+            
+            <sra-card :address="fundRaAddress"></sra-card>
+            
+            <md-card v-if="fundCreation.currentStep < 8">
+                <md-card-header>
+                    <h3><span v-locale="[localeKey + '.current_step_title', {step: fundCreation.currentStep}]"></span></h3>
+                    <!--<h4><span v-locale="localeKey + '.split_operation.address'"></span><pretty-hex :hex="spaceSplitOperation.address"></pretty-hex></h4>-->
+                </md-card-header>
+
+                <md-card-content>
+                    <md-button @click="processCreation()" class="md-raised md-accent">
+                        <md-icon>vertical_align_bottom</md-icon>
+                        <span v-locale="localeKey + '.continue_creation'"></span>
+                    </md-button>
+
+                    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="inProcess"></md-progress-bar>
+                </md-card-content>
+            </md-card>
+        </div>
+        
+    </div>
+    <div class="md-layout-item md-size-50">
+        
+    </div>
+</div>

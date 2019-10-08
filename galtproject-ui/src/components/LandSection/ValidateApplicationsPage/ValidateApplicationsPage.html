@@ -1,0 +1,232 @@
+<div style="display: flex; height: 100%;" xmlns:v-on="">
+    <div style="flex: 2;">
+        <div id="validate-applications-page" class="inner-scroll">
+            <md-app-content>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-title padding" v-locale="'validate_applications.title'"></div>
+
+                        <div class="padding">
+                            <md-field>
+                                <label v-locale="'my_applications.filter_by_contract'"></label>
+                                <md-select v-model="filterByContractType">
+                                    <md-option v-for="(contractType, index) in applicationContratsTypes" :value="contractType.name" :key="index">{{contractType.title}}</md-option>
+                                </md-select>
+                            </md-field>
+
+                            <md-field>
+                                <label v-locale="'validate_applications.filter_by_status'"></label>
+                                <md-select v-model="filterByStatus">
+                                    <md-option v-for="status in applicationStatuses" :value="status.name">{{status.title}}</md-option>
+                                </md-select>
+                            </md-field>
+
+                            <md-field>
+                                <label v-locale="'validate_applications.filter_by_role'"></label>
+                                <md-select v-model="filterByRole">
+                                    <md-option v-for="role in oracleRoles" :value="role.name">{{role.title}}</md-option>
+                                </md-select>
+                            </md-field>
+                        </div>
+
+                        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+                        <div v-locale="['validate_applications.count', {value: filtered_applications.length}]" v-if="!loading" class="count-label"></div>
+
+                        <application-card v-for="application in filtered_applications"
+                                          :application="application"
+                                          @click.native="showApplication(application)"
+                                          v-on:vote-for-propose="voteForPropose(application, $event)"
+                                          :full="true"
+                                          :validate-mode="true">
+
+                            <div v-if="application.contractType === 'plotManager'" class="actions-container">
+                                <div class="warn full-width"
+                                     v-locale="'validate_applications.need_locked_by_all_roles'"
+                                     v-if="application.waitForLockByAllRoles && application.validatorsList && (application.validatorsList.indexOf(user_wallet) !== -1)">
+                                </div>
+
+                                <md-button v-if="application.statusName === 'submitted'" @click="setApplicationStatus(application, 'locked')" class="md-raised md-accent">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="'validate_applications.lock_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked'" :disabled="application.waitForLockByAllRoles" @click="checkAndApprove(application)" class="md-raised md-accent">
+                                    <md-icon>done</md-icon>
+                                    <span v-locale="'validate_applications.check_and_approve'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked'" :disabled="application.waitForLockByAllRoles" @click="setApplicationStatus(application, 'rejected')" class="md-raised md-accent">
+                                    <md-icon>not_interested</md-icon>
+                                    <span v-locale="'validate_applications.reject_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked'" :disabled="application.waitForLockByAllRoles" @click="setApplicationStatus(application, 'reverted')" class="md-raised md-accent">
+                                    <md-icon>replay</md-icon>
+                                    <span v-locale="'validate_applications.revert_application'"></span>
+                                </md-button>
+
+                                <!--<md-button v-if="application.statusName === 'rejected'" @click="disassemblePackConfirm(application)" class="md-raised md-accent">-->
+                                    <!--<md-icon>dialpad</md-icon>-->
+                                    <!--<span v-locale="'validate_applications.disassemble_application'"></span>-->
+                                <!--</md-button>-->
+
+                                <!--<md-button v-if="application.statusName === 'disassembled_by_oracle' && !application.gasDepositRedeemed" @click="claimGasDeposit(application)" class="md-raised md-accent">-->
+                                    <!--<md-icon>cake</md-icon>-->
+                                    <!--<span v-locale="'validate_applications.claim_gas_deposit'"></span>-->
+                                <!--</md-button>-->
+
+                                <md-button v-if="application.userValidationRole && (application.statusName === 'approved' || application.statusName === 'rejected') && !application.rewardPaidOut" @click="getReward(application)" class="md-raised md-accent">
+                                    <md-icon>cake</md-icon>
+                                    <span v-locale="'validate_applications.get_reward'"></span>
+                                </md-button>
+                            </div>
+                            
+                            <div v-if="application.contractType === 'plotClarification'" class="actions-container">
+                                <div class="warn full-width"
+                                     v-locale="'validate_applications.need_locked_by_all_roles'"
+                                     v-if="application.waitForLockByAllRoles && application.validatorsList && (application.validatorsList.indexOf(user_wallet) !== -1)">
+                                </div>
+
+                                <md-button v-if="application.statusName === 'submitted'" @click="setApplicationStatus(application, 'locked')" class="md-raised md-accent">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="'validate_applications.lock_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked'" :disabled="application.waitForLockByAllRoles" @click="setApplicationStatus(application, 'approved')" class="md-raised md-accent">
+                                    <md-icon>done</md-icon>
+                                    <span v-locale="'validate_applications.approve'"></span>
+                                </md-button>
+
+                                <!--<md-button v-if="application.statusName === 'locked'" :disabled="application.waitForLockByAllRoles" @click="setApplicationStatus(application, 'rejected')" class="md-raised md-accent">-->
+                                    <!--<md-icon>not_interested</md-icon>-->
+                                    <!--<span v-locale="'validate_applications.reject_application'"></span>-->
+                                <!--</md-button>-->
+
+                                <md-button v-if="application.statusName === 'locked'" :disabled="application.waitForLockByAllRoles" @click="setApplicationStatus(application, 'reverted')" class="md-raised md-accent">
+                                    <md-icon>replay</md-icon>
+                                    <span v-locale="'validate_applications.revert_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.userValidationRole && (application.statusName === 'approved' || application.statusName === 'rejected') && !application.rewardPaidOut" @click="getReward(application)" class="md-raised md-accent">
+                                    <md-icon>cake</md-icon>
+                                    <span v-locale="'validate_applications.get_reward'"></span>
+                                </md-button>
+                            </div>
+
+                            <div v-if="application.contractType === 'plotValuation'" class="actions-container">
+                                <div class="warn full-width"
+                                     v-locale="'validate_applications.valuations_should_be_equal'"
+                                     v-if="application.userValidationRole && application.firstValuation !== application.secondValuation">
+                                </div>
+
+                                <md-button v-if="!application.userValidationRole && ((application.statusName === 'submitted' && oracleRolesNames.indexOf('PV_APPRAISER_ORACLE_TYPE') !== -1)
+                                            || (['submitted','valuated'].indexOf(application.statusName) !== -1 && oracleRolesNames.indexOf('PV_APPRAISER2_ORACLE_TYPE') !== -1)
+                                            || (['submitted','valuated','confirmed'].indexOf(application.statusName) !== -1 && oracleRolesNames.indexOf('PV_AUDITOR_ORACLE_TYPE') !== -1))"
+                                           @click="setApplicationStatus(application, 'locked')" class="md-raised md-accent">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="'validate_applications.lock_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="['locked', 'reverted'].indexOf(application.statusName) !== -1 && oracleRolesNames.indexOf('PV_APPRAISER_ORACLE_TYPE') !== -1 && (!application.userValidationRole || application.userValidationRole === 'PV_APPRAISER_ORACLE_TYPE')" @click="valuate(application, 'first')" class="md-raised md-accent">
+                                    <md-icon>done</md-icon>
+                                    <span v-locale="'validate_applications.valuate_plot'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked' && oracleRolesNames.indexOf('PV_APPRAISER2_ORACLE_TYPE') !== -1 && (!application.userValidationRole || application.userValidationRole === 'PV_APPRAISER2_ORACLE_TYPE')" @click="valuate(application, 'confirm')" class="md-raised md-accent">
+                                    <md-icon>done_all</md-icon>
+                                    <span v-locale="'validate_applications.confirm_valuate_plot'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked' && oracleRolesNames.indexOf('PV_AUDITOR_ORACLE_TYPE') !== -1 && (!application.userValidationRole || application.userValidationRole === 'PV_AUDITOR_ORACLE_TYPE')" @click="setApplicationStatus(application, 'rejected')" class="md-raised md-accent">
+                                    <md-icon>not_interested</md-icon>
+                                    <span v-locale="'validate_applications.reject_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'locked' && oracleRolesNames.indexOf('PV_AUDITOR_ORACLE_TYPE') !== -1 && (!application.userValidationRole || application.userValidationRole === 'PV_AUDITOR_ORACLE_TYPE')" :disabled="application.firstValuation != application.secondValuation" @click="checkAndApprove(application)" class="md-raised md-accent">
+                                    <md-icon>done_outline</md-icon>
+                                    <span v-locale="'validate_applications.approve'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.userValidationRole && application.statusName === 'approved' && !application.rewardPaidOut" @click="getReward(application)" class="md-raised md-accent">
+                                    <md-icon>cake</md-icon>
+                                    <span v-locale="'validate_applications.get_reward'"></span>
+                                </md-button>
+                            </div>
+
+                            <div v-if="application.contractType === 'plotCustodian'" class="actions-container">
+                                <md-button v-if="application.userStatus === 'pending' && (((application.statusName === 'submitted' || application.userStatus === 'pending') && oracleRolesNames.indexOf('PC_CUSTODIAN_ORACLE_TYPE') !== -1 && (application.userChoosenCustodian || application.userCurrentCustodian))
+                                            || (application.statusName === 'review' && oracleRolesNames.indexOf('PC_AUDITOR_ORACLE_TYPE') !== -1 && !application.auditor))"
+                                           @click="setApplicationStatus(application, 'locked')" class="md-raised md-accent">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="'validate_applications.lock_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'review' && oracleRolesNames.indexOf('PC_CUSTODIAN_ORACLE_TYPE') !== -1 && application.userValidationRole === 'PC_CUSTODIAN_ORACLE_TYPE' && !application.approvedByUser" 
+                                           @click="setApplicationStatus(application, 'rejected')" class="md-raised md-accent">
+                                    <md-icon>not_interested</md-icon>
+                                    <span v-locale="'validate_applications.reject_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'review' && oracleRolesNames.indexOf('PC_CUSTODIAN_ORACLE_TYPE') !== -1 && (application.userChoosenCustodian || application.userCurrentCustodian) && !application.approvedByUser" @click="attachDocuments(application)" class="md-raised md-accent">
+                                    <md-icon>done</md-icon>
+                                    <span v-locale="'validate_applications.attach_documents'"></span>
+                                </md-button>
+
+                                <md-button :disabled="!application.custodianDocuments || !application.custodianDocuments.length" v-if="application.statusName === 'review' &&
+                                            ((oracleRolesNames.indexOf('PC_CUSTODIAN_ORACLE_TYPE') !== -1 && application.userValidationRole === 'PC_CUSTODIAN_ORACLE_TYPE' && !application.approvedByUser)
+                                            || (oracleRolesNames.indexOf('PC_AUDITOR_ORACLE_TYPE') !== -1 && application.userValidationRole === 'PC_AUDITOR_ORACLE_TYPE' && !application.approvedByUser))" @click="checkAndApprove(application)" class="md-raised md-accent">
+                                    <md-icon>done_outline</md-icon>
+                                    <span v-locale="'validate_applications.approve'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.userValidationRole && application.statusName === 'approved' && !application.rewardPaidOut" @click="getReward(application)" class="md-raised md-accent">
+                                    <md-icon>cake</md-icon>
+                                    <span v-locale="'validate_applications.get_reward'"></span>
+                                </md-button>
+                            </div>
+
+                            <div v-if="application.contractType === 'claimManager'" class="actions-container">
+                                <div class="warn full-width"
+                                     v-locale="'validate_applications.need_locked_by_all_roles'"
+                                     v-if="application.waitForLockByAllRoles && application.validatorsList && (application.validatorsList.indexOf(user_wallet) !== -1)">
+                                </div>
+
+                                <md-button v-if="application.statusName === 'submitted' && !application.takenByUser" @click="setApplicationStatus(application, 'locked')" class="md-raised md-accent">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="'validate_applications.lock_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.statusName === 'submitted' && application.takenByUser" @click="createClaimManagerProposal(application)" class="md-raised md-accent">
+                                    <md-icon>add</md-icon>
+                                    <span v-locale="'validate_applications.create_proposal'"></span>
+                                </md-button>
+                            </div>
+
+                            <div v-if="application.contractType === 'plotEscrow' && (application.buyer.statusName === 'audit_required' || (application.buyer.statusName === 'audit' && application.buyer.audit.address === user_wallet))" class="actions-container">
+                                <md-button v-if="application.buyer.audit.statusName === 'pending'" @click="setApplicationStatus(application, 'locked')" class="md-raised md-accent">
+                                    <md-icon>pan_tool</md-icon>
+                                    <span v-locale="'validate_applications.lock_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.buyer.audit.statusName === 'locked'" @click="setApplicationStatus(application, 'rejected')" class="md-raised md-accent">
+                                    <md-icon>not_interested</md-icon>
+                                    <span v-locale="'validate_applications.reject_application'"></span>
+                                </md-button>
+
+                                <md-button v-if="application.buyer.audit.statusName === 'locked'" @click="setApplicationStatus(application, 'approved')" class="md-raised md-accent">
+                                    <md-icon>done_outline</md-icon>
+                                    <span v-locale="'validate_applications.approve'"></span>
+                                </md-button>
+                            </div>
+                        </application-card>
+                    </div>
+                </div>
+
+            </md-app-content>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

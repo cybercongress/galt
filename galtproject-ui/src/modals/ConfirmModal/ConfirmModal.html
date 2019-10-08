@@ -1,0 +1,21 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="'confirm_modal.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-html="title"></p>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="'confirm_modal.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent"><span v-locale="'confirm_modal.ok'"></span></md-button>
+  </template>
+</modal-item>

@@ -1,0 +1,21 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 2;" class="inner-scroll">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading" style="margin-bottom: 10px;"></md-progress-bar>
+                
+                <space-token-card v-for="spaceToken in spaceTokens" :spaceToken="spaceToken"></space-token-card>
+                
+                <div v-if="!loading && !spaceTokens.length" style="margin-top: 15px;">
+                    <div v-locale="localeKey + '.not_found'" class="count-label"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

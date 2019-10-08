@@ -1,0 +1,182 @@
+<md-card :class="['space-token-card', 'space-level-' + (application.spaceToken ? application.spaceToken.colorLevel : 'none')]">
+    <md-card-header>
+        <md-avatar v-if="application.spaceToken">
+            <md-icon v-if="application.spaceToken.type === 'plot'">public</md-icon>
+            <md-icon v-if="application.spaceToken.type === 'building'">select_all</md-icon>
+            <md-icon v-if="application.spaceToken.type.indexOf('predefined') !== -1">domain</md-icon>
+        </md-avatar>
+        <md-avatar v-if="!application.spaceToken">
+            <md-icon v-if="application.contractType === 'claimManager'">sentiment_very_dissatisfied</md-icon>
+        </md-avatar>
+
+        <div class="md-title"><pretty-hex :hex="application.id"></pretty-hex></div>
+        
+        <div class="md-badge md-square md-theme-default md-position-top" v-locale="localeKey + '.contract_type.' + application.contractType"></div>
+    </md-card-header>
+    
+    <div></div>
+
+    <md-card-content>
+        <div class="row">
+            <div class="col-md-12" v-if="application.spaceToken">
+                <label v-locale="localeKey + '.space_token_type'"></label> <span v-locale="['territory_types.' + application.spaceToken.type, {level: application.spaceToken.level}]"></span><br>
+            </div>
+            <div class="col-md-12" v-if="application.contractType === 'plotManager' && application.spaceToken">
+                <label v-locale="localeKey + '.ledger_identifier'"></label> {{application.ledgerIdentifier | hexToUtf8}}<br>
+                <br v-if="!application.additionalDescription">
+                <div v-if="application.additionalDescription" v-for="ad in application.additionalDescription">
+                    <label v-locale="localeKey + '.description_' + ad.name"></label> {{ad.value}}
+                </div>
+                <label v-locale="localeKey + '.description'"></label> <pre>{{application.description}}</pre>
+                <label v-locale="localeKey + '.area'"></label> {{application.spaceToken.area | beautyNumber}}<br>
+                <div v-if="application.spaceToken.contour">
+                    <label v-locale="localeKey + '.contour_length'"></label>{{application.spaceToken.contour.length}}<br>
+                    <label v-locale="localeKey + '.contour'"></label>
+                    <space-token-contour :space-token="application.spaceToken"></space-token-contour>
+                </div>
+                <!--<label v-locale="localeKey + '.geohashes_count'"></label> {{application.geohashesCount}}-->
+            </div>
+            
+            <div class="col-md-12" v-if="application.contractType === 'plotClarification' && application.newGeoData">
+                <label v-locale="localeKey + '.ledger_identifier'"></label> {{application.newGeoData.ledgerIdentifier | hexToUtf8}}<br>
+                <label v-locale="localeKey + '.area'"></label> {{application.newGeoData.area | beautyNumber}}<br>
+                <div v-if="application.newGeoData.contour">
+                    <label v-locale="localeKey + '.contour_length'"></label>{{application.newGeoData.contour.length}}<br>
+                    <label v-locale="localeKey + '.contour'"></label>
+                    <space-token-contour :space-token="application.newGeoData"></space-token-contour>
+                </div>
+                <!--<label v-locale="localeKey + '.geohashes_count'"></label> {{application.geohashesCount}}-->
+            </div>
+            
+            <div class="col-md-12" v-if="application.contractType === 'plotValuation'">
+                <label v-locale="localeKey + '.first_valuation'"></label><span :class="{'md-warn': application.firstValuation && application.secondValuation && application.firstValuation != application.secondValuation}"> {{application.firstValuation | ether}} GALT</span><br>
+                <label v-locale="localeKey + '.second_valuation'"></label><span :class="{'md-warn': application.firstValuation && application.secondValuation && application.firstValuation != application.secondValuation}"> {{application.secondValuation | ether}} GALT</span>
+            </div>
+
+            <div class="col-md-12" v-if="application.contractType === 'plotCustodian'">
+                <label v-locale="localeKey + '.chosen_custodian'"></label><br/><oracle-popup v-for="custodian in application.custodians" :address="custodian"></oracle-popup><br>
+                <label v-locale="localeKey + '.action'"></label> <span v-locale="'plot_custodian.action_types.' + application.actionName"></span><br>
+                <label v-locale="localeKey + '.token_attached'"></label> <span v-locale="'boolean.' + application.tokenAttached"></span>
+            </div>
+
+            <div class="col-md-12" v-if="application.contractType === 'plotEscrow'">
+                <label v-locale="'order_info.seller'"></label> {{application.seller}}<br>
+                <label v-locale="'order_info.ask'"></label> {{application.ask}}<br>
+                <label v-locale="'order_info.currency'"></label> {{application.escrowCurrencyName}}<br>
+                <label v-locale="'order_info.custodian'"></label><br/><oracle-popup v-for="custodian in application.custodians" :address="custodian"></oracle-popup><br><br>
+
+                <label v-locale="'order_info.current_buyer'"></label> {{application.buyer.address}}<br>
+                <label v-locale="'order_info.ask'"></label> {{application.buyer.ask}}<br>
+                <label v-locale="'order_info.bid'"></label> {{application.buyer.bid}}<br><br>
+
+                <label v-locale="'order_info.seller_resolved'"></label> <span v-locale="'boolean.' + application.buyer.sellerResolved"></span><br>
+                <label v-locale="'order_info.buyer_resolved'"></label> <span v-locale="'boolean.' + application.buyer.buyerResolved"></span><br>
+            </div>
+
+            <div class="col-md-12" v-if="application.contractType === 'claimManager'">
+                <label v-locale="localeKey + '.multisig_address'"></label> <pretty-hex :hex="application.multiSig"></pretty-hex><br>
+                <label v-locale="localeKey + '.beneficiary'"></label> <pretty-hex :hex="application.beneficiary"></pretty-hex><br>
+                <label v-locale="localeKey + '.amount'"></label> {{application.amount | beautyNumber}} GALT<br>
+                <label v-locale="localeKey + '.slots_taken'"></label> {{application.slotsTaken}}<br>
+                <label v-locale="localeKey + '.slots_threshold'"></label> {{application.slotsThreshold}}<br>
+                <label v-locale="localeKey + '.total_slots'"></label> {{application.totalSlots}}
+            </div>
+            
+            <div class="col-md-12" v-if="application.attachedDocuments && application.attachedDocuments.length">
+                <label v-locale="localeKey + '.attached_documents'"></label><br>
+                <div v-for="document in application.attachedDocuments">{{document | hexToUtf8}}</div>
+            </div>
+            
+            <div class="col-md-12" v-if="application.custodianDocuments && application.custodianDocuments.length">
+                <label v-locale="localeKey + '.attached_documents'"></label><br>
+                <div v-for="document in application.custodianDocuments">{{document | hexToUtf8}}</div>
+            </div>
+            
+            <div class="col-md-12">
+                <label v-locale="localeKey + '.status'"></label> <span v-locale="'application_statuses.' + application.statusName"></span><br>
+            </div>
+
+            <div class="col-md-12" v-if="application.spaceTokenId">
+                <label v-locale="localeKey + '.package_token'"></label><router-link :to="'/land/space-token/' + application.spaceTokenId">{{application.spaceTokenId}}</router-link>
+            </div>
+            
+            <div class="col-md-12 md-error" v-if="application.spaceToken && application.spaceToken.notFound" v-locale="'application_info.space_token_not_found'"></div>
+
+            <div class="col-md-12" v-if="full && application.applicant">
+                <label v-locale="localeKey + '.applicant'"></label><pretty-hex :hex="application.applicant"></pretty-hex>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="md-layout" v-if="application.validationList && application.validationList.length" style="margin-top: 25px;">
+                    <div class="md-layout-item" v-for="validation in application.validationList">
+                        <span v-locale="'validation_roles.' + validation.roleName"></span>:<br>
+                        <oracle-popup :address="validation.oracle"></oracle-popup><br>
+                        {{validation.reward | ether}} {{application.feeCurrencyName}}<br>
+                        <span v-locale="'validation_statuses.' + validation.statusName"></span>
+                        <div v-if="validation.message">{{validation.message}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" v-if="application.contractType === 'claimManager'">
+                
+                <claim-manager-chat :application-id="application.id"></claim-manager-chat>
+                
+                <div class="md-layout vertical-layout" v-if="application.proposals && application.proposals.length" style="margin-top: 25px;">
+                    <div class="md-layout-item" v-for="(proposal, index) in application.proposals" v-if="index < application.showProposals" style="position: relative;">
+                        <md-divider></md-divider>
+                        <label v-locale="localeKey + '.proposal.id'"></label> <pretty-hex :hex="proposal.id"></pretty-hex><br>
+                        <label v-locale="localeKey + '.proposal.action'"></label> <span v-locale="'claim_manager.action_types.' + proposal.action"></span><br>
+                        <label v-locale="localeKey + '.proposal.message'"></label> {{proposal.message}}<br>
+                        <label v-locale="localeKey + '.proposal.from'"></label> {{proposal.from}}<br>
+                        <label v-locale="localeKey + '.proposal.votes_count'"></label>
+                        
+                        <md-menu md-direction="bottom-end">
+                            <a md-menu-trigger>{{proposal.votesFor.length}}</a>
+                            <md-menu-content class="info-menu">
+                                <h4 v-locale="localeKey + '.proposal.votes_title'"></h4>
+                                <div v-for="(voter) in proposal.votesFor">
+                                    <pretty-hex :hex="voter"></pretty-hex>
+                                </div>
+                            </md-menu-content>
+                        </md-menu>/{{application.slotsThreshold}}
+                        
+                        <div v-if="proposal.action === 'approve'">
+                            <label v-locale="localeKey + '.proposal.amount'"></label> {{proposal.amount}} GALT<br>
+                            <label v-locale="localeKey + '.proposal.blame_oracles_count'"></label>
+                            <md-menu md-direction="bottom-end">
+                                <a md-menu-trigger>{{proposal.oracles.length}}</a>
+                                <md-menu-content class="info-menu">
+                                    <h4 v-locale="localeKey + '.proposal.blame_oracles_title'"></h4>
+                                    <div v-for="(oracle, i) in proposal.oracles">
+                                        <pretty-hex :hex="oracle"></pretty-hex> (<span v-locale="'admin_validation_roles.' + proposal.roles[i]"></span>) - {{proposal.fines[i]}} GALT
+                                    </div>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        
+                        <div style="position: absolute; right: 0; top: 0;" v-if="validateMode">
+                            <md-button v-if="proposal.votesFor.indexOf(user_wallet) === -1" @click="voteForPropose(proposal)" class="md-accent">
+                                <md-icon>done</md-icon>
+                                <span v-locale="localeKey + '.proposal.vote_for'"></span>
+                            </md-button>
+                            <div class="md-success" v-if="proposal.votesFor.indexOf(user_wallet) !== -1" v-locale="localeKey + '.proposal.already_voted'"></div>
+                        </div>
+                    </div>
+
+                    <md-button class="md-icon-button md-raised" style="align-self: center;" @click="application.showProposals += 3" v-if="application.showProposals < application.proposals.length">
+                        <md-icon>expand_more</md-icon>
+                    </md-button>
+
+                    <md-button class="md-icon-button md-raised" style="align-self: center;" @click="application.showProposals = 3" v-if="application.showProposals >= application.proposals.length && application.showProposals > 3">
+                        <md-icon>expand_less</md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-card-content>
+
+    <md-card-actions>
+        <slot></slot>
+    </md-card-actions>
+</md-card>

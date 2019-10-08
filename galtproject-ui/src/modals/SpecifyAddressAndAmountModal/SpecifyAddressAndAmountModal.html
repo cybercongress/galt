@@ -1,0 +1,28 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="'specify_address_and_amount.' + locale + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <md-field>
+        <label v-locale="'specify_address_and_amount.' + locale + '.address_placeholder'"></label>
+        <md-input v-model="address" required></md-input>
+      </md-field>
+      <md-field>
+        <label v-locale="'specify_address_and_amount.' + locale + '.amount_placeholder'"></label>
+        <md-input v-model="amount" required></md-input>
+      </md-field>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="'specify_address_and_amount.' + locale + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="!address || !amount"><span v-locale="'specify_address_and_amount.' + locale + '.ok'"></span></md-button>
+  </template>
+</modal-item>

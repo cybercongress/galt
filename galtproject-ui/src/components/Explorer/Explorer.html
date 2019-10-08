@@ -1,0 +1,6 @@
+<div id="explorer" xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <div style="height: 97%;">
+        <div class="explorer-coordinates-helper">Geohash: {{cursor.geohash || 'none'}}, Lat, Lng: {{cursor.lat || 'none'}}, {{cursor.lng || 'none'}}</div>
+        <div style="height: 100%;" ref="map" :id="'map-' + name" class="leaflet-map-container"></div>
+    </div>
+</div>

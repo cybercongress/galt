@@ -1,0 +1,49 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <div>
+                    <md-tabs class="simple-tabs" :md-active-tab.sync="activeTab" @md-changed="setActiveTab">
+                        <md-tab md-label="Thresholds" id="thresholds"></md-tab>
+                        <md-tab md-label="Other" id="other"></md-tab>
+                    </md-tabs>
+
+                    <md-table>
+                        <md-table-row>
+                            <md-table-head>
+                                <span v-locale="localeKey + '.name_title'"></span>
+                                <hint v-if="activeTab === 'thresholds'" :locale="localeKey + '.thresholds_hint'"></hint>
+                            </md-table-head>
+                            <md-table-head><span v-locale="localeKey + '.value_title'"></span></md-table-head>
+                        </md-table-row>
+
+                        <md-table-row v-for="property in tabPropertiesList">
+                            <md-table-cell>
+                                {{property.nameStr}}
+                                <hint :locale="localeKey + '.hints.' + property.name"></hint>
+                            </md-table-cell>
+                            <md-table-cell>{{property.valueStr}}</md-table-cell>
+                        </md-table-row>
+                    </md-table>
+                </div>
+            </md-list-item>
+
+            <md-list-item v-if="loading">
+                <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+            </md-list-item>
+            
+            <md-list-item v-if="!loading && !propertiesList.length">
+                <span class="md-list-item-text row-direction">
+                    <span v-locale="localeKey + '.not_found'"></span>
+                </span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

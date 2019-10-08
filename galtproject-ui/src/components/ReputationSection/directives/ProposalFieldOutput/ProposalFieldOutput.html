@@ -1,0 +1,27 @@
+<div>
+    <div v-if="fieldType === 'link'">
+        <label>{{title}}:</label> <router-link :to="url">{{formattedValue}}</router-link>
+    </div>
+    <div v-if="fieldType === 'ipfsHash'">
+        <label>{{title}}:</label> <pretty-doc :doc="formattedValue"></pretty-doc>
+    </div>
+    <div v-if="fieldType === 'string' || fieldType === 'ether' || fieldType === 'decimals'">
+        <label>{{title}}:</label> {{formattedValue}}
+    </div>
+    <div v-if="fieldType === 'address-list'">
+        <label>{{title}}:</label><br>
+        <div v-for="item in value"><pretty-hex :hex="item"></pretty-hex></div>
+    </div>
+    <div v-if="fieldType === 'member_identification'">
+        <member-identification-output v-model="value" :sra-address="sraAddress"></member-identification-output>
+    </div>
+    <div v-if="fieldType === 'bool'">
+        <label>{{title}}:</label> <span v-local="'boolean.' + value"></span>
+    </div>
+    <div v-if="fieldType === 'ms_contract_address'">
+        <ms-contract-address-output v-model="value" :sra-address="sraAddress"></ms-contract-address-output>
+    </div>
+    <div v-if="fieldType === 'boolean_select'">
+        <boolean-select-output v-model="value" :contract-type="contractType"></boolean-select-output>
+    </div>
+</div>

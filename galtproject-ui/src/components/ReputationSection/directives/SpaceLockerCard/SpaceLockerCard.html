@@ -1,0 +1,49 @@
+<div>
+    <md-card :class="['space-locker-card']">
+        <md-card-header>
+            <md-avatar>
+                <md-icon>wallpaper</md-icon>
+            </md-avatar>
+
+            <div class="md-title"><span v-locale="localeKey + '.title'"></span><pretty-hex :hex="address" :to="'/reputation/space-locker/' + address"></pretty-hex></div>
+        </md-card-header>
+        
+        <div></div>
+
+        <md-card-content v-if="spaceLocker">
+            <div>
+                <label v-locale="localeKey + '.owner'"></label> <pretty-hex :hex="spaceLocker.owner"></pretty-hex><br>
+                <div v-if="spaceLocker.tokenDeposited">
+                    <label v-locale="localeKey + '.space_token'"></label> <router-link :to="'/land/space-token/' + spaceLocker.spaceTokenId">{{spaceLocker.spaceTokenId}}</router-link>
+                </div>
+                <label v-locale="localeKey + '.reputation'"></label> {{spaceLocker.reputationStr}}<br>
+                <label v-locale="localeKey + '.deposited_' + spaceLocker.tokenDeposited"></label><br>
+                <label v-locale="[localeKey + '.sras_count', {value: spaceLocker.srasCount}]"></label><br>
+                
+                <!--<div class="md-error" v-if="spaceToken.notFound" v-locale="'space_token_info.not_found'"></div>-->
+            </div>
+        </md-card-content>
+
+        <md-card-content v-if="!spaceLocker || loading">
+            <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+        </md-card-content>
+
+        <md-card-actions>
+            <sra-locker-control v-if="sraAddress" :sra-address="sraAddress" :space-locker-address="address" @update="onControlUpdate()" :loading.sync="loading"></sra-locker-control>
+
+            <div v-if="showLockerControl">
+                <md-button @click="withdraw()" class="md-accent" v-if="spaceLocker.tokenDeposited" :disabled="loading">
+                    <md-icon>keyboard_capslock</md-icon>
+                    <span v-locale="localeKey + '.withdraw'"></span>
+                </md-button>
+                
+                <md-button :to="'/reputation/choose-for-space-locker/' + spaceLocker.address" class="md-accent md-raised" v-if="!spaceLocker.tokenDeposited" :disabled="loading">
+                    <md-icon>vertical_align_bottom</md-icon>
+                    <span v-locale="localeKey + '.deposit'"></span>
+                </md-button>
+            </div>
+            
+            <slot></slot>
+        </md-card-actions>
+    </md-card>
+</div>

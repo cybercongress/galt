@@ -1,0 +1,34 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 2;" class="inner-scroll">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="[localeKey + '.title', {count: proposalsCount === null ? '...' : proposalsCount}]"></div>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+                
+                <space-token-card v-for="request in joinRequests" :spaceToken="request.spaceToken" @click.native="showSpaceToken(request.spaceToken)">
+                    <div class="full-width padding">
+                        <label v-locale="localeKey + '.proposal_description'"></label> {{request.proposal.description}}
+                    </div>
+                    
+                    <proposal-control 
+                            :proposal-id="request.proposal.id" 
+                            :manager-address="proposalManagerContract.address" 
+                            :sra-address="$route.params.sraAddress"
+                            :loading.sync="request.loading"
+                    ></proposal-control>
+
+                    <md-progress-bar class="md-accent full-width" md-mode="indeterminate" v-if="request.loading"></md-progress-bar>
+                </space-token-card>
+                
+                <div v-if="!loading && !joinRequests.length" style="margin-top: 15px;">
+                    <div v-locale="localeKey + '.not_found'" class="count-label"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

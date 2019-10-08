@@ -1,0 +1,75 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="'admin.plot_manager.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <md-subheader v-locale="'admin.plot_manager.general.title'"></md-subheader>
+
+            <md-list-item class="right-button-container" v-if="paymentMethod !== null">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="'admin.plot_manager.general.payment_method'"></span> 
+                    <span v-locale="'payment_methods.' + paymentMethod"></span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editPaymentMethod()">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+            
+            <!--<md-list-item class="right-button-container">-->
+                <!--<span class="md-list-item-text text-row">-->
+                    <!--<span v-locale="'admin.plot_manager.general.gas_price_for_deposits'"></span> -->
+                    <!--<span>{{gasPriceForDeposits}} Gwei</span>-->
+                <!--</span>-->
+                <!--<md-button class="md-icon-button md-list-action md-raised" @click="editGasPriceForDeposits()">-->
+                    <!--<md-icon class="md-accent">edit</md-icon>-->
+                <!--</md-button>-->
+            <!--</md-list-item>-->
+            
+            <md-subheader v-locale="'admin.plot_manager.fee_rate.title'"></md-subheader>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="'admin.plot_manager.fee_rate.eth'"></span> 
+                    <span>{{ethFeeRate}} Gwei</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editFeeRate('eth')">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="'admin.plot_manager.fee_rate.galt'"></span> 
+                    <span>{{galtFeeRate}} Gwei</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editFeeRate('galt')">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+
+            <md-subheader v-locale="'admin.plot_manager.fee_share.title'"></md-subheader>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="'admin.plot_manager.fee_share.eth'"></span> 
+                    <span>{{ethShare}}%</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editShare('eth')">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+
+            <md-list-item class="right-button-container">
+                <span class="md-list-item-text text-row">
+                    <span v-locale="'admin.plot_manager.fee_share.galt'"></span> 
+                    <span>{{galtShare}}%</span>
+                </span>
+                <md-button class="md-icon-button md-list-action md-raised" @click="editShare('galt')">
+                    <md-icon class="md-accent">edit</md-icon>
+                </md-button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

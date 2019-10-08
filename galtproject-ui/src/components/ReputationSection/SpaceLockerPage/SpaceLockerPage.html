@@ -1,0 +1,34 @@
+<div style="display: flex;">
+    <div style="flex: 2;" class="inner-scroll">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+                
+                <space-locker-card :address="$route.params.lockerAddress" @update="getSpaceToken()" v-if="!hideSpaceLocker" :show-control="true"></space-locker-card>
+                
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.space_token.title'"></div>
+                
+                <div v-if="!loading && !spaceToken" class="padding" v-locale="localeKey + '.space_token.not_found'"></div>
+
+                <space-token-card v-if="spaceToken" :spaceToken="spaceToken"></space-token-card>
+
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.sra_list.title'"></div>
+                
+                <md-button @click="addSra()" class="md-raised md-accent" v-if="spaceLocker && user_wallet === spaceLocker.owner" :disabled="!spaceLocker || !spaceLocker.tokenDeposited">
+                    <md-icon>add</md-icon>
+                    <span v-locale="localeKey + '.sra_list.add'"></span>
+                </md-button>
+                
+                <div v-if="!loading && !srasAddresses.length" class="padding" v-locale="localeKey + '.sra_list.not_found'"></div>
+
+                <sra-card v-for="sraAddress in srasAddresses" :address="sraAddress" :space-locker-address="$route.params.lockerAddress" @update="getSpaceToken() && getSras()"></sra-card>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

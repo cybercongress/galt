@@ -1,0 +1,287 @@
+/*!
+ * Copyright ©️ 2018 Galt•Space Society Construction and Terraforming Company 
+ * (Founded by [Nikolai Popeka](https://github.com/npopeka),
+ * [Dima Starodubcev](https://github.com/xhipster), 
+ * [Valery Litvin](https://github.com/litvintech) by 
+ * [Basic Agreement](http://cyb.ai/QmSAWEG5u5aSsUyMNYuX2A2Eaz4kEuoYWUkVBRdmu9qmct:ipfs)).
+ * ​
+ * Copyright ©️ 2018 Galt•Core Blockchain Company 
+ * (Founded by [Nikolai Popeka](https://github.com/npopeka) and 
+ * Galt•Space Society Construction and Terraforming Company by 
+ * [Basic Agreement](http://cyb.ai/QmaCiXUmSrP16Gz8Jdzq6AJESY1EAANmmwha15uR3c1bsS:ipfs)).
+ */
+
+@import "~flexboxgrid";
+@import "~font-awesome/web-fonts-with-css/scss/fontawesome";
+//@import "~font-awesome/web-fonts-with-css/scss/fa-solid";
+//@import "fonts";
+
+@import '~vue-material/dist/vue-material.min.css';
+@import '~leaflet/dist/leaflet.css';
+
+@import '~@galtproject/frontend-core/styles/main-with-theme.scss';
+@import '~@galtproject/frontend-core/components/GaltMultisig/styles/main.scss';
+@import '~@galtproject/frontend-core/modals/AsyncModal/modal.css';
+
+@import '_vars';
+@import 'grid';
+
+@import './theme';
+
+#explorer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+#map-enter-geohashes {
+  height: 300px;
+}
+
+.leaflet-map-container {
+  max-width: 100%;
+  position: relative;
+  flex: 1;
+  max-height: 1000px;
+}
+
+.fa-broadcast-tower {
+  color: #4e88dd;
+}
+
+.field-help {
+  line-height: 0;
+  display: block;
+  position: relative;
+  top: -10px;
+}
+
+
+.field-help span {
+  line-height: 1.5;
+}
+
+.explorer-coordinates-helper {
+  font-size: 12px;
+}
+//.md-drawer.md-theme-default.md-persistent-mini.md-left:not(.minimized) {
+//  position: absolute;
+//}
+.galtdex-card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  .md-card-content {
+    flex: 1;
+    & > * {
+      display: flex;
+      flex-direction: column;
+      & > *:first-child {
+        flex-grow: 1;
+        height: 100px;
+      }
+    }
+  }
+  &.reverse {
+    .md-card-content {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .galtdex-currency {
+    padding: 0 8px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 16px;
+  }
+}
+
+
+#wait-screen,
+#rpc-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  #wait-screen-center-text, #wait-screen-center-sub-text, #wait-screen-right-top-text,
+  #rpc-screen-center-text, #rpc-screen-center-sub-text, #rpc-screen-right-top-text{
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: .005em;
+    line-height: 26px;
+    color: #fff;
+    text-align: center;
+  }
+  
+  #rpc-screen-center-video {
+    margin-top: 25px;
+    
+    &, > * {
+      width: 560px;
+      height: 315px;
+    }
+  }
+
+  #wait-screen-center-sub-text,
+  #rpc-screen-center-sub-text {
+    margin-top: 20px;
+  }
+  
+  #wait-screen-transactions {
+    margin-top: 20px;
+    
+    #wait-screen-transactions-list {
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: scroll;
+
+      /* scrollbar width */
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Scrollbar background */
+      &::-webkit-scrollbar-track {
+        background: black;
+      }
+
+      /* Scrollbar color */
+      &::-webkit-scrollbar-thumb {
+        background: #bdbdbd;
+      }
+
+      /* Scrollbar color on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #9e9e9e;
+      }
+    }
+  }
+  
+  #wait-screen-right-top-text,
+  #rpc-screen-right-top-text{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+}
+
+#rpc-screen {
+  z-index: 10040;
+}
+
+
+.md-table-cell-container {
+  max-width: 500px;
+  white-space: normal;
+}
+.actions-container {
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 10px;
+}
+.count-label {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+.space-exchange-btn-container {
+  height: 100%; 
+  margin-top: 50px; 
+  justify-content: space-around;
+  
+  .space-exchange-btn {
+    flex: 1;
+    margin: 15px;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+  }
+}
+
+.space-token-card, .space-locker-card, .sra-card, .proposal-manager-card, .proposal-card, .fund-rule-card, .multisig-card {
+  & > .md-card-header {
+    position: relative;
+    &, .md-icon, a, a:hover, a:active, a:focus {
+      color: black;
+    }
+    .md-avatar {
+      position: relative;
+      top: -10px;
+    }
+    .md-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+  }
+}
+
+.md-card-header {
+  .md-badge {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    height: 28px;
+    font-size: 12px;
+    &.md-badge-top {
+      top: 10px;
+      bottom: initial;
+    }
+  }
+}
+
+.chat-messages-list {
+  display: flex;
+  flex-direction: column;
+}
+.chat-message {
+  max-width: 70%;
+  min-width: 30%;
+  border-radius: 12px;
+  border: 1px solid #607D8B;
+  
+  align-self: flex-start;
+  &.current-user-message {
+    align-self: flex-end;
+  }
+
+  .md-card-header {
+    .md-subhead {
+      opacity: 1;
+    }
+    background: #78909C;
+    color: black;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .md-card-content {
+    background: #607D8B;
+    color: black;
+    padding: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
+
+.leaflet-popup-content {
+  max-height: 200px;
+  overflow-x: auto;
+}
+
+@import 'adaptive';

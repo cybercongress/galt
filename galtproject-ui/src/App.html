@@ -1,0 +1,118 @@
+<div style="height: 100%;">
+  <modal ref="modal"></modal>
+  <modal ref="sub_modal"></modal>
+  
+  <wait-screen></wait-screen>
+
+  <notifications :duration="7000" position="bottom right"></notifications>
+
+  <metamask-not-active v-if="showMetamaskNotActive"></metamask-not-active>
+
+  <md-app v-if="!loading">
+    <md-app-toolbar class="md-accent" md-elevation="0">
+      <h3 class="md-title" v-locale="'navbar.project_title'"></h3>
+      <a href @click.prevent.stop="showChangeLog()" style="margin-left: 10px; color: white;"><h5>v{{version}}</h5></a>
+
+      <span flex style="flex: 1"></span>
+      
+      <md-menu md-direction="bottom-start">
+        <md-button md-menu-trigger><span v-locale="'navbar.language.title'"></span></md-button>
+
+        <md-menu-content>
+          <md-menu-item v-for="(lang, index) in languageList" @click="changeLanguage(lang[0])" :key="index">{{lang[1]}}</md-menu-item>
+        </md-menu-content>
+      </md-menu>
+      
+      <md-button class="md-raised" to="/tutorials/" style="margin-right: 35px;"><span v-locale="'navbar.video_tutorials'"></span></md-button>
+
+      <span style="margin-right: 15px;">
+        <span v-locale="'navbar.rpc_server'"></span> {{rpcServer}}
+        <a v-if="altServersExists" href @click.prevent.stop="alternativeServers()" style="color:white;"><br><span v-locale="'navbar.alt_servers'"></span></a>
+      </span>
+
+      <user-menu></user-menu>
+    </md-app-toolbar>
+
+    <md-app-drawer :md-active.sync="menuVisible" md-persistent="mini" :class="{'minimized': menuMinimized}">
+      <md-toolbar class="md-transparent" md-elevation="0">
+        <span v-if="menuVisible" v-locale="'main_menu.title'"></span>
+
+        <md-button class="md-icon-button show" @click="toggleMenu()" v-if="!menuVisible">
+          <md-icon>menu</md-icon>
+        </md-button>
+
+        <div class="md-toolbar-section-end">
+          <md-button class="md-icon-button md-dense" @click="toggleMenu" v-if="menuVisible">
+            <md-icon>keyboard_arrow_left</md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+
+      <md-list>
+        <md-list-item to="/land/new-application/">
+          <md-icon>note_add</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.new_application'"></span>
+        </md-list-item>
+
+        <md-list-item to="/land/my-applications/" v-if="pm_user_applications_ids.length || pv_user_applications_ids.length || pc_user_applications_ids.length || pcl_user_applications_ids.length">
+          <md-icon>list</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.my_applications'"></span>
+        </md-list-item>
+
+        <md-list-item to="/land/my-territory/" v-if="user_space_balance">
+          <md-icon>location_on</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.my_territory'"></span>
+        </md-list-item>
+
+        <md-list-item to="/land/validate/" v-if="is_oracle">
+          <md-icon>all_inbox</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.validate_applications'"></span>
+        </md-list-item>
+
+        <md-list-item to="/land/buy/">
+          <md-icon>store_mall_directory</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.buy_space'"></span>
+        </md-list-item>
+
+        <md-list-item to="/land/sell/">
+          <md-icon>local_atm</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.sell_space'"></span>
+        </md-list-item>
+
+        <md-list-item to="/galdex/">
+          <md-icon>cached</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.galtdex'"></span>
+        </md-list-item>
+
+        <md-list-item :to="'/account/' + user_wallet + '/overview'">
+          <md-icon>account_box</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.personal_cabinet'"></span>
+        </md-list-item>
+
+        <md-list-item to="/reputation/communities-registry">
+          <md-icon>group</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.sras_registry'"></span>
+        </md-list-item>
+
+        <md-list-item to="/admin/" v-if="is_fee_manager">
+          <md-icon>business_center</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.admin'"></span>
+        </md-list-item>
+
+        <md-list-item to="/tech-info">
+          <md-icon>build</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.tech_info'"></span>
+        </md-list-item>
+
+        <md-list-item to="/extensions/list">
+          <md-icon>widgets</md-icon>
+          <span class="md-list-item-text" v-locale="'main_menu.extensions'"></span>
+        </md-list-item>
+      </md-list>
+    </md-app-drawer>
+
+    <md-app-content>
+      <router-view></router-view>
+    </md-app-content>
+  </md-app>
+</div>

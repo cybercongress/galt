@@ -1,0 +1,56 @@
+<div>
+    <md-card :class="['sra-card']">
+        <md-card-header>
+            <md-avatar>
+                <md-icon>group</md-icon>
+            </md-avatar>
+
+            <div class="md-title"><span v-locale="localeKey + '.title'"></span><pretty-hex :hex="address" :to="'/reputation/community/' + address + '/overview/general'"></pretty-hex></div>
+        </md-card-header>
+        
+        <div></div>
+
+        <md-card-content v-if="sra">
+            <div>
+                <label v-locale="localeKey + '.space_owners_count'"></label> {{sra.spaceTokenOwnersCount}}<br>
+                <label v-locale="localeKey + '.total_supply'"></label> {{sra.totalSupplyStr}}
+                <!--<div class="md-error" v-if="spaceToken.notFound" v-locale="'space_token_info.not_found'"></div>-->
+            </div>
+            <div v-if="sra.storage">
+                <label v-locale="localeKey + '.name'"></label> {{sra.storage.name}}<br>
+                <label v-locale="localeKey + '.description'"></label> {{sra.storage.description}}<br>
+                <label v-locale="localeKey + '.rules_count'"></label> {{sra.storage.activeFundRulesCount}}<br>
+                <label v-locale="localeKey + '.is_private'"></label> <hint :locale="localeKey + '.is_private_hint'"></hint> <span v-locale="localeKey + '.is_private_' + sra.storage.isPrivate"></span>
+            </div>
+            <br>
+            <div v-if="user_wallet">
+                <label v-locale="localeKey + '.user_have.tokens_count'"></label> {{userTokensCount === null ? '...' : userTokensCount}}<br>
+                <div v-if="userTokensCount === 0 && sra.storage && sra.storage.isPrivate">
+                    <label v-locale="localeKey + '.user_have.join_proposal_' + userSentJoinProposal"></label><br>
+                </div>
+            </div>
+        </md-card-content>
+
+        <md-card-content v-if="!sra || loading">
+            <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+        </md-card-content>
+
+        <md-card-actions>
+            <sra-locker-control :sra-address="address" :space-locker-address="spaceLockerAddress" @update="onControlUpdate()" :loading.sync="loading"></sra-locker-control>
+            
+            <div v-if="showJoinControl">
+                <md-button @click="showSpaceTokensList()" class="md-accent" style="position: absolute; left: 10px;">
+                    <md-icon>explore</md-icon>
+                    <span v-locale="localeKey + '.show_on_map'"></span>
+                </md-button>
+
+                <md-button :to="'/reputation/community/' + address + '/join-exit'" class="md-accent md-raised">
+                    <md-icon>forward</md-icon>
+                    <span v-locale="localeKey + '.join_exit'"></span>
+                </md-button>
+            </div>
+            
+            <slot></slot>
+        </md-card-actions>
+    </md-card>
+</div>

@@ -1,0 +1,37 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <md-table>
+                    <md-table-row>
+                        <md-table-head><span v-locale="localeKey + '.id_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.area_title'"></span></md-table-head>
+                    </md-table-row>
+
+                    <md-table-row v-for="spaceToken in spaceTokens">
+                        <md-table-cell>
+                            <router-link :to="'/land/space-token/' + spaceToken.tokenId">{{spaceToken.tokenId}}</router-link>
+                        </md-table-cell>
+                        <md-table-cell>{{spaceToken.areaStr}}</md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </md-list-item>
+
+            <md-list-item v-if="loading">
+                <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+            </md-list-item>
+
+            <md-list-item v-if="!loading && !spaceTokens.length">
+                <span class="md-list-item-text row-direction">
+                    <span v-locale="localeKey + '.not_found'"></span>
+                </span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

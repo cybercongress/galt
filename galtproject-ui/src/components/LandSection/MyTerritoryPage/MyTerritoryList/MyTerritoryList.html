@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="md-title padding" v-locale="'my_territory.title'"></div>
+        
+        <div class="padding" style="padding-top: 0;">
+            <md-field>
+                <label v-locale="'my_territory.search'"></label>
+                <md-input v-model="search"></md-input>
+            </md-field>
+            
+            <md-field>
+                <label v-locale="'my_territory.filter_by_type'"></label>
+                <md-select v-model="filterByType">
+                    <md-option v-for="type in tokenTypes" :value="type.name">{{type.title}}</md-option>
+                </md-select>
+            </md-field>
+
+            <md-field v-if="filterByType === 'building' && levels.length">
+                <label v-locale="'my_territory.filter_by_level'"></label>
+                <md-select v-model="filterByLevel">
+                    <md-option v-for="level in levels" :value="level.name">{{level.title}}</md-option>
+                </md-select>
+            </md-field>
+        </div>
+
+        <!--<md-button class="md-raised md-accent" to="/land/my-territory/new-pack">-->
+            <!--<md-icon>select_all</md-icon>-->
+            <!--<span v-locale="'my_territory.create_pack'"></span>-->
+        <!--</md-button>-->
+
+        <!--<md-button class="md-raised md-accent" to="/land/my-territory/merge-geohashes">-->
+            <!--<md-icon>border_all</md-icon>-->
+            <!--<span v-locale="'my_territory.merge_geohashes'"></span>-->
+        <!--</md-button>-->
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+        <div v-locale="['my_territory.count', {value: filtered_tokens.length}]" v-if="!loading" class="count-label"></div>
+        
+        <space-token-card v-for="spaceToken in filtered_tokens"
+                          :spaceToken="spaceToken"
+                          @click.native="showSpaceToken(spaceToken)">
+
+            <md-button :to="'/land/space-token/' + spaceToken.tokenId" class="md-accent" style="position: absolute; left: 10px;">
+                <md-icon>info</md-icon>
+                <md-icon>layers</md-icon>
+            </md-button>
+
+            <md-button @click="sendSpaceTokenConfirm(spaceToken)" class="md-accent">
+                <md-icon>call_made</md-icon>
+                <span v-locale="'my_territory.send_token'"></span>
+            </md-button>
+
+            <md-menu md-direction="bottom-start">
+                <md-button md-menu-trigger class="md-icon-button md-raised md-accent" style="margin-left: 15px;"><md-icon>menu</md-icon></md-button>
+
+                <md-menu-content>
+                    <md-menu-item @click="placeToEscrow(spaceToken)">
+                        <md-icon>gavel</md-icon>
+                        <span v-locale="'my_territory.place_to_escrow'"></span>
+                    </md-menu-item>
+                    
+                    <md-menu-item @click="valuatePlot(spaceToken)">
+                        <md-icon>shopping_cart</md-icon>
+                        <span v-locale="'my_territory.valuate_plot'"></span>
+                    </md-menu-item>
+                    
+                    <md-menu-item @click="registerCustodianForPlot(spaceToken)">
+                        <md-icon>how_to_reg</md-icon>
+                        <span v-locale="'my_territory.register_custodian_for_plot'"></span>
+                    </md-menu-item>
+
+                    <md-menu-item :to="'/land/my-territory/add-building/' + spaceToken.tokenId">
+                        <md-icon>tab</md-icon>
+                        <span v-locale="'my_territory.add_building'"></span>
+                    </md-menu-item>
+                    
+                    <md-menu-item :to="'/land/my-territory/split-pack/' + spaceToken.tokenId">
+                        <md-icon>flip</md-icon>
+                        <span v-locale="'my_territory.split_pack'"></span>
+                    </md-menu-item>
+
+                    <md-menu-item :to="'/land/my-territory/merge-pack/' + spaceToken.tokenId">
+                        <md-icon>select_all</md-icon>
+                        <span v-locale="'my_territory.merge_pack'"></span>
+                    </md-menu-item>
+
+                    <md-menu-item :to="'/land/plot-clarification/' + spaceToken.tokenId">
+                        <md-icon>rounded_corner</md-icon>
+                        <span v-locale="'my_territory.plot_clarification'"></span>
+                    </md-menu-item>
+                        
+                        <!--<md-menu-item @click="splitGeohash(spaceToken)" v-if="spaceToken.isGeohash">-->
+                        <!--<md-icon>view_module</md-icon>-->
+                        <!--<span v-locale="'my_territory.split_geohash'"></span>-->
+                    <!--</md-menu-item>-->
+
+                    <!--<md-menu-item @click="editGeohashes('add', spaceToken)" v-if="spaceToken.isPack">-->
+                        <!--<md-icon>present_to_all</md-icon>-->
+                        <!--<span v-locale="'my_territory.add_geohashes'"></span>-->
+                    <!--</md-menu-item>-->
+                    <!--<md-menu-item @click="editGeohashes('remove', spaceToken)" v-if="spaceToken.isPack">-->
+                        <!--<md-icon>cancel_presentation</md-icon>-->
+                        <!--<span v-locale="'my_territory.remove_geohashes'"></span>-->
+                    <!--</md-menu-item>-->
+                    <!--<md-menu-item @click="disassemblePackConfirm(spaceToken)" v-if="spaceToken.isPack">-->
+                        <!--<md-icon>dialpad</md-icon>-->
+                        <!--<span v-locale="'my_territory.disassemble_pack'"></span>-->
+                    <!--</md-menu-item>-->
+                </md-menu-content>
+            </md-menu>
+        </space-token-card>
+    </div>
+</div>

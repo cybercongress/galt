@@ -1,0 +1,90 @@
+<modal-item xmlns:v-on="">
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-locale="localeKey + '.description'"></p>
+
+      <md-field>
+        <label v-locale="localeKey + '.action'"></label>
+        <md-select v-model="proposal.action" :disabled="sending">
+          <md-option v-for="type in actionTypes" :value="type.name">{{type.title}}</md-option>
+        </md-select>
+      </md-field>
+      
+      <md-field>
+        <label v-locale="localeKey + '.message'"></label>
+        <md-input v-model="proposal.message" :disabled="sending"></md-input>
+      </md-field>
+
+      <md-field v-if="proposal.action === 'approve'">
+        <label v-locale="localeKey + '.amount'"></label>
+        <md-input v-model="proposal.amount" :disabled="sending" required></md-input>
+      </md-field>
+
+      <md-card v-if="proposal.action === 'approve'">
+        <md-card-header>
+          <label v-locale="localeKey + '.blame_list'"></label>
+        </md-card-header>
+
+        <md-card-content>
+          
+          <div v-for="(blameItem, index) in proposal.blameList">
+            <div class="md-layout">
+              <div class="md-layout-item md-size-40">
+                <md-field :class="{'md-invalid': invalidBlameItems[index]}">
+                  <label v-locale="localeKey + '.blame_item.address'"></label>
+
+                  <md-input v-model="proposal.blameList[index].address" v-on:keyup="findRolesForOracle(proposal.blameList[index].address)" :disabled="sending"></md-input>
+                </md-field>
+              </div>
+
+              <div class="md-layout-item md-size-25" style="padding-left: 5px; position: relative;">
+                <md-field :class="{'md-invalid': invalidBlameItems[index]}" v-if="rolesByOracle[blameItem.address] && !rolesLoadingByOracle[blameItem.address]">
+                  <label v-locale="localeKey + '.blame_item.role'"></label>
+                  <md-select v-model="proposal.blameList[index].role">
+                    <md-option v-for="role in rolesByOracle[blameItem.address]" :value="role.name">{{role.title}}</md-option>
+                  </md-select>
+                </md-field>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" style="position: absolute; bottom: 23px; right: 0; left: 0;" v-if="rolesLoadingByOracle[blameItem.address]"></md-progress-bar>
+              </div>
+
+              <div class="md-layout-item md-size-25" style="padding-left: 5px;">
+                <md-field :class="{'md-invalid': invalidBlameItems[index]}">
+                  <label v-locale="localeKey + '.blame_item.penalty'"></label>
+  
+                  <md-input v-model="proposal.blameList[index].penalty" :disabled="sending"></md-input>
+                </md-field>
+              </div>
+
+              <div class="md-layout-item md-size-10" style="padding-top: 15px;">
+                <md-button class="md-icon-button" @click="proposal.blameList.splice(index, 1)" :disabled="sending">
+                  <md-icon>clear</md-icon>
+                </md-button>
+              </div>
+            </div>
+          </div>
+
+          <md-button class="md-icon-button md-raised" @click="proposal.blameList.push({address: null, penalty: null, role: null})">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-card-content>
+      </md-card>
+      
+      <div class="warn" v-if="warnText">{{warnText}}</div>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="sendDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

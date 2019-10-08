@@ -1,0 +1,25 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="ok">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="'alt_servers.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <md-card>
+      <md-card-header>
+        <h3 v-locale="'alt_servers.description'"></h3>
+        <div v-for="server in serversList">
+          {{server}}
+        </div>
+      </md-card-header>
+    </md-card>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="ok" class="md-raised md-accent"><span v-locale="'alt_servers.ok'"></span></md-button>
+  </template>
+</modal-item>

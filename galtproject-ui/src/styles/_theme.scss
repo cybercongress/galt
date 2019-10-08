@@ -1,0 +1,71 @@
+/*!
+ * Copyright ©️ 2018 Galt•Space Society Construction and Terraforming Company 
+ * (Founded by [Nikolai Popeka](https://github.com/npopeka),
+ * [Dima Starodubcev](https://github.com/xhipster), 
+ * [Valery Litvin](https://github.com/litvintech) by 
+ * [Basic Agreement](http://cyb.ai/QmSAWEG5u5aSsUyMNYuX2A2Eaz4kEuoYWUkVBRdmu9qmct:ipfs)).
+ * ​
+ * Copyright ©️ 2018 Galt•Core Blockchain Company 
+ * (Founded by [Nikolai Popeka](https://github.com/npopeka) and 
+ * Galt•Space Society Construction and Terraforming Company by 
+ * [Basic Agreement](http://cyb.ai/QmaCiXUmSrP16Gz8Jdzq6AJESY1EAANmmwha15uR3c1bsS:ipfs)).
+ */
+
+.galtdex-card {
+  .galtdex-currency {
+    background-color: #5d42b5;
+  }
+  .md-button.md-theme-default.md-accent .md-icon-font {
+    color: #5d42b5;
+  }
+}
+
+.space-token-card {
+  //#81c750
+  $spaceColors: #81c750 #fdf16e #f8d861 #f8d249 #f6c53d #f3b63b #f1ad36 #efa035 #ee9733 #ec8631 #ee8533;
+
+  @each $color in $spaceColors {
+    $i: index($spaceColors, $color) - 1;
+    &.space-level-#{$i} .md-card-header {
+      background: $color;
+    }
+  }
+
+  &.space-level-none > .md-card-header {
+    background: #9E9E9E;
+  }
+
+  &.space-info {
+    & > .md-card-header {
+      background: #00B8D4 !important;
+    }
+  }
+
+  .md-badge {
+    background-color: #5d42b5;
+  }
+}
+
+.space-locker-card .md-card-header {
+  background: #5C6BC0;
+}
+
+.sra-card .md-card-header {
+  background: #4257ce;
+}
+
+.proposal-manager-card .md-card-header {
+  background: #4257ce;
+}
+
+.proposal-card .md-card-header {
+  background: #5e35b1;
+}
+
+.fund-rule-card .md-card-header {
+  background: #5e35b1;
+}
+
+.multisig-card .md-card-header {
+  background: #4257ce;
+}

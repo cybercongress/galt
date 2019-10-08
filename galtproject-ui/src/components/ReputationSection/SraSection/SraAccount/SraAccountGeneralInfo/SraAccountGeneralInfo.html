@@ -1,0 +1,53 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.wallet'"></span> <pretty-hex :hex="userWallet"></pretty-hex></span>
+            </md-list-item>
+            
+            <md-list-item>
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.balance'"></span> <span>{{balanceStr}}</span></span>
+            </md-list-item>
+            
+            <md-list-item>
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.owned_balance'"></span> <span>{{ownedBalanceStr}}</span></span>
+            </md-list-item>
+
+            <!--<md-list-item>-->
+                <!--<span class="md-list-item-text row-direction">-->
+                <!--<span v-locale="localeKey + '.delegations_count'"></span> <span>{{delegationsCount}}</span></span>-->
+            <!--</md-list-item>-->
+
+            <!--<md-list-item>-->
+                <!--<span class="md-list-item-text row-direction">-->
+                <!--<span v-locale="localeKey + '.delegated_by_count'"></span> <span>{{delegatedByCount}}</span></span>-->
+            <!--</md-list-item>-->
+
+            <md-list-item>
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.space_tokens_count'"></span> <span>{{spaceTokensCount}}</span></span>
+            </md-list-item>
+
+            <md-list-item v-if="identification">
+                <span class="md-list-item-text row-direction">
+                <span v-locale="localeKey + '.identification'"></span> <member-identification :hex="identification"></member-identification></span>
+            </md-list-item>
+            
+            <md-list-item>
+                <md-button @click="addIdentification()" class="md-accent">
+                    <md-icon>account_box</md-icon>
+                    <span v-locale="localeKey + '.propose_identification'"></span>
+                </md-button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

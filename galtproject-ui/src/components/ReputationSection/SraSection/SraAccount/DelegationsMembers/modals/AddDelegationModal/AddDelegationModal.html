@@ -1,0 +1,39 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <md-autocomplete v-model="delegateFromOwner" :md-options="delegatedByList" @md-opened="getDelegatedBy" :disabled="sending"><!--@md-changed="getCountries"-->
+      <label v-locale="localeKey + '.from_owner'"></label>
+
+      <template slot="md-autocomplete-item" slot-scope="{ item }"><small>({{ item.address }})</small>({{ item.delegatedBalanceStr }})</template>
+    </md-autocomplete>
+    
+    <md-field>
+      <label v-locale="localeKey + '.to_address'"></label>
+      <md-input v-model="toAddress" required></md-input>
+    </md-field>
+
+    <div class="md-error" v-if="invalidTo" v-locale="localeKey + '.invalid_to'"></div>
+
+    <md-field>
+      <label v-locale="localeKey + '.amount'"></label>
+      <md-input v-model="delegateAmount" required></md-input>
+    </md-field>
+
+    <div class="md-error" v-if="tooMuchAmount" v-locale="[localeKey + '.too_much_amount', {delegatedBalance: delegateFromOwner.delegatedBalanceStr}]"></div>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading || sending"></md-progress-bar>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="delegate" class="md-raised md-accent" :disabled="loading || sending || isInputsInvalid"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

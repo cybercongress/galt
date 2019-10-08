@@ -1,0 +1,6 @@
+<md-tabs md-sync-route :class="tabsClass">
+    <md-tab v-for="tab in visibleTabs"
+            :id="'tab-' + tab.route" :md-label="tab.title"
+            :to="'/reputation/community/' + $route.params.sraAddress + '/' + tab.route"
+    ></md-tab>
+</md-tabs>

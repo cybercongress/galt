@@ -1,0 +1,29 @@
+<div>
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+    <div class="md-layout" v-if="!loading">
+        <div class="md-layout-item md-size-45">
+            <md-card>
+                <md-card-content>
+                    <multisig-managers-input v-model="currentManagers" :sra-address="$route.params.sraAddress"></multisig-managers-input>
+                    
+                    <md-button @click="proposeNewManagers()" class="md-accent md-raised" :disabled="!changed">
+                        <md-icon>call_made</md-icon>
+                        <span v-locale="localeKey + '.propose_new_managers'"></span>
+                    </md-button>
+                    
+                    <div style="margin-top: 10px;" v-if="changeMsManagersManager">
+                        <router-link :to="{name: 'reputation-sra-voting-overview', params: {managerAddress: changeMsManagersManager}}">
+                            <span v-locale="localeKey + '.voting_link'"></span>
+                        </router-link>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        
+        <div class="md-layout-item md-size-45">
+            <fund-withdrawal-limits :sra-address="$route.params.sraAddress"></fund-withdrawal-limits>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,9 @@
+<div>
+    <md-field v-if="trueStr">
+        <!--<label v-locale="localeKey + '.currency'"></label>-->
+        <md-select v-model="localValue">
+            <md-option :value="1">{{trueStr}}</md-option>
+            <md-option :value="0">{{falseStr}}</md-option>
+        </md-select>
+    </md-field>
+</div>

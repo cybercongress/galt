@@ -1,0 +1,64 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-locale="localeKey + '.description'"></p>
+
+      <md-field>
+        <label v-locale="localeKey + '.beneficiary'"></label>
+        <md-input v-model="application.beneficiary" required :disabled="sending"></md-input>
+      </md-field>
+      
+      <md-field>
+        <label v-locale="localeKey + '.amount'"></label>
+        <md-input v-model="application.amount" required :disabled="sending"></md-input>
+      </md-field>
+
+      <md-field>
+        <label v-locale="localeKey + '.multisig_address'"></label>
+        <md-select v-model="application.multisigAddress">
+          <md-option v-for="multisig in multisigList" required :disabled="sending" :value="multisig.address">{{multisig.address}}</md-option>
+        </md-select>
+      </md-field>
+      
+      <md-card>
+        <md-card-header>
+          <label v-locale="localeKey + '.documents'"></label>
+        </md-card-header>
+
+        <md-card-content>
+          <md-field v-for="(description, index) in application.documents">
+            <label v-locale="localeKey + '.document_item'"></label>
+
+            <md-input v-model="application.documents[index]" required :disabled="sending"></md-input>
+
+            <md-button class="md-icon-button" :disabled="sending" @click="application.documents.splice(index, 1)">
+              <md-icon>clear</md-icon>
+            </md-button>
+          </md-field>
+
+          <md-button class="md-icon-button md-raised" :disabled="sending" @click="application.documents.push('')">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-card-content>
+      </md-card>
+      
+      <fee-input v-model="application" :disabled="sending" :invalid-fee.sync="invalidFee" application-type="claimManager" :for-validation="true"></fee-input>
+      
+      <div class="warn" v-if="warnText">{{warnText}}</div>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="sendDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

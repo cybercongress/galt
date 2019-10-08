@@ -1,0 +1,43 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 2;">
+        <div class="row inner-scroll">
+            <div class="col-md-12">
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="spaceTokenLoading"></md-progress-bar>
+                
+                <space-token-card v-if="spaceToken" :spaceToken="spaceToken" :infoMark="true" :full="true">
+                    <div class="actions-container">
+                       
+                    </div>
+                </space-token-card>
+                
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.tokens_tree'"></div>
+
+                <space-token-card v-for="spaceItem in spaceTokensTree" :spaceToken="spaceItem" :infoMark="spaceItem.tokenId == spaceToken.tokenId"></space-token-card>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 3;">
+        <div>
+            <md-button :to="'/land/space-token/' + $route.params.tokenId + '/3d'" :class="{'md-raised': true, 'md-accent': viewType == '3d'}">
+                <md-icon>layers</md-icon>
+                <span v-locale="localeKey + '.3d_view'"></span>
+            </md-button>
+            <md-button :to="'/land/space-token/' + $route.params.tokenId + '/map'" :class="{'md-raised': true, 'md-accent': viewType == 'map'}">
+                <md-icon>location_on</md-icon>
+                <span v-locale="localeKey + '.map_view'"></span>
+            </md-button>
+            <md-button :to="'/land/space-token/' + $route.params.tokenId + '/cloudpoints'" :class="{'md-raised': true, 'md-accent': viewType == 'cloudpoints'}">
+                <md-icon>dialpad</md-icon>
+                <span v-locale="localeKey + '.cloud_points'"></span>
+            </md-button>
+
+            <md-checkbox v-model="showOnlyCurrent"><span v-locale="localeKey + '.show_only_current'"></span></md-checkbox>
+        </div>
+
+        <space-token-cloudpoints v-if="!spaceTokenLoading && viewType === 'cloudpoints' && spaceTokensTree" :allSpaceTokens="spaceTokensTree" :curSpaceToken="spaceToken"></space-token-cloudpoints>
+        <space-token-3d v-if="!spaceTokenLoading && viewType === '3d' && spaceTokensTree" :allSpaceTokens="spaceTokensTree" :curSpaceToken="spaceToken"></space-token-3d>
+        <space-token-map v-if="!spaceTokenLoading && viewType === 'map' && spaceTokensTree" :allSpaceTokens="spaceTokensTree" :curSpaceToken="spaceToken"></space-token-map>
+    </div>
+</div>

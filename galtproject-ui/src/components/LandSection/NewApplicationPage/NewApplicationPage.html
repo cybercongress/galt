@@ -1,0 +1,50 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div id="new-application-page" class="inner-scroll" xmlns:v-on="">
+            <md-app-content>
+                <div class="row">
+                    <div class="col-md-12">
+                        <md-card>
+                            <md-card-header>
+                                <div class="md-title" v-locale="[localeKey + '.form.title', {area: newApplication.areaStr || '...'}]"></div>
+                                <md-button class="md-primary" @click="drawContour(true)"><md-icon>explore</md-icon> <span v-locale="localeKey + '.form.show_on_map'"></span></md-button>
+                            </md-card-header>
+
+                            <md-card-content>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        
+                                        <space-geo-data-inputs 
+                                                v-model="newApplication"
+                                                @change-contour="onContourChange()"
+                                                @change="setAreaStr()"
+                                                :application-type="'plotManager'"
+                                                :hide-fee="ended" :invalid-inputs.sync="invalidInputs" 
+                                                :invalid-fee.sync="invalidFee" 
+                                                :explorer-name="explorerName"></space-geo-data-inputs>
+                                        
+                                        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+                                        
+                                        <div>
+                                            <md-button @click="sendApplication()" class="md-raised md-accent" :disabled="ended || invalidInputs || invalidFee">
+                                                <md-icon>arrow_upward</md-icon>
+                                                <span v-locale="localeKey + '.form.submit'"></span>
+                                            </md-button>
+
+                                            <div class="md-success" v-if="ended" v-locale="localeKey + '.form.end'"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </div>
+
+            </md-app-content>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

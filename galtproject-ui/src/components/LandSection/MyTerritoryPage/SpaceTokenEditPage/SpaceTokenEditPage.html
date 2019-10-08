@@ -1,0 +1,69 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div class="row">
+            <div class="col-md-12 inner-scroll">
+                <md-button class="md-raised md-accent" :to="backLink">
+                    <md-icon>undo</md-icon>
+                    <span v-locale="localeKey + '.back'"></span>
+                </md-button>
+
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+                <space-token-card :spaceToken="basePlot" v-if="basePlot">
+                    <div class="actions-container">
+
+                    </div>
+                </space-token-card>
+
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title" v-locale="[localeKey + '.form.title', {area: spaceToken.areaStr}]"></div>
+                        <md-button class="md-primary" @click="drawContour(true)">
+                            <md-icon>explore</md-icon>
+                            <span v-locale="localeKey + '.form.show_on_map'"></span></md-button>
+                    </md-card-header>
+
+                    <md-card-content>
+                        
+                        <space-geo-data-inputs v-if="spaceToken.contour && spaceToken.contour.length"
+                                               @change-contour="drawContour()"
+                                               v-model="spaceToken" :hide-fee="ended" 
+                                               :application-type="applicationType"
+                                               :show-credentials="needCredentials" :invalid-inputs.sync="invalidInputs" 
+                                               :invalid-fee.sync="invalidFee" :explorer-name="explorerName"></space-geo-data-inputs>
+
+                        <div v-if="needApproveSpace">
+                            <md-button @click="approveSpaceToken()" class="md-raised md-accent"
+                                       :disabled="approveSpaceTokenDisabled || spaceApproved">
+                                <md-icon>done</md-icon>
+                                <span v-locale="localeKey + '.form.approve_space_token'"></span>
+                            </md-button>
+                        </div>
+                        
+                        <div v-if="needApproveGalt">
+                            <md-button @click="approveGalt()" class="md-raised md-accent"
+                                       :disabled="approveGaltDisabled || galtApproved">
+                                <md-icon>done</md-icon>
+                                <span v-locale="localeKey + '.form.approve_galt'"></span>
+                            </md-button>
+                        </div>
+                        
+                        <div>
+                            <md-button @click="submit()" class="md-raised md-accent" :disabled="submitDisabled">
+                                <md-icon>done_all</md-icon>
+                                <span v-locale="localeKey + '.form.submit'"></span>
+                            </md-button>
+                        </div>
+
+                        <div class="md-success" v-if="spaceToken.ended" v-locale="localeKey + '.form.end'"></div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main" :hide-surroundings="false"></explorer>
+    </div>
+</div>

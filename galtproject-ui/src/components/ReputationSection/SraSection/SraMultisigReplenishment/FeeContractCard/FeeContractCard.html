@@ -1,0 +1,30 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-if="item"><router-link :to="{ name: 'multisig-replenishment-fee-contract', params: { feeContractAddress: item.address }}">{{item.title}}</router-link></div>
+        <div class="md-subhead"><pretty-hex :hex="feeContractAddress"></pretty-hex></div>
+        
+        <div v-if="item" class="md-badge md-square md-theme-default md-position-top md-badge-top" v-locale="localeKey + '.fee_category.' + (item.category || 'undefined')"></div>
+    </md-card-header>
+
+    <md-card-content v-if="item">
+        <p style="margin-top: 0;">{{item.description}}</p>
+        <p v-if="item.proposalDescription">{{item.proposalDescription}}</p>
+        <div>
+            <span v-locale="localeKey + '.rate'"></span>
+            <span class="md-warn">{{item.rate}} {{item.currencyStr}}</span>
+        </div>
+        <div>
+            <span v-locale="localeKey + '.period'"></span>
+            <span class="md-warn">{{item.period | beautyPeriod}}</span>
+        </div>
+    </md-card-content>
+
+    <md-card-actions>
+        <slot></slot>
+
+    </md-card-actions>
+    
+    <md-card-content v-if="loading">
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+    </md-card-content>
+</md-card>

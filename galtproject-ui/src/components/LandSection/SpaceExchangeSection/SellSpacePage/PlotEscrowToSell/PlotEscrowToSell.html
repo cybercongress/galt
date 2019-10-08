@@ -1,0 +1,139 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+                <div class="padding">
+                    <md-field>
+                        <label v-locale="localeKey + '.filter_by_status'"></label>
+                        <md-select v-model="filterByStatus">
+                            <md-option v-for="(status, index) in orderStatuses" :value="status.name" :key="index">{{status.title}}</md-option>
+                        </md-select>
+                    </md-field>
+                </div>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+                <div v-locale="[localeKey + '.count', {value: filteredOrders.length}]" v-if="!loading"
+                     class="count-label"></div>
+                
+                <div v-locale="localeKey + '.orders_not_exists'" class="count-label" v-if="!loading && !ordersList.length"></div>
+
+                <plot-escrow-order-card v-for="order in filteredOrders" :order="order" :full="false" @click.native="showSpaceToken(order)">
+
+                    <div class="md-layout" style="flex-direction: column; flex: 1; margin: 0px 10px 0;">
+                        <div class="md-layout md-alignment-top-right" style="margin-top: 10px;" v-if="order.statusName === 'open' && order.seller === user_wallet">
+                        <md-button @click="cancelOrder(order)" class="md-raised">
+                            <md-icon>delete_forever</md-icon>
+                            <span v-locale="localeKey + '.cancel_order'"></span>
+                        </md-button>
+                        </div>
+                        
+                        <div class="md-layout-item" v-if="order.lastBuyer && order.lastBuyerActive">
+                            <label v-locale="'order_info.current_buyer'"></label> {{order.buyer.address}}<br>
+                            <label v-locale="'order_info.ask'"></label> {{order.buyer.ask}}<br>
+                            <label v-locale="'order_info.bid'"></label> {{order.buyer.bid}}<br>
+                            
+                            <label v-locale="'order_info.offer_status'"></label> <span v-locale="'plot_escrow_offer_statuses.' + order.buyer.statusName"></span><br>
+                            <label v-locale="'order_info.space_token_attached'"></label> <span v-locale="'boolean.' + order.spaceTokenAttached"></span><br>
+                            <label v-locale="'order_info.payment_attached'"></label> <span v-locale="'boolean.' + order.buyer.paymentAttached"></span><br>
+                            <label v-locale="'order_info.seller_resolved'"></label> <span v-locale="'boolean.' + order.buyer.sellerResolved"></span><br>
+                            <label v-locale="'order_info.buyer_resolved'"></label> <span v-locale="'boolean.' + order.buyer.buyerResolved"></span><br>
+
+                            <div v-if="order.buyer.custodianApplicationId" style="margin-top: 10px;">
+                                <label v-locale="'order_info.custodian_application'"></label> {{order.buyer.custodianApplicationId}}<br>
+                                <label v-locale="'order_info.custodian_application_status'"></label> <span v-locale="'application_statuses.' + order.buyer.custodianApplication.statusName"></span>
+                            </div>
+
+                            <label class="warn" v-locale="localeKey + '.need_to_resolve_custodian_application'" v-if="order.buyer.statusName === 'custodian_review' && order.buyer.custodianApplication.statusName !== 'approved'"></label>
+
+                            <div class="md-layout md-alignment-top-right" style="margin-top: 10px;">
+                                <md-button @click="cancelCurrentOffer(order)" class="md-raised" v-if="order.buyer.statusName === 'match'">
+                                    <md-icon>highlight_off</md-icon>
+                                    <span v-locale="localeKey + '.cancel_offer'"></span>
+                                </md-button>
+                                
+                                <md-button @click="emptyCurrentOffer(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'cancelled' && !order.spaceTokenAttached && !order.buyer.paymentAttached">
+                                    <md-icon>autorenew</md-icon>
+                                    <span v-locale="localeKey + '.empty_offer'"></span>
+                                </md-button>
+
+                                <md-button @click="reopenCurrentOffer(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'empty'">
+                                    <md-icon>gavel</md-icon>
+                                    <span v-locale="localeKey + '.reopen_offer'"></span>
+                                </md-button>
+
+                                <md-button @click="withdrawSpaceToken(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'cancelled' && order.spaceTokenAttached">
+                                    <md-icon>publish</md-icon>
+                                    <span v-locale="localeKey + '.withdraw_space_token'"></span>
+                                </md-button>
+                                
+                                <md-button @click="attachSpaceToken(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'match' && !order.spaceTokenAttached">
+                                    <md-icon>call_made</md-icon>
+                                    <span v-locale="localeKey + '.attach_space_token'"></span>
+                                </md-button>
+
+                                <md-button @click="applyForCustodian(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'escrow' && !order.custodians.length && !order.buyer.custodianApplicationId">
+                                    <md-icon>how_to_reg</md-icon>
+                                    <span v-locale="localeKey + '.apply_for_custodian'"></span>
+                                </md-button>
+
+                                <md-button @click="withdrawFromCustodian(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'custodian_review'" :disabled="order.buyer.custodianApplication.statusName !== 'approved'">
+                                    <md-icon>call_made</md-icon>
+                                    <span v-locale="localeKey + '.withdraw_from_custodian'"></span>
+                                </md-button>
+
+                                <md-button @click="resolve(order)" class="md-raised md-accent" :disabled="!order.buyer.custodianApplicationId && !order.custodians && !order.custodians.length" v-if="order.buyer.statusName === 'escrow' && !order.buyer.sellerResolved">
+                                    <md-icon>done_all</md-icon>
+                                    <span v-locale="localeKey + '.resolve'"></span>
+                                </md-button>
+
+                                <md-button @click="claimPayment(order)" class="md-raised md-accent" v-if="order.buyer.statusName === 'resolved' && order.buyer.paymentAttached">
+                                    <md-icon>publish</md-icon>
+                                    <span v-locale="localeKey + '.claim_payment'"></span>
+                                </md-button>
+                            </div>
+                        </div>
+
+                        <div class="md-layout-item" v-if="order.offersList && order.offersList.length && (!order.lastBuyerActive || order.showAllOrders)" style="margin-top: 25px;">
+                            <div class="md-layout">
+                                <div class="md-layout-item" v-for="offer in order.offersList">
+                                    <pretty-hex :hex="offer.address"></pretty-hex>
+                                    <br>
+                                    <label v-locale="'order_info.ask'"></label> {{offer.ask}}<br>
+                                    <label v-locale="'order_info.bid'"></label> {{offer.bid}}<br>
+                                    <span v-locale="'plot_escrow_offer_statuses.' + offer.statusName"></span><br>
+
+                                    <label class="warn" v-locale="localeKey + '.need_equal_prices'" v-if="order.statusName === 'open' && offer.ask !== offer.bid"></label><br>
+
+                                    <md-button @click="changeAsk(order, offer)" class="md-raised md-accent" v-if="order.statusName === 'open' && offer.ask !== offer.bid">
+                                        <md-icon>create</md-icon>
+                                        <span v-locale="localeKey + '.change_ask'"></span>
+                                    </md-button>
+                                    
+                                    <md-button @click="selectOffer(order, offer)" class="md-raised md-accent" v-if="order.statusName === 'open' && offer.ask === offer.bid">
+                                        <md-icon>check</md-icon>
+                                        <span v-locale="localeKey + '.select_offer'"></span>
+                                    </md-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md-layout-item" v-if="order.lastBuyerActive">
+                            <div class="md-layout md-alignment-top-center">
+                                <md-button class="md-icon-button md-raised" @click="toggleAllOffers(order)">
+                                    <md-icon>{{order.showAllOrders ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
+                                    </md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                    </div>
+                </plot-escrow-order-card>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main"></explorer>
+    </div>
+</div>

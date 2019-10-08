@@ -1,0 +1,15 @@
+<div id="buy-space" style="height: 100%;" xmlns:v-on="">
+    <md-app-content>
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+        
+        <div class="md-layout space-exchange-btn-container">
+            <div class="md-layout-item md-size-30">
+                <md-button class="md-raised md-accent space-exchange-btn" to="/land/buy/plot-escrow">
+                    <md-icon>gavel</md-icon>
+                    <span v-locale="[localeKey + '.plot_escrow.button',{on_sale_count: plotEscrowCount}]"></span>
+                </md-button>
+                <p v-locale="localeKey + '.plot_escrow.description'"></p>
+            </div>
+        </div>
+    </md-app-content>
+</div>

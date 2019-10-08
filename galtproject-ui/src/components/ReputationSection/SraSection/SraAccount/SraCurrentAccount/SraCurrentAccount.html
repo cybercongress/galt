@@ -1,0 +1,19 @@
+<div id="admin-page" style="height: 100%;" xmlns:v-on="">
+    <md-app-content class="padding">
+        <div class="md-title" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+        <div class="md-layout">
+            <div class="md-layout-item md-size-35">
+                <sra-account-general-info v-if="user_wallet" :user-wallet="user_wallet" :sra-address="$route.params.sraAddress"></sra-account-general-info>
+                
+                <sra-account-space-tokens :user-wallet="user_wallet" :sra-address="$route.params.sraAddress"></sra-account-space-tokens>
+            </div>
+            <div class="md-layout-item md-size-65">
+                <delegated-by-members v-if="user_wallet" :user-wallet="user_wallet" :sra-address="$route.params.sraAddress"></delegated-by-members>
+                
+                <delegations-members v-if="user_wallet" :user-wallet="user_wallet" :sra-address="$route.params.sraAddress"></delegations-members>
+            </div>
+        </div>
+
+    </md-app-content>
+</div>

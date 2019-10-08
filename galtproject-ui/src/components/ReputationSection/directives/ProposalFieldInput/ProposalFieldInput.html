@@ -1,0 +1,55 @@
+<div>
+    <md-progress-bar v-if="loading" class="md-accent" md-mode="indeterminate"></md-progress-bar>
+
+    <md-field v-if="fieldType === 'string'">
+        <label>{{placeholder}}</label>
+        <md-input v-model="localValue"></md-input>
+    </md-field>
+    
+    <div v-if="fieldType === 'bool'">
+        <md-checkbox v-model="localValue">{{placeholder}}</md-checkbox>
+    </div>
+    
+    <md-field v-if="fieldType === 'ether'">
+        <label>{{placeholder}}</label>
+        <md-input v-model="localValue" type="number"></md-input>
+    </md-field>
+
+    <div v-if="fieldType === 'decimals'">
+        <decimals-input v-model="localValue" :placeholder="placeholder"></decimals-input>
+    </div>
+    
+    <md-autocomplete v-if="fieldType === 'autocomplete'" v-model="localValue" :md-options="selectorList" @md-opened="getSelectorList"><!--@md-changed="getCountries"-->
+        <label>{{placeholder}}</label>
+
+        <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.title || '...' }}&nbsp;<small v-if="item.tip">({{ item.tip }})</small></template>
+    </md-autocomplete>
+
+    <md-field v-if="fieldType === 'select'">
+        <label>{{placeholder}}</label>
+        <md-select v-model="localValue">
+            <md-option v-for="item in selectorList" :value="item.value">{{item.title}}</md-option>
+        </md-select>
+    </md-field>
+
+    <md-field v-if="fieldType === 'textarea'">
+        <label>{{placeholder}}</label>
+        <md-textarea v-model="localValue"></md-textarea>
+    </md-field>
+    
+    <div v-if="fieldType === 'member_identification'">
+        <member-identification-input v-model="localValue" :sra-address="sraAddress"></member-identification-input>
+    </div>
+
+    <div v-if="fieldType === 'multisig_managers'">
+        <multisig-managers-input v-model="localValue" :sra-address="sraAddress"></multisig-managers-input>
+    </div>
+
+    <div v-if="fieldType === 'ms_contract_address'">
+        <ms-contract-address-input v-model="localValue" :sra-address="sraAddress"></ms-contract-address-input>
+    </div>
+
+    <div v-if="fieldType === 'boolean_select'">
+        <boolean-select-input v-model="localValue" :contract-type="contractType"></boolean-select-input>
+    </div>
+</div>

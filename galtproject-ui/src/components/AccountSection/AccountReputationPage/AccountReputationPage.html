@@ -1,0 +1,15 @@
+<div id="reputation-page" style="height: 100%;" xmlns:v-on="">
+    <md-app-content class="padding">
+        <!--<div class="md-title" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>-->
+
+        <div class="md-layout">
+            <div class="md-layout-item md-size-45">
+                <account-space-lockers :user-wallet="$route.params.userAddress"></account-space-lockers>
+            </div>
+            <div class="md-layout-item md-size-55">
+                <account-sras :user-wallet="$route.params.userAddress"></account-sras>
+            </div>
+        </div>
+
+    </md-app-content>
+</div>

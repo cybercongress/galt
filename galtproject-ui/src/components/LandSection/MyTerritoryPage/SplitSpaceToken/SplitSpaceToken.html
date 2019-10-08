@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-md-12">
+        <md-button class="md-raised md-accent" to="/land/my-territory/list">
+            <md-icon>undo</md-icon>
+            <span v-locale="localeKey + '.back'"></span>
+        </md-button>
+        
+        <div class="md-title padding" style="margin-bottom: 10px;" v-locale="localeKey + '.title'"></div>
+
+        <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+        
+        <md-card v-if="subjectSpaceToken.tokenId">
+            <md-card-header>
+                <div class="md-title" v-locale="[localeKey + '.source_package']"></div>
+                <md-button class="md-primary" @click="drawSubjectSpaceToken(true)"><md-icon>explore</md-icon> <span v-locale="localeKey + '.show_on_map'"></span></md-button>
+            </md-card-header>
+
+            <md-card-content>
+                <div class="col-md-12">
+                    <label v-locale="localeKey + '.token_id'"></label>{{subjectSpaceToken.tokenId}}<br><br>
+                    <label v-locale="localeKey + '.area_before'"></label>{{subjectSpaceToken.area | beautyNumber}}<br>
+                    <label v-locale="localeKey + '.contour_before'"></label><div style="white-space: normal;">{{subjectSpaceToken.contour.join(', ')}}</div>
+                    <div v-if="subjectSpaceToken.areaAfterSplit">
+                        <br>
+                        <label v-locale="localeKey + '.area_after'"></label>{{subjectSpaceToken.areaAfterSplit | beautyNumber}}<br>
+                        <label v-locale="localeKey + '.contour_after'"></label><div style="white-space: normal;">{{subjectSpaceToken.contourAfterSplit.join(', ')}}</div>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <md-card v-if="spaceSplitOperation && spaceSplitOperation.active">
+            <md-card-header>
+                <h3><span v-locale="localeKey + '.split_operation.title'"></span>
+                    <span v-if="spaceSplitOperation.doneStage" class="warn" v-locale="localeKey + '.split_operation.status.' + spaceSplitOperation.doneStage"></span>
+                </h3>
+                <h4><span v-locale="localeKey + '.split_operation.address'"></span><pretty-hex :hex="spaceSplitOperation.address"></pretty-hex></h4>
+            </md-card-header>
+            
+            <md-card-content>
+                <div v-if="spaceSplitOperation.doneStage !== 'polygons_finish'">
+                    <md-button @click="processSplitOperation()" class="md-raised md-accent">
+                        <md-icon>check</md-icon>
+                        <span v-locale="localeKey + '.continue_split_pack'"></span>
+                    </md-button>
+                </div>
+
+                <div v-else>
+                    <md-button @click="finishSplitToken()" class="md-raised md-accent">
+                        <md-icon>check</md-icon>
+                        <span v-locale="localeKey + '.finish_split_pack'"></span>
+                    </md-button>
+                </div>
+
+                <md-button @click="cancelSplitToken()" class="md-raised">
+                    <md-icon>clear</md-icon>
+                    <span v-locale="localeKey + '.cancel_split_pack'"></span>
+                </md-button>
+                
+                <div class="md-success" v-if="ended" v-locale="localeKey + '.end'"></div>
+
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="clipping.inProcess"></md-progress-bar>
+            </md-card-content>
+        </md-card>
+
+        <md-card v-if="!spaceSplitOperation || !spaceSplitOperation.active">
+            <md-card-header>
+                <div class="md-title" v-locale="[localeKey + '.split_package', {area: clipping.area}]"></div>
+                <!--<md-button class="md-primary" @click="drawContour(true)"><md-icon>explore</md-icon> <span v-locale="localeKey + '.show_on_map'"></span></md-button>-->
+            </md-card-header>
+
+            <md-card-content>
+                <contour-input v-model="clipping.contour" @change="drawContour()" v-on:clear-contour="onClearContour()" :disabled="clipping.inProcess" :explorer-name="explorerName"></contour-input>
+
+                <div style="margin-top: 20px;">
+                    <md-button @click="approveSubjectToken()" class="md-raised md-accent" :disabled="approved || clipping.approving">
+                        <md-icon>check</md-icon>
+                        <span v-locale="localeKey + '.approve'"></span>
+                    </md-button>
+                    
+                    <md-button @click="splitSubjectToken()" class="md-raised md-accent" :disabled="splitSpaceTokenDisabled">
+                        <md-icon>tab</md-icon>
+                        <span v-locale="localeKey + '.split_pack'"></span>
+                    </md-button>
+                </div>
+
+                <div class="md-success" v-if="ended" v-locale="localeKey + '.end'"></div>
+                
+                <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="clipping.inProcess || clipping.approving"></md-progress-bar>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

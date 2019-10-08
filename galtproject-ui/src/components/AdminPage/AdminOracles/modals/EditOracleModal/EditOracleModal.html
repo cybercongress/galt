@@ -1,0 +1,85 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <md-field>
+        <label v-locale="localeKey + '.address'"></label>
+        <md-input v-model="resultOracle.address" required></md-input>
+      </md-field>
+      
+      <md-field>
+        <label v-locale="localeKey + '.name'"></label>
+        <md-input v-model="resultOracle.name" required></md-input>
+      </md-field>
+
+      <md-field>
+        <label v-locale="localeKey + '.position'"></label>
+        <md-input v-model="resultOracle.position" required></md-input>
+      </md-field>
+
+      <md-field>
+        <label v-locale="localeKey + '.description'"></label>
+        <md-input v-model="resultOracle.description" required></md-input>
+      </md-field>
+
+      <md-card>
+        <md-card-header>
+          <label v-locale="localeKey + '.description_hashes'"></label>
+        </md-card-header>
+
+        <md-card-content>
+          <md-field v-for="(description, index) in resultOracle.descriptionHashes">
+            <label v-locale="localeKey + '.description_hash_item'"></label>
+            
+            <md-input v-model="resultOracle.descriptionHashes[index]" required></md-input>
+            
+            <md-button class="md-icon-button" @click="resultOracle.descriptionHashes.splice(index, 1)">
+              <md-icon>clear</md-icon>
+            </md-button>
+          </md-field>
+
+          <md-button class="md-icon-button md-raised" @click="resultOracle.descriptionHashes.push('')">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-card-content>
+      </md-card>
+
+      <md-card>
+        <md-card-header>
+          <label v-locale="localeKey + '.roles'"></label>
+        </md-card-header>
+        
+        <md-card-content>
+          <md-field v-for="(role, index) in resultOracle.roles">
+            <label v-locale="localeKey + '.role_item'"></label>
+            
+            <md-select v-model="resultOracle.roles[index]">
+              <md-option v-for="role in applicationRoles" :value="role.name">{{role.title}}</md-option>
+            </md-select>
+
+            <md-button class="md-icon-button" @click="removeRole(index)">
+              <md-icon>clear</md-icon>
+            </md-button>
+          </md-field>
+
+          <md-button class="md-icon-button md-raised" @click="pushRole()">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="saveDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

@@ -1,0 +1,14 @@
+<div>
+    <md-field>
+        <label v-locale="localeKey + '.currency'"></label>
+        <md-select v-model="currency">
+            <md-option value="eth">ETH</md-option>
+            <md-option value="erc20">ERC20</md-option>
+        </md-select>
+    </md-field>
+    
+    <md-field v-if="currency === 'erc20'">
+        <label v-locale="localeKey + '.contract_address'"></label>
+        <md-input v-model="contractAddress"></md-input>
+    </md-field>
+</div>

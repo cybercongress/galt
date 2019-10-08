@@ -1,0 +1,18 @@
+<div xmlns:v-on="">
+    <div class="md-layout md-gutter">
+        <div class="md-layout-item md-size-60">
+            <md-autocomplete v-model="selectedCurrency" :md-options="currencies" @md-opened="getCurrencies" :disabled="disabled"><!--@md-changed="getCountries"-->
+                <label v-locale="localeKey + '.currency'"></label>
+
+                <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name || '...' }}&nbsp;&nbsp;<small v-if="item.address">({{ item.address }})</small></template>
+            </md-autocomplete>
+        </div>
+        
+        <div class="md-layout-item md-size-40">
+            <md-field><!--  :class="{'md-invalid': invalidPrice}" -->
+                <label>{{label}}</label>
+                <md-input v-model="value.price" required v-on:keyup="changePrice()" :disabled="disabled"></md-input>
+            </md-field>
+        </div>
+    </div>
+</div>

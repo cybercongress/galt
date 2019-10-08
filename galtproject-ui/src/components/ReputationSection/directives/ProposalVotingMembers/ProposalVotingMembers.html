@@ -1,0 +1,41 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-button :class="{'md-accent': currentTab === 'accepted'}" @click="currentTab = 'accepted'"><span v-locale="[localeKey + '.accepted', {count: proposalStatus ? proposalStatus.acceptedCount : '...'}]"></span></md-button>
+        <md-button :class="{'md-accent': currentTab === 'declined'}" @click="currentTab = 'declined'"><span v-locale="[localeKey + '.declined', {count: proposalStatus ? proposalStatus.declinedCount : '...'}]"></span></md-button>
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <md-table>
+                    <md-table-row>
+                        <md-table-head><span v-locale="localeKey + '.address_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.balance_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.owned_balance_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.identification_title'"></span></md-table-head>
+                    </md-table-row>
+
+                    <md-table-row v-for="member in membersList">
+                        <md-table-cell><pretty-hex :hex="member.address" :to="'/reputation/community/' + sraAddress + '/member/' + member.address"></pretty-hex></md-table-cell>
+                        <md-table-cell>{{member.balanceStr}}</md-table-cell>
+                        <md-table-cell>{{member.ownedBalanceStr}}</md-table-cell>
+                        <md-table-cell><member-identification :hex="member.identification"></member-identification></span></md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </md-list-item>
+
+            <md-list-item v-if="loading">
+                <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+            </md-list-item>
+            
+            <md-list-item v-if="!loading && !membersList.length">
+                <span class="md-list-item-text row-direction">
+                    <span v-locale="localeKey + '.not_found'"></span>
+                </span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

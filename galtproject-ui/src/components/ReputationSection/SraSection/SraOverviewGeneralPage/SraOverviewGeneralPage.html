@@ -1,0 +1,12 @@
+<div>
+    <div class="md-layout">
+        <div class="md-layout-item md-size-35">
+            <sra-card :address="$route.params.sraAddress"></sra-card>
+
+            <sra-properties :sra-address="$route.params.sraAddress"></sra-properties>
+        </div>
+        <div class="md-layout-item md-size-65">
+            <sra-members :sra-address="$route.params.sraAddress"></sra-members>
+        </div>
+    </div>
+</div>

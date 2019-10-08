@@ -1,0 +1,2791 @@
+{
+  "navbar": {
+    "project_title": "Galt Project Global Property Registry",
+    "video_tutorials": "Video instructions",
+    "rpc_server": "RPC Server:",
+    "alt_servers": "Alternative servers",
+    "language": {
+      "title": "Language",
+      "list": [
+        ["ru", "Russian"],
+        ["en", "English"]
+      ]
+    }
+  },
+  "main_menu": {
+    "title": "Menu",
+    "new_application": "New application",
+    "my_applications": "My applications",
+    "my_territory": "My Tokens",
+    "validate_applications": "Applications<br>for review",
+    "galtdex": "GALT Automatic<br>Exchange",
+    "admin": "Administration",
+    "buy_space": "Buy Property Tokens",
+    "sell_space": "Sell Property Tokens",
+    "personal_cabinet": "Personal cabinet",
+    "my_reputation": "My reputation",
+    "sras_registry": "Communities of<br>Property owners",
+    "tech_info": "Technical info",
+    "extensions": "Extensions"
+  },
+  "wait_screen": {
+    "default_title": "Please wait until all transactions will be send and confirmed",
+    "default_tip": "Pay attention for new transactions",
+
+    "release_rights": {
+      "space": "The built-in wallet still has the rights to manage your SPACE(Land plot) tokens",
+      "plot_manager": "The built-in wallet still has the rights to manage your Applications",
+      "tip": "Use MetaMask to revoke rights from built-in wallet"
+    },
+    "transactions": {
+      "sent_count": "Transactions sent: <%= actual_value %> из <%= full_value %>",
+      "confirmed_count": "Transactions confirmed: <%= actual_value %> из <%= full_value %>",
+      "rejected_count": "Transaction errors: <%= actual_value %> из <%= full_value %>",
+      "will_repeat": " => will repeat wih gas higher",
+      "repeat_of": ", repeat of ",
+      "sent_status": "Sent",
+      "error_status": "Error: ",
+      "reverted_status": "Failed: ",
+      "confirmations_status": "Confirmations: <%= value %>",
+      "mined_status": "Mined",
+      "tx_row": "#<%= number %> - "
+    }
+  },
+  "rpc_screen": {
+    "not_correct": "Your RPC server in MetaMask or Nifty is not correct to work with this site.<br/>Please use one of the proposed RPC servers",
+    "you_can_use_tip": "Use MetaMask or Nifty browser extension",
+    "youtube_video_id": "dxasmHOsEFg"
+  },
+  "pack_contour": {
+    "title": "Vertices (<%= value %>)",
+    "clear": "Clear",
+    "altitude": "Height, meters",
+    "geohash": {
+      "placeholder": "Geohash or coordinates",
+      "select_on_map": "Select on map",
+      "please_select_on_map": "Select a point on the map and its Geohash will be inserted in the field"
+    }
+  },
+  "fee_input": {
+    "title": "Contract fee",
+    "currency": "Currency",
+    "amount": "Amount",
+    "help": "Smart contract takes a fee"
+  },
+  "fee_with_amount_input": {
+    "title": "Contract fee (More amount - higher in list)",
+    "currency": "Currency",
+    "amount": "Amount",
+    "help": "Smart contract takes a fee"
+  },
+  "fee_for_validation_input": {
+    "title": "Pay for validation (More amount - faster review)",
+    "help": "Validators take a fee for review application",
+    "currency": "Currency",
+    "amount": "Amount"
+  },
+  "price_and_currency_input": {
+    "currency": "Currency or ERC20 address"
+  },
+  "space_geo_data_inputs": {
+    "ledger_identifier": "Cadastral number",
+    "edit_credentials": "Edit identity data",
+    "document_id": "ID or Passport number",
+    "full_name": "Full name as specified in the document",
+    "description": "Additional notes",
+    "view_config": "View config address",
+    "additional_description": {
+      "plot": [
+        {"name": "config_address", "value": "View config address"}
+      ],
+      "building": [
+        {"name": "config_address", "value": "View config address"}
+      ],
+      "predefined_building": [
+        {"name": "config_address", "value": "View config address"},
+        {"name": "address", "value": "Address"}
+      ],
+      "predefined_room": [
+        {"name": "config_address", "value": "View config address"},
+        {"name": "address", "value": "Address"},
+        {"name": "room", "value": "Building room number or id"}
+      ]
+    },
+    "type": "Space token type",
+    "level": "Floor",
+    "custom_area": "Custom area",
+    "building_tip": "Building - its a type for creating buildings and floors on existing land plot",
+    "predefined_tip": "Pre-defined - its a type for creating building or appartment-like real estate tokens with specified area and general contour of building",
+    "cache_geohashes": "Cache coordinates",
+    "success": {
+      "cache_geohashes": {
+        "title": "Geohashes cached",
+        "description": "Now you can submit application"
+      }
+    },
+    "error": {
+      "something_wrong": {
+        "title": "Oops!",
+        "description": "Something went wrong"
+      }
+    }
+  },
+  "new_application": {
+    "form": {
+      "title": "New application (<%= area %> meters)",
+      "show_on_map": "Show on map",
+      "submit": "Send application for review",
+      "end": "Application successfully created! Now you can see application status in My applications"
+    },
+    "wait_screen": {
+      "application_creating": "Creating application",
+      "approve_galt": "Approve GALT",
+      "release_internal_wallet": "Returning ETH from built-in wallet and revoking rights",
+      "submit_application": "Sending transactions"
+    },
+    "error": {
+      "min_contour": "The number of vertices must be at least <%= value %>",
+      "send_application": {
+        "title": "Error",
+        "description": "An error occurred during transaction sending, perhaps this land plot is already occupied by someone"
+      },
+      "not_enough_galt": {
+        "title": "You dont have enough GALT",
+        "description": "You can buy GALT on GaltDex"
+      },
+      "something_wrong": {
+        "title": "Oops!",
+        "description": "Something went wrong"
+      }
+    },
+    "success": {
+      "send_application": {
+        "title": "Application created",
+        "description": "Now you need to wait until transaction will be confirmed and you will be able to add all geohashes to your application"
+      },
+      "submit_application": {
+        "title": "Application have been sent for review",
+        "description": "Now you have to wait until Application will be reviewed by geodesist and lawyer"
+      }
+    },
+    "credentials": {
+      "title": "Specify data for identification",
+      "document_id": "You passport or ID number",
+      "full_name": "Full name as specified in the document",
+      "description": "Identification information is required to verify that you are the owner of this land plot. This data will not be sent to the Ethereum network, but a unique hash will be generated.",
+      "cancel": "Cancel",
+      "ok": "Ok"
+    }
+  },
+  "use_internal_wallet": {
+    "title": "Use built-in wallet",
+    "introduction": "To perform this operation you need to send <b><%= value %> transactions</b>. Do you want to use <b>Built-in wallet</b> to perform those operations?",
+    "description_parts": [
+      "If you use Built-in wallet, you will need to send only 1 transaction: to send the necessary amount of ETH to the Built-in wallet for gas to perform these operations.",
+      "The built-in wallet and it's private key is stored in your browser, and only you have access to it.",
+      "The built-in wallet uses Ethers <b> only to pay for Gas to execute transactions </b>, and <b> after sending</b> transactions <b>remaining ETH will be sent to your main address and new Built-in wallet adress will be generated automaticly</b>."
+    ],
+    "send_eth": {
+      "title": "Send ETH to built-in wallet",
+      "address": "Built-in wallet address:",
+      "balance": "Built-in wallet address balance:",
+      "need_eth": "For this operation ETH required amount:",
+      "export_private_key": "Export private key",
+      "enough": "Wallet balance is enough to send transactions",
+      "input": "Send ETH (calculated automatically)",
+      "button": "Send <%= value %> ETH to Built-in wallet"
+    },
+    "warn": {
+      "wait_for_fulfill": "Please wait until Ethers will be transfered to Built-in wallet",
+      "wait_for_approve": "Please wait for confirmation of transaction, which delegates rights to Built-in wallet",
+      "wait_for_sent_transaction": "At the moment, ETH is being send to your Built-in wallet. Please wait for confirmation of the transaction to calculate ETH required amount for sending new transactions."
+    },
+    "cancel": "Use MetaMask",
+    "ok": "Continue with built-in wallet",
+    "error": {
+      "something_wrong": {
+        "title": "Something went wrong",
+        "description": "Unknown contract <%= value %>"
+      }
+    },
+    "success": {
+      "export_private_key": "Private key of Built-in wallet was copied to clipboard"
+    }
+  },
+  "currency": {
+    "eth": "ETH",
+    "galt": "GALT",
+    "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359": "DAI"
+  },
+  "my_applications": {
+    "title": "My current applications",
+    "count": "Found applications: <%= value %>",
+    "filter_by_status": "Filter by status",
+    "filter_by_contract": "Filter by type",
+    "make_proposal": "Make a proposal",
+    "claim_manager_proposal": "Create Dispute",
+    "submit_application": "Send application for review",
+    "resubmit_application": "Edit and resubmit application",
+    "check_geohashes": "Check geohashes in application",
+    "edit": "Edit details",
+    "approve_application": "Confirm application results",
+    "claim_gas_deposit": "Claim gas pledge",
+    "claim_token": "Claim token",
+    "withdraw_token": "Withdraw token",
+    "withdraw_token_on_plot_escrow": "Now you can continue the deal on Land and real estate marketplace page",
+    "cancel_application": "Cancel application",
+    "disassemble_application": "Disassemble land plot",
+    "disassemble": {
+      "title": "Are you sure you want to disassemble land plot in application <%= application_id %> and to remove <%= geohashes_count %> geohashes?",
+      "wait_screen": {
+        "title": "Removing geohash",
+        "release_rights": "Returning ETH from built-in wallet and revoking rights"
+      }
+    },
+    "wait_screen": {
+      "calculation": "Please, wait until calculations are completed",
+      "approximation": {
+        "calculate": "Approximation is calculated ",
+        "entry_check": "(Check for contour entry) ",
+        "parents_merge": "(Geohash merge) ",
+        "stats": "<%= actual_value %>/<%= full_value %>"
+      },
+      "send_geohashes": {
+        "title": "Please wait until all transactions will be send and confirmed",
+        "add_geohashes": "Adding geohashes",
+        "release": "Returning ETH from built-in wallet and revoking rights"
+      }
+    },
+    "success": {
+      "submit": {
+        "title": "Application have been sent",
+        "description": "Now you have to wait until Application will be reviewed by geodesist and lawyer"
+      },
+      "check_geohashes": {
+        "title": "All geohashes in your application are correct!",
+        "description": "You do not need to add geohashes to your land plot, since all geohashes are already registered in your application"
+      },
+      "disassembled": {
+        "title": "Successfully disassembled!",
+        "description": "Now you can get your reward"
+      },
+      "withdraw": {
+        "title": "Successfully withdraw!",
+        "description": " "
+      },
+      "claim_token": {
+        "title": "Successfully claimed!",
+        "description": " "
+      }
+    },
+    "error": {
+      "wrong_action": {
+        "title": "Oops!",
+        "description": "Something went wrong"
+      },
+      "general": {
+        "title": "Oops!",
+        "description": "Something went wrong"
+      }
+    },
+    "attach_space_token": "Attach Space token to contract",
+    "attach_space_token_modal": {
+      "title": "Attach Space token to contract",
+      "description": "Are you sure, that you want to send token <%= tokenId %> to PlotCustodian contract?",
+      "need_to_approve_first": "You need to approve your token to PlotCustodian contract address first",
+      "approve": "Approve Space token to PlotCustodian",
+      "cancel": "Cancel",
+      "ok": "Send Space token",
+      "success": {
+        "approve": {
+          "title": "Successfully approved",
+          "description": "Now you can send your Space token"
+        },
+        "attach": {
+          "title": "Token successfully sent",
+          "description": " "
+        }
+      },
+      "error": {
+        "approve": {
+          "title": "Error on approving",
+          "description": "Please check that this token is still yours"
+        },
+        "attach": {
+          "title": "Error on sending",
+          "description": "Please check that you approved this token to PlotCustodian contract"
+        }
+      }
+    },
+    "submit_application_modal": {
+      "title": "Send application for review",
+      "description": "After submit application - you should to wait until validators review and accept your application",
+      "tip": {
+        "sending": "Application sending. Please check MetaMask",
+        "approve_galt": "Need to approve GALT for fee payment. Please check MetaMask"
+      },
+      "success": {
+        "send_application": {
+          "title": "Application successfully sent",
+          "description": "Please wait for validation"
+        }
+      },
+      "error": {
+        "send_application": {
+          "title": "Error on application sending",
+          "description": "Please check input data"
+        },
+        "not_enough_galt": {
+          "title": "You dont have enough GALT",
+          "description": "You can buy GALT on GaltDex"
+        }
+      },
+      "ok": "Send application",
+      "cancel": "Cancel"
+    },
+    "resubmit_application_modal": {
+      "title": "Edit application details",
+      "tip": {
+        "saving": "Application saving. Please check MetaMask"
+      },
+      "success": {
+        "save": {
+          "title": "Application successfully saved",
+          "description": " "
+        }
+      },
+      "error": {
+        "save": {
+          "title": "Error on application saving",
+          "description": "Please check input data"
+        }
+      },
+      "ok": "Save application",
+      "cancel": "Cancel"
+    },
+    "create_claim_manager_application_modal": {
+      "title": "Creating a dispute for refund",
+      "description": "Each user can create a dispute to recover his financial losses in case of an error, made by validators or custodians.<br>When creating a dispute, you must specify the recipient of the compensation and the amount you want to claim.<br>During the dispute, the final amount and the list of validators/custodians, who is guilty, will be determined by the auditors. By their decision pledges can be charged off and transferred to recipient of compensation.",
+      "beneficiary": "Beneficiary",
+      "amount": "GALT amount",
+      "multisig_address": "MultiSig address",
+      "documents": "Documents",
+      "document_item": "Document hash",
+      "tip": {
+        "sending": "Application sending. Please check MetaMask",
+        "approve_galt": "Need to approve GALT for fee payment. Please check MetaMask"
+      },
+      "success": {
+        "send_application": {
+          "title": "Application successfully sent",
+          "description": "Please wait for validation"
+        }
+      },
+      "error": {
+        "send_application": {
+          "title": "Error on application sending",
+          "description": "Please check input data"
+        },
+        "not_enough_galt": {
+          "title": "You dont have enough GALT",
+          "description": "You can buy GALT on GaltDex"
+        }
+      },
+      "ok": "Send application",
+      "cancel": "Cancel"
+    }
+  },
+  "validate_applications": {
+    "title": "Applications for review",
+    "count": "Found applications: <%= value %>",
+    "filter_by_status": "Filter by status",
+    "filter_by_role": "Filter by role",
+    "lock_application": "Take an application",
+    "valuate_plot": "Valuate plot",
+    "confirm_valuate_plot": "Confirm plot valuation",
+    "check_and_approve": "Check and approve",
+    "attach_documents": "Attach documents",
+    "create_proposal": "Create proposal",
+    "approve": "Approve",
+    "reject_application": "Reject",
+    "revert_application": "Return",
+    "disassemble_application": "Disassemble geohashes",
+    "claim_gas_deposit": "Claim gas pledge",
+    "get_reward": "Get Reward",
+    "need_locked_by_all_roles": "Application should be locked by all roles for handle it",
+    "valuations_should_be_equal": "For approve application - valuations by validators should be equal",
+    "success": {
+      "valuate": {
+        "title": "Application successfully valuated",
+        "description": "Now need to confirm by another validator"
+      },
+      "approved": {
+        "title": "Application was aproved",
+        "description": "Now you can get reward for review"
+      },
+      "rejected": {
+        "title": "Application was rejected",
+        "description": "Now you can get reward for review"
+      },
+      "reverted": {
+        "title": "Application was returned",
+        "description": "Now an applicant needs to change his application, contact him for details"
+      },
+      "locked": {
+        "title": "You have fixed this application for yourself",
+        "description": "Now you need to review it"
+      },
+      "disassembled": {
+        "title": "Successfully disassembled!",
+        "description": "Now you can get your reward"
+      },
+      "reward": {
+        "title": "You got your reward!",
+        "description": "Your reward for processing the application was <%= value %> <%= currency %>"
+      },
+      "vote_for_proposal": {
+        "title": "You have successfully voted for proposal",
+        "description": " "
+      }
+    },
+    "error": {
+      "need_approved_by_all_oracles": {
+        "title": "Need to be approved by all oracles",
+        "description": "For getting the reward - you should to wait until all validators approve the application"
+      },
+      "already_locked": {
+        "title": "You already locked this application",
+        "description": " "
+      },
+      "full_locked": {
+        "title": "This application already full-locked by all roles",
+        "description": " "
+      },
+      "need_disassembled": {
+        "title": "The rejected application must be disassembled",
+        "description": "You can not get a reward until you disassemble application"
+      },
+      "general": {
+        "title": "An error occurred while sending the transaction",
+        "description": "Please check the relevance of the data"
+      },
+      "cant_be_oracle_for_yourself": {
+        "title": "You can not be a validator for your application",
+        "description": " "
+      }
+    },
+    "disassemble": {
+      "title": "Are you sure you want to disassemble land plot in application <%= application_id %> and to remove <%= geohashes_count %> geohashes?",
+      "wait_screen": {
+        "title": "Removing geohash",
+        "release_rights": "Returning ETH from built-in wallet and revoking rights"
+      }
+    },
+    "valuate_plot_modal": {
+      "title": "Valuate plot",
+      "placeholder": "GALT price"
+    },
+    "approve_valuation": {
+      "title": "Are you sure to approve application <%= application_id %> for valuation?"
+    },
+    "approve_custodian": {
+      "title": "Are you sure to approve application <%= application_id %> for <%= action == 'attach' ? 'attach' : 'detach' %> custodian?"
+    },
+    "vote_for_proposal_confirm": {
+      "title": "Are you sure to vote for proposal <%= proposal_id %> of application <%= application_id %>?<br><br>You can vote only for one proposal in application.<br><br>Before one of the proposals reaches the required number of votes - you can change your decision."
+    },
+    "attach_documents_modal": {
+      "title": "Attach documents to application",
+      "description": "Use IPFS for upload documents for attach them to application",
+      "documents": "Documents",
+      "document_item": "Document hash",
+      "tip": {
+        "sending": "Transaction sending. Please check MetaMask"
+      },
+      "success": {
+        "send": {
+          "title": "Documents successfully attached",
+          "description": " "
+        }
+      },
+      "error": {
+        "send": {
+          "title": "Error on documents attaching",
+          "description": "Please check input data"
+        }
+      },
+      "ok": "Send documents",
+      "cancel": "Cancel"
+    },
+    "create_claim_manager_proposal_modal": {
+      "title": "Create proposal for claim compensation",
+      "description": "You can create one or more proposal for dispute. That proposal, which the first will gain the necessary number of votes - will apply for dispute.",
+      "action": "Action",
+      "message": "Message",
+      "blame_list": "Validators, who will receive penalty",
+      "blame_item": {
+        "address": "Address",
+        "role": "Role",
+        "penalty": "GALT Penalty"
+      },
+      "tip": {
+        "sending": "Transaction sending. Please check MetaMask"
+      },
+      "success": {
+        "send": {
+          "title": "Proposal successfully created",
+          "description": " "
+        }
+      },
+      "error": {
+        "send": {
+          "title": "Error on proposal creating",
+          "description": "Please check input data"
+        }
+      },
+      "ok": "Send proposal",
+      "cancel": "Cancel"
+    }
+  },
+  "check_credentials": {
+    "title": "Enter applicant identification data",
+    "document_id": "ID or Passport number",
+    "full_name": "Full name as specified in the document",
+    "status": {
+      "title": "Status: ",
+      "waiting": "Waiting for data entry",
+      "invalid": "Data not valid!",
+      "valid": "Correct!"
+    },
+    "description": "Enter the data in order to verify that the Aplicant really owns the Land plot",
+    "cancel": "Cancel",
+    "ok": "Aprove application"
+  },
+  "space_token_contour": {
+    "height_item": " (<%= value %> m.)"
+  },
+  "application_info": {
+    "space_token_type": "Space token type: ",
+    "ledger_identifier": "Cadastral number: ",
+    "status": "Status: ",
+    "geohashes_count": "Geohashes number in Land Plot: ",
+    "applicant": "The applicant: ",
+    "beneficiary": "The beneficiary: ",
+    "multisig_address": "MultiSig address: ",
+    "amount": "The sum: ",
+    "slots_taken": "Validators took the application: ",
+    "slots_threshold": "Required number to complete: ",
+    "total_slots": "Total validators possible: ",
+    "area": "Area, meters: ",
+    "description": "Description: ",
+    "description_point_cloud": "Point cloud: ",
+    "description_building_model": "Building model: ",
+    "description_address": "Address: ",
+    "description_room": "Room: ",
+    "description_config_address": "View config address: ",
+    "contour": "Contour: ",
+    "contour_length": "Contour length: ",
+    "action": "Action: ",
+    "package_token": "Land Plot token: ",
+    "oracle_reward": "Review reward: ",
+    "chosen_custodian": "Chosen custodians: ",
+    "token_attached": "Token attached: ",
+    "first_valuation": "First valuation: ",
+    "second_valuation": "Final valuation: ",
+    "attached_documents": "Attached documents: ",
+    "contract_type": {
+      "plot_valuation": "For valuation",
+      "plot_manager": "For plot register",
+      "plot_clarification": "For plot clarification",
+      "plot_custodian": "For plot custodian",
+      "plot_escrow": "For land market deal cancellation",
+      "claim_manager": "For claim compensation"
+    },
+    "proposal": {
+      "id": "ID: ",
+      "action": "Action: ",
+      "message": "Message: ",
+      "from": "From: ",
+      "votes_count": "Votes: ",
+      "votes_title": "Voters:",
+      "amount": "Amount: ",
+      "blame_oracles_count": "Blame validators: ",
+      "blame_oracles_title": "Blame validators: ",
+      "vote_for": "Vote for",
+      "already_voted": "You voted for this proposal"
+    },
+    "space_token_not_found": "Space token not found! Looks like it burned."
+  },
+  "application_statuses": {
+    "all": "All",
+    "not_exist": "Does not exist",
+    "new": "New",
+    "submitted": "Submitted for review",
+    "locked": "Review",
+    "review": "Review",
+    "approved": "Approved",
+    "open": "Open",
+    "cancelled": "Cancelled",
+    "rejected": "Rejected",
+    "reverted": "Returned",
+    "confirmed": "Confirmed",
+    "completed": "Completed",
+    "valuated": "Valuated",
+    "disassembled_by_applicant": "Disassembled by applicant",
+    "disassembled_by_oracle": "Disassembled by validator",
+    "closed": "Closed"
+  },
+  "claim_manager_chat": {
+    "title": "Chat(<%= messagesCount || '...' %>)",
+    "new_message": "New message"
+  },
+  "order_info": {
+    "status": "Status: ",
+    "package_token": "Space token: ",
+    "space_token_type": "Token type: ",
+    "seller": "Seller: ",
+    "current_buyer": "Current buyer: ",
+    "offer_status": "Status of deal: ",
+    "ask": "Ask price: ",
+    "bid": "Bid price: ",
+    "currency": "Currency: ",
+    "custodian": "Custodians: ",
+    "documents": "Documents: ",
+    "custodian_application": "Application for custodians: ",
+    "custodian_application_status": "Application for custodians status: ",
+    "space_token_attached": "Space token sent: ",
+    "payment_attached": "Payment sent: ",
+    "seller_resolved": "Seller confirmed the deal: ",
+    "buyer_resolved": "Buyer confirmed the deal: "
+  },
+  "order_statuses": {
+    "all": "All",
+    "not_exist": "Does not exist",
+    "open": "Open",
+    "locked": "Deal in process",
+    "closed": "Closed",
+    "cancelled": "Cancelled"
+  },
+  "plot_escrow_offer_statuses": {
+    "all": "All",
+    "not_exist": "Does not exist",
+    "open": "Open",
+    "match": "Ready to escrow",
+    "escrow": "Escrow",
+    "audit_required": "Audit required",
+    "custodian_review": "Назначение кастодиана",
+    "audit": "On audit",
+    "resolved": "Resolved",
+    "closed": "Closed",
+    "cancelled": "Cancelled",
+    "empty": "Empty"
+  },
+  "validation_roles": {
+    "all": "All",
+    "pm_surveyor_oracle_type": "Cadastral engineer",
+    "pm_lawyer_oracle_type": "Notary",
+    "pm_auditor_oracle_type": "Auditor",
+    "pcl_cadastral": "Cadastral engineer",
+    "pcl_notary": "Notary",
+    "pcl_auditor": "Auditor",
+    "pv_appraiser_oracle_type": "Appraiser",
+    "pv_appraiser_2_oracle_type": "Appraiser 2",
+    "pv_auditor_oracle_type": "Auditor",
+    "pc_custodian_oracle_type": "Custodian",
+    "pc_auditor_oracle_type": "Auditor",
+    "pc_applicant_role": "Applicant",
+    "pe_auditor_oracle_type": "Auditor",
+    "cm_auditor": "Auditor",
+    "custodian": "Custodian",
+    "auditor": "Auditor",
+    "applicant": "Applicant"
+  },
+  "admin_validation_roles": {
+    "all": "All",
+    "pm_surveyor_oracle_type": "PM Cadastral engineer",
+    "pm_lawyer_oracle_type": "PM Notary",
+    "pm_auditor_oracle_type": "PM Auditor",
+    "pcl_cadastral": "PCL Cadastral engineer",
+    "pcl_notary": "PCL Notary",
+    "pcl_auditor": "PCL Auditor",
+    "pv_appraiser_oracle_type": "PV Appraiser",
+    "pv_appraiser_2_oracle_type": "PV Appraiser 2",
+    "pv_auditor_oracle_type": "PV Auditor",
+    "pc_custodian_oracle_type": "PC Custodian",
+    "pc_auditor_oracle_type": "PC Auditor",
+    "pe_auditor_oracle_type": "PE Auditor",
+    "cm_auditor": "CM Auditor"
+  },
+  "validation_statuses": {
+    "not_exist": "Does not exist",
+    "pending": "Pending",
+    "review": "Review",
+    "locked": "Review",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "reverted": "Returned"
+  },
+  "payment_methods": {
+    "none": "None",
+    "eth": "ETH",
+    "galt": "GALT",
+    "eth_and_galt": "ETH and GALT"
+  },
+  "application_contracts_types": {
+    "all": "All",
+    "plot_valuation": "Applications for valuation",
+    "plot_manager": "Applications for plot register",
+    "plot_clarification": "Applications for plot clarification",
+    "plot_custodian": "Applications for plot custodian",
+    "plot_escrow": "Applications for land market deal cancellation",
+    "claim_manager": "Applications for claim compensation",
+    "plot_clarification_manager": "Application for clarification"
+  },
+  "my_territory": {
+    "title": "My Tokens",
+    "count": "Found Space tokens: <%= value %>",
+    "search": "Search",
+    "filter_by_type": "Filter by type",
+    "filter_by_level": "Filter by level",
+    "create_pack": "Create Land plot",
+    "merge_geohashes": "Merge geohashes",
+    "send_token": "Send Land plot token",
+    "split_geohash": "Split geohash",
+    "add_geohashes": "Add geohashes",
+    "remove_geohashes": "Remove geohashes",
+    "disassemble_pack": "Disassemble",
+    "add_building": "Add building",
+    "plot_clarification": "Plot clarification",
+    "split_pack": "Split",
+    "merge_pack": "Merge",
+    "place_to_escrow": "Place to Land and real estate marketplace",
+    "valuate_plot": "Send for valuation",
+    "register_custodian_for_plot": "Register custodian for plot",
+    "success": {
+      "token_sent": {
+        "title": "Transaction sent",
+        "description": "Now you need to wait for the transaction confirmation"
+      },
+      "token_sent_finish": {
+        "title": "Your Land plot token has been successfully transferred"
+      }
+    },
+    "error": {
+      "unknown_action": {
+        "title": "Ups!",
+        "description": "Something went wrong, you are trying to perform an unknown action"
+      }
+    },
+    "disassemble_pack_confirm": {
+      "title": "Are ypu sure you want to disassemble your Land plot <%= token_id %> and to remove <%= geohashes_count %> all geohashes?"
+    },
+    "wait_screen": {
+      "remove_geohashes": {
+        "title": "Removing geohashes",
+        "release_rights": "Returning ETH from built-in wallet and revoking rights"
+      }
+    },
+    "place_to_escrow_modal": {
+      "title": "Place Space token on Land and real estate marketplace",
+      "description": "When placed on Land and real estate marketplace, you create an order with a starting price that users can answer by specifying the price they are willing to buy. Once you have decided on the buyer and the price, the buyer must transfer the required amount of GALT to the contract, after which the transaction will begin. To complete the transaction, you must have a Custodian at the site. Land and real estate marketplace provides functionality for the convenient appointment of a custodian in the transaction process.",
+      "documents": "Documents IPFS hashes",
+      "document_item": "Document hash",
+      "price": "Initial price",
+      "tip": {
+        "sending": "Order creating. Please check MetaMask",
+        "approve_galt": "Need to approve GALT for fee payment. Please check MetaMask"
+      },
+      "success": {
+        "send_order": {
+          "title": "Order successfully created",
+          "description": "You can check current status on Land and real estate marketplace page in Sell Space section"
+        }
+      },
+      "error": {
+        "not_enough_balance": {
+          "title": "Insufficient balance",
+          "description": "You balance: <%= value %> <%= currency %>"
+        },
+        "send_order": {
+          "title": "Error on order creating",
+          "description": "Please check input data"
+        }
+      },
+      "ok": "Create order",
+      "cancel": "Cancel"
+    },
+    "valuate_plot_modal": {
+      "title": "Create application for Space token valuation",
+      "description": "For creating application - need uploaded documents in IPFS, which evidencing the price of Land plot<br>Validators will check your request, then set the price, which you can used for sell Land plot in SpaceDex.",
+      "documents": "Documents IPFS hashes",
+      "document_item": "Document hash",
+      "tip": {
+        "sending": "Application creating. Please check MetaMask",
+        "approve_galt": "Need to approve GALT for fee payment. Please check MetaMask"
+      },
+      "success": {
+        "send_application": {
+          "title": "Application successfully sent",
+          "description": "Please wait for validation"
+        }
+      },
+      "error": {
+        "send_application": {
+          "title": "Error on application sending",
+          "description": "Please check input data"
+        }
+      },
+      "ok": "Create application",
+      "cancel": "Cancel"
+    },
+    "register_custodian_for_plot_modal": {
+      "title": "Create application for Space token custodian register",
+      "description": "For attach or detach custodian - you need to create application.<br>Please, choose custodian and action for create application.",
+      "custodian": "Custodian",
+      "action": "Action",
+      "tip": {
+        "sending": "Application creating. Please check MetaMask",
+        "approve_galt": "Need to approve GALT for fee payment. Please check MetaMask"
+      },
+      "success": {
+        "send_application": {
+          "title": "Application successfully sent",
+          "description": "Please wait for validation"
+        }
+      },
+      "error": {
+        "send_application": {
+          "title": "Error on application sending",
+          "description": "Please check input data"
+        },
+        "not_enough_galt": {
+          "title": "You dont have enough GALT",
+          "description": "You can buy GALT on GaltDex"
+        }
+      },
+      "ok": "Create application",
+      "cancel": "Cancel"
+    }
+  },
+  "merge_geohashes": {
+    "back": "Back to my Tokens",
+    "title": "Geohashes for Merge",
+    "merge": "Merge"
+  },
+  "create_new_pack": {
+    "back": "Back to my Tokens",
+    "title": "New Land plot (<%= value %> geohashes)",
+    "create_pack": "Create Land Plot",
+    "error": {
+      "min_contour": "The number of vertices must be at least <%= value %>",
+      "not_found_by_contour": "There is no geohash for the given contour"
+    },
+    "success": {
+      "init_pack": {
+        "title": "Transaction to initialize new land plot was sent",
+        "description": "Now you need to wait for the transaction confirmation, after that you need to send transaction series"
+      },
+      "init_pack_finish": {
+        "title": "Land plot token created",
+        "description": "Now you need to perform a series of transactions to add geohashes to the Land plot"
+      },
+      "single_geohash_pack_finish": {
+        "title": "Transaction to initialize Land plot was sent",
+        "description": "Now you need to wait for the transaction to be confirmed so that the Land plot will appear in the list of your Land"
+      }
+    },
+    "wait_screen": {
+      "create_pack": "Creating Land plot",
+      "set_contour": "Creating contour",
+      "add_geohashes": "Adding geohashes",
+      "release_rights": "Returning ETH from built-in wallet and revoking rights"
+    }
+  },
+  "add_building": {
+    "back": "Back to my Tokens",
+    "title": "Add building for Space token",
+    "new_building": {
+      "title": "Application for new building (<%= area %> meters)",
+      "level": "Level (floor)",
+      "height": "Distance from ground level to floor",
+      "show_on_map": "Show on map",
+      "ledger_identifier": "Cadastral number",
+      "send": "Create application",
+      "submit": "Send application for review",
+      "end": "Application successfully created! Now you can see application status in My applications"
+    },
+    "error": {
+      "min_contour": "The number of vertices must be at least <%= value %>",
+      "send_application": {
+        "title": "Error",
+        "description": "An error occurred during transaction sending, perhaps this land plot is already occupied by someone"
+      },
+      "not_enough_galt": {
+        "title": "You dont have enough GALT",
+        "description": "You can buy GALT on GaltDex"
+      }
+    },
+    "wait_screen": {
+      "application_creating": "Creating application",
+      "approve_galt": "Approve GALT",
+      "release_internal_wallet": "Returning ETH from built-in wallet and revoking rights",
+      "submit_application": "Sending transactions"
+    },
+    "success": {
+      "send_application": {
+        "title": "Application created",
+        "description": "Now you need to wait until transaction will be confirmed and you will be able to submit your application"
+      },
+      "submit_application": {
+        "title": "Application have been sent for review",
+        "description": "Now you have to wait until Application will be reviewed by geodesist and lawyer"
+      }
+    }
+  },
+  "split_space_token": {
+    "back": "Back to my Tokens",
+    "title": "Land plot split",
+    "source_package": "Source Land plot",
+    "split_operation": {
+      "title": "Split operation: ",
+      "address": "Contract address: ",
+      "status": {
+        "none": "Not exists",
+        "contract_init": "Contract init",
+        "polygons_prepare": "Prepare polygons",
+        "polygons_init": "Init polygons",
+        "segments_add": "Add segments",
+        "martinez_rueda_process": "Martinez-Rueda process",
+        "intersects_points_add": "Add intersection points",
+        "weiler_atherton_build": "Weiler-Atherton build",
+        "polygons_finish": "Finish polygons"
+      }
+    },
+    "continue_split_pack": "Continue split operation",
+    "finish_split_pack": "Finish and withdraw result Space tokens",
+    "cancel_split_pack": "Cancel split operation",
+    "split_package": "Split Land Plot (<%= area %> meters)",
+    "show_on_map": "Show on map",
+    "token_id": "Package token id: ",
+    "area_before": "Area before split: ",
+    "area_after": "Area after split: ",
+    "contour_before": "Contour before split: ",
+    "contour_after": "Contour after split: ",
+    "approve": "Approve for split",
+    "split_pack": "Split Land Plot",
+    "error": {
+      "min_contour": "The number of vertices must be at least <%= value %>",
+      "split_operation": {
+        "title": "Split operation failed.",
+        "description": "Maybe problem in clipping contour. You can cancel Split operation."
+      },
+      "not_active": {
+        "title": "Split operation not active now.",
+        "description": "Maybe its finished or canceled already."
+      },
+      "something_wrong": {
+        "title": "Oops!",
+        "description": "Something went wrong"
+      }
+    },
+    "success": {
+      "approve": {
+        "title": "You have approved Space token to Split contract",
+        "description": " "
+      },
+      "split_operation": {
+        "title": "Split operation successfully finished.",
+        "description": "Now you can withdraw result Space tokens"
+      },
+      "finish": {
+        "title": "You have successfully withdrawal Space tokens",
+        "description": " "
+      },
+      "cancel": {
+        "title": "You have successfully cancel Split operation",
+        "description": " "
+      },
+      "split": {
+        "title": "Transaction to split Land plot tokens was sent",
+        "description": " "
+      }
+    },
+    "end": "Land plot was successfully split, now you can check My Tokens page for changes"
+  },
+  "merge_pack": {
+    "back": "Back to my Tokens",
+    "title": "Land plots merge",
+    "source_package": "Expandable plot",
+    "possible_merge_packs": "Possible to merge plots",
+    "possible_merge_packs_count": "Found Space tokens: <%= value %>",
+    "show_on_map": "Show on map",
+    "token_id": "Package token id: ",
+    "area": "Area: ",
+    "contour": "Contour: ",
+    "merge_attention": "Warning! Will be delete on merge!",
+    "merge_pack": "Merge plot",
+    "success": {
+      "merge": {
+        "title": "Plots successfully merged",
+        "description": " "
+      }
+    }
+  },
+  "plot_clarification": {
+    "back": "Back to my Tokens",
+    "title": "Edit geo data of Space token",
+    "form": {
+      "title": "Application for clarification (<%= area %> meters)",
+      "level": "Level (floor)",
+      "show_on_map": "Show on map",
+      "ledger_identifier": "Cadastral number",
+      "approve_space_token": "Approve Space token",
+      "approve_galt": "Approve GALT",
+      "submit": "Create application",
+      "end": "Application successfully created! Now you can see application status in My applications"
+    },
+    "wait_screen": {
+      "submit": "Creating application",
+      "release_internal_wallet": "Returning ETH from built-in wallet and revoking rights"
+    },
+    "error": {
+      "min_contour": "The number of vertices must be at least <%= value %>",
+      "submit": {
+        "title": "Error",
+        "description": "Unknown error"
+      },
+      "not_enough_galt": {
+        "title": "You dont have enough GALT",
+        "description": "You can buy GALT on GaltDex"
+      },
+      "approve_space_token": {
+        "title": "Error on approve SPACE token",
+        "description": "Unknown error"
+      },
+      "approve_galt": {
+        "title": "Error on approve GALT",
+        "description": "Unknown error"
+      }
+    },
+    "success": {
+      "approve_space_token": {
+        "title": "Space token successfully approved",
+        "description": "Now you can create application"
+      },
+      "submit": {
+        "title": "Application have been sent for review",
+        "description": "Now you have to wait until Application will be reviewed by geodesist and lawyer"
+      },
+      "approve_galt": {
+        "title": "GALT successfully approved",
+        "description": " "
+      }
+    }
+  },
+  "resubmit_plot_manager": {
+    "back": "Back to my Applications",
+    "title": "Edit geo data of Space token",
+    "form": {
+      "title": "Application for resubmit (<%= area %> meters)",
+      "level": "Level (floor)",
+      "show_on_map": "Show on map",
+      "ledger_identifier": "Cadastral number",
+      "edit_credentials": "Edit credentials",
+      "document_id": "You passport or ID number",
+      "full_name": "Full name as specified in the document",
+      "approve_galt": "Approve GALT",
+      "submit": "Resubmit application",
+      "end": "Application successfully created! Now you can see application status in My applications"
+    },
+    "wait_screen": {
+      "submit": "Creating application",
+      "release_internal_wallet": "Returning ETH from built-in wallet and revoking rights"
+    },
+    "error": {
+      "min_contour": "The number of vertices must be at least <%= value %>",
+      "submit": {
+        "title": "Error",
+        "description": "Unknown error"
+      },
+      "approve_galt": {
+        "title": "Error on approve GALT",
+        "description": "Unknown error"
+      },
+      "not_enough_galt": {
+        "title": "You dont have enough GALT",
+        "description": "You can buy GALT on GaltDex"
+      }
+    },
+    "success": {
+      "submit": {
+        "title": "Application have been sent for review",
+        "description": "Now you have to wait until Application will be reviewed by geodesist and lawyer"
+      },
+      "approve_galt": {
+        "title": "GALT successfully approved",
+        "description": " "
+      }
+    }
+  },
+  "space_token_page": {
+    "title": "Space token info",
+    "3_d_view": "3D presentation",
+    "map_view": "On map",
+    "cloud_points": "Cloud points",
+    "tokens_tree": "Space tokens tree",
+    "show_only_current": "Show only current"
+  },
+  "space_token_info": {
+    "title": "Space token ",
+    "type": "Type: ",
+    "geohashes_count": "Number of Geohashes in Land Plot: ",
+    "geohash": "Geohash: ",
+    "area": "Area, meters: ",
+    "contour": "Contour: ",
+    "contour_length": "Contour length: ",
+    "description": "Description: ",
+    "description_point_cloud": "Point cloud: ",
+    "description_building_model": "Building model: ",
+    "description_address": "Address: ",
+    "description_room": "Room: ",
+    "description_config_address": "View config address: ",
+    "level": "Floor: ",
+    "price": "Price: ",
+    "custodian": "Custodians: ",
+    "custodian_documents": "Documents: ",
+    "owner": "Owner: ",
+    "not_found": "Space token not found! Looks like it burned."
+  },
+  "oracle_info": {
+    "none": "None",
+    "address": "Address: ",
+    "name": "Name: ",
+    "position": "Position: ",
+    "active": "Active: ",
+    "roles": "Roles: ",
+    "description_hashes": "IPFS hashes:"
+  },
+  "territory_types": {
+    "plot": "Land plot",
+    "building": "Building area, floor №<%= level %>",
+    "predefined_building": "Pre-defined real estate: Whole Building",
+    "predefined_room": "Pre-defined real estate: Room/Apartment",
+    "all": "All"
+  },
+  "plot_custodian": {
+    "action_types": {
+      "attach": "Attach",
+      "detach": "Detach"
+    }
+  },
+  "claim_manager": {
+    "action_types": {
+      "approve": "Approve",
+      "reject": "Reject"
+    }
+  },
+  "tutorials": {
+    "title": "Video instructions",
+    "description": "Here you can get tutorials",
+    "youtube_playlist_id": "PLQQX9uag7l0e0cLG9kSIKn3cmHXu8mEY_"
+  },
+  "galtdex": {
+    "title": "GaltDex",
+    "description": "<h3>Exchange of ETH to GALT and back</h3><h4>Guaranteed way to get GALT tokens with the ability to return ETH</h4>",
+    "choose_direction": "Select a direction for the exchange",
+    "eth_panel": "<%= value %> Ethereum",
+    "galt_panel": "<%= value %> Galt",
+    "send": "Send",
+    "receive": "Receive",
+    "send_transaction": "Send transaction",
+    "error": {
+      "not_enough_balance": {
+        "title": "Insufficient balance",
+        "description": "You balance: <%= value %> <%= currency %>"
+      },
+      "not_enough_balance_on_contract": {
+        "title": "Not enough balance on contract",
+        "description": "GaltDex only have <%= value %> <%= currency %>"
+      }
+    },
+    "success": {
+      "exchange_galt_to_eth": {
+        "title": "You have successfully exchanged <%= eth_value %> ETH.",
+        "description": "Wait to receive <%= galt_value %> GALT on your account."
+      },
+      "approve_galt": {
+        "title":  "You have successfully gave permission to GaltDex contract to dispose your GALT tokens",
+        "description": "Please wait for the transaction to complete, after that a transaction will be sent to exchange GALT for ETH"
+      },
+      "exchange_eth_to_galt": {
+        "title": "You have successfully exchanged <%= galt_value %> GALT.",
+        "description": "Wait to receive <%= eth_value %> ETH on your account."
+      }
+    },
+    "wait_screen": {
+      "title": "Transfer GaltDex contract permission to your <%= value %> GALT"
+    }
+  },
+  "sell_space": {
+    "title": "Sell space",
+    "plot_escrow": {
+      "button": "Land and real estate marketplace:<br/><%= on_sale_count %> orders for sale",
+      "description": "Land and real estate marketplace allows you to place an order for sell your plot with base price. Buyers will make a bids for your order, so you can choose - at what price and to whom to sell plot."
+    }
+  },
+  "buy_space": {
+    "title": "Buy space",
+    "plot_escrow": {
+      "button": "Land and real estate marketplace:<br/><%= on_sale_count %> plots on sale",
+      "description": "Land and real estate marketplace allows you to make bids in Smart Contract. Seller will choose - which bid will wins, so that buyer will receive the plot."
+    }
+  },
+  "plot_escrow": {
+    "sell": {
+      "title": "Land and real estate marketplace:<br/>Sell Space token",
+      "filter_by_status": "Filter by status",
+      "count": "Found orders: <%= value %>",
+      "orders_not_exists": "You can create land and real estate orders by plot menu in My Tokens page",
+      "select_offer": "Select",
+      "cancel_offer": "Cancel",
+      "empty_offer": "Clear for reopen",
+      "reopen_offer": "Reopen order",
+      "cancel_order": "Cancel order",
+      "withdraw_space_token": "Withdraw Space token",
+      "change_ask": "Change price",
+      "attach_space_token": "Attach Space token",
+      "apply_for_custodian": "Apply for custodian",
+      "withdraw_from_custodian": "Finish custodian attaching",
+      "resolve": "Confirm the deal",
+      "claim_payment": "Get payment",
+      "need_to_resolve_custodian_application": "Need to handle PlotCustodian application. Please check status in My applications page",
+      "need_equal_prices": "Prices should be equal",
+      "change_ask_modal": {
+        "title": "Change ask price",
+        "placeholder": "Your new price"
+      },
+      "select_offer_modal": {
+        "title": "Are you sure to accept the offer? After accept the offer - you should to send Space token to Smart Contract to start the deal."
+      },
+      "resolve_modal": {
+        "title": "Are you sure that you want to complete the deal? Your consent is necessary in order to transfer your Space token to the buyer, and then you receive a payment."
+      },
+      "cancel_order_modal": {
+        "title": "Are you sure that you want to cancel the order?"
+      },
+      "success": {
+        "change_ask": {
+          "title": "You have successfully changed ask price for this offer",
+          "description": " "
+        },
+        "select_offer": {
+          "title": "You have successfully selected this offer",
+          "description": " "
+        },
+        "cancel_offer": {
+          "title": "You have successfully canceled the offer",
+          "description": " "
+        },
+        "cancel_order": {
+          "title": "You have successfully canceled the order",
+          "description": " "
+        },
+        "empty_offer": {
+          "title": "You have successfully cleared the order, now you can reopen it",
+          "description": " "
+        },
+        "reopen_offer": {
+          "title": "You have successfully reopened the order.",
+          "description": "Now it available for new offers"
+        },
+        "withdraw_space_token": {
+          "title": "You have successfully withdrawal the Space token.",
+          "description": "Order will available for open after payment withdraw"
+        },
+        "apply_for_custodian": {
+          "title": "Success applied for custodian",
+          "description": "Now you should to process the custodian register application"
+        },
+        "withdraw_from_custodian": {
+          "title": "Success withdrawal from custodian",
+          "description": "Now you can continue the deal"
+        },
+        "resolve": {
+          "title": "You have successfully completed the order",
+          "description": "After complete the deal by buyer - you can withdraw payment"
+        },
+        "claim_payment": {
+          "title": "You have successfully received a payment",
+          "description": " "
+        }
+      },
+      "attach_space_token_modal": {
+        "title": "Attach Space token to Land and real estate order",
+        "description": "You should to send your Space token to Land and real estate marketplace Smart Contract for finish deal.",
+        "need_to_approve_first": "You need to approve your Space token to Land and real estate marketplace contract address first",
+        "approve": "Approve Space token to Land and real estate marketplace",
+        "cancel": "Cancel",
+        "ok": "Attach Space token",
+        "success": {
+          "approve": {
+            "title": "Successfully approved",
+            "description": "Now you can attach your Space token"
+          },
+          "attach": {
+            "title": "Successfully attached",
+            "description": " "
+          }
+        },
+        "error": {
+          "approve": {
+            "title": "Error on approving",
+            "description": "Please check that this token is still yours"
+          },
+          "attach": {
+            "title": "Error on attaching",
+            "description": "Please check that you approved this token to Land and real estate marketplace contract"
+          }
+        }
+      },
+      "apply_for_custodian_modal": {
+        "title": "Create application for Space token custodian register",
+        "description": "For attach custodian - you need to create application.<br>Please, choose custodian and action for create application.",
+        "custodian": "Custodian",
+        "tip": {
+          "sending": "Application creating. Please check MetaMask",
+          "approve_galt": "Need to approve GALT for fee payment. Please check MetaMask"
+        },
+        "success": {
+          "send_application": {
+            "title": "Application successfully sent",
+            "description": "Please wait for validation"
+          }
+        },
+        "error": {
+          "send_application": {
+            "title": "Error on application sending",
+            "description": "Please check input data"
+          },
+          "not_enough_galt": {
+            "title": "You dont have enough GALT",
+            "description": "You can buy GALT on GaltDex"
+          }
+        },
+        "ok": "Create application",
+        "cancel": "Cancel"
+      }
+    },
+    "buy": {
+      "title": "Land and real estate marketplace:<br/>Buy Space token",
+      "filter_by_status": "Filter by status",
+      "count": "Found orders: <%= value %>",
+      "place_bid": "Place bid",
+      "cancel_bid": "Cancel bid",
+      "cancel_request": "Cancellation request",
+      "withdraw_space_token": "Withdraw payment",
+      "change_bid": "Change bid",
+      "attach_payment": "Attach payment",
+      "withdraw_payment": "Withdraw payment",
+      "resolve": "Confirm the deal",
+      "claim_space_token": "Get Space token",
+      "need_to_wait_until_select": "To start the deal, it is necessary for the seller to agree to your bid and select you as a buyer.",
+      "place_bid_modal": {
+        "title": "Place bid for order",
+        "placeholder": "Your bid"
+      },
+      "change_bid_modal": {
+        "title": "Change bid for order",
+        "placeholder": "Your bid"
+      },
+      "cancel_bid_modal": {
+        "title": "Are you sure that you want to cancel the offer?"
+      },
+      "cancel_request_modal": {
+        "title": "Are you sure that you want to place request for cancellation the deal? It will take a while for validate and confirm request"
+      },
+      "resolve_modal": {
+        "title": "Are you sure that you want to complete the deal? Your consent is necessary in order to transfer your payment to the seller, and then you receive a Space Token."
+      },
+      "success": {
+        "place_bid": {
+          "title": "Bid placed successfully",
+          "description": " "
+        },
+        "resolve": {
+          "title": "You have successfully completed the order",
+          "description": "After complete the deal by seller - you can withdraw Space token"
+        },
+        "cancel": {
+          "title": "You have successfully canceled the offer",
+          "description": " "
+        },
+        "cancel_request": {
+          "title": "You have successfully placed cancellation request",
+          "description": "Now you should to wait, while validator will take the request and confirm it"
+        },
+        "withdraw_payment": {
+          "title": "You have successfully withdrawal payment",
+          "description": " "
+        },
+        "claim_space_token": {
+          "title": "You have successfully received Space token",
+          "description": " "
+        }
+      },
+      "error": {
+        "cant_buy_of_yourself": {
+          "title": "You cant buy of yourself",
+          "description": " "
+        },
+        "not_enough_balance": {
+          "title": "You dont have enough balance",
+          "description": "Need to: <%= value %>"
+        }
+      },
+      "attach_payment_modal": {
+        "title": "Attach Payment to Land and real estate order",
+        "description": "You should to send payment to Land and real estate marketplace Smart Contract for finish deal.",
+        "need_to_approve_first": "You need to approve your ERC20 tokens amount to Land and real estate marketplace contract address first",
+        "approve": "Approve Payment to Land and real estate marketplace",
+        "cancel": "Cancel",
+        "ok": "Attach Payment",
+        "success": {
+          "approve": {
+            "title": "Successfully approved",
+            "description": "Now you can attach your payment"
+          },
+          "attach": {
+            "title": "Successfully attached",
+            "description": " "
+          }
+        },
+        "error": {
+          "approve": {
+            "title": "Error on approving",
+            "description": "Please check that this token is still yours"
+          },
+          "attach": {
+            "title": "Error on attaching",
+            "description": "Please check that you approved this token to Land and real estate marketplace contract"
+          }
+        }
+      }
+    }
+  },
+  "user_account": {
+    "title": "Account <%= address %> page",
+    "tabs": {
+      "overview": "Overview",
+      "space_tokens": "Property tokens",
+      "oracle": "Oracle",
+      "reputation": "Reputation"
+    },
+    "general_info": {
+      "title": "General info",
+      "wallet": "Account",
+      "galt_balance": "Galt balance",
+      "space_balance": "Space balance",
+      "success": {
+        "token_sent": {
+          "title": "GALT successfully sent",
+          "description": "You successfully sent <%= amount %> GALT to recipient"
+        }
+      },
+      "error": {
+        "token_sent": {
+          "title": "Error on GALT sending",
+          "description": "Maybe you have not enough GALT balance"
+        }
+      }
+    },
+    "space_tokens": {
+      "not_found": "Space tokens of this user not found"
+    },
+    "oracle": {
+      "info": "Oracle info"
+    },
+    "oracle_description": {
+      "name": "Name:",
+      "description_address": "Address:",
+      "description_company": "Company Name:",
+      "description_registration_number": "Company Government Registration number:",
+      "description_site": "Web Site:"
+    },
+    "custodian_space_tokens": {
+      "title": "Custodian of Space tokens",
+      "token_title": "Space token",
+      "owner_title": "Owner",
+      "documents_title": "Documents"
+    },
+    "oracle_stakes": {
+      "title": "Oracle's Roles and Stakes",
+      "role_title": "Oracle role",
+      "current_stake_title": "Current stake",
+      "minimal_stake_title": "Minimal stake",
+      "multisig_address": "MultiSig address",
+      "add_stake_modal": {
+        "title": "Add stake for role <%= role %>",
+        "description": "You can add a stake to multisig <%= multisigAddress %> for your role as a validator if you consider it necessary to add the amount to your current stake.<br><br>Your stake may be charged as a penalty if your work has been done non-disputedly for one of the applications.<br><br>In order to be able to perform validation on this role, it is necessary that your current stake should be equal to or greater than the minimum stake for the role.",
+        "stake": "Stake amount for add, GALT",
+        "need_to_approve_first": "You need to approve your token to ValidatorStakes contract address first",
+        "approve": "Approve GALT",
+        "ok": "Send",
+        "cancel": "Cancel",
+        "success": {
+          "approve": {
+            "title": "Successfully approved",
+            "description": "Now you can send your Space token"
+          },
+          "send": {
+            "title": "Stake successfully sent",
+            "description": " "
+          }
+        },
+        "error": {
+          "not_enough_balance": {
+            "title": "Insufficient balance",
+            "description": "Your balance: <%= value %> GALT. You can buy more GALT on GaltDex"
+          },
+          "approve": {
+            "title": "Error on approving",
+            "description": "Please check that you have enough GALT"
+          },
+          "send": {
+            "title": "Error on sending",
+            "description": "Please check that you have enough GALT"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "title": "Administration",
+    "galt": {
+      "title": "Galt",
+      "general_data": "General info",
+      "total_supply": "Total Supply:"
+    },
+    "plot_manager": {
+      "title": "Plot Manager",
+      "fee_rate": {
+        "title": "Dynamic application fee",
+        "eth": "Fee rate for ETH",
+        "galt": "Fee rate for GALT"
+      },
+      "edit_fee_rate": {
+        "title": "Edit rate of <%= currency %> application fee",
+        "placeholder": "Price for geohash add in Gwei"
+      },
+      "fee_share": {
+        "title": "Application fee share of GaltSpace",
+        "eth": "ETH fee share",
+        "galt": "GALT fee share"
+      },
+      "edit_fee_share": {
+        "title": "Edit <%= currency %> application fee share of GaltSpace",
+        "placeholder": "Percent"
+      },
+      "general": {
+        "title": "General",
+        "payment_method": "Payment method",
+        "gas_price_for_deposits": "Gas price for pledge"
+      },
+      "edit_payment_method": {
+        "title": "Edit payment method for application fee",
+        "placeholder": "Choose payment method"
+      },
+      "edit_gas_price_for_deposits": {
+        "title": "Edit gas price for pledge",
+        "placeholder": "Gas price in Gwei"
+      }
+    },
+    "oracles": {
+      "title": "Validators",
+      "oracle_control": "Validator control",
+      "find_oracle_placeholder": "Find validator by address",
+      "address_title": "Address",
+      "name_title": "Name",
+      "position_title": "Position",
+      "roles_title": "Roles",
+      "active_title": "Active",
+      "active_true": "Yes",
+      "active_false": "No",
+      "not_found": "Not found",
+      "invalid_address": "Not correct address",
+      "success": {
+        "deactivate": {
+          "title": "Successfully deactivated",
+          "description": "Now this account cant validate anything"
+        }
+      },
+      "error": {
+        "deactivate": {
+          "title": "Something went wrong",
+          "description": "Error on deactivate this account"
+        }
+      },
+      "edit_oracle": {
+        "title": "Validator edit",
+        "address": "Address",
+        "name": "Name",
+        "position": "Position",
+        "description": "Description",
+        "description_hashes": "Hashes of documents, files in IPFS",
+        "description_hash_item": "Hash of file",
+        "roles": "Validator roles",
+        "role_item": "Role",
+        "cancel": "Cancel",
+        "ok": "Save and make as validator",
+        "success": {
+          "save": {
+            "title": "You successfully saved the validator",
+            "description": "Now he can validate applications by his roles"
+          }
+        },
+        "error": {
+          "save": {
+            "title": "Validator save is failed",
+            "description": "Please check your specified data"
+          }
+        }
+      }
+    },
+    "oracles_roles": {
+      "title": "Validators roles",
+      "application_type": "Application type",
+      "roles_control": "Roles control",
+      "name_title": "Name",
+      "reward_share_title": "Reward share in %",
+      "description_hash_title": "Description hash",
+      "edit_roles_button": "Edit roles",
+      "edit_roles": {
+        "title": "Edit roles",
+        "name_title": "Name",
+        "reward_share_title": "Reward share in %",
+        "description_hash_title": "Description hash",
+        "share_sum_must_be_100": "Reward share sum must be equal 100",
+        "need_to_delete_previous_version": "Need to delete previous version of roles first - to save new",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "ok": "Save",
+        "success": {
+          "save": {
+            "title": "You successfully saved the validators roles",
+            "description": "Now you can use this roles for validators edit"
+          },
+          "delete": {
+            "title": "You successfully deleted the validators roles",
+            "description": "Now you can use save new roles"
+          }
+        },
+        "error": {
+          "save": {
+            "title": "Validators roles save is failed",
+            "description": "Please check your specified data"
+          },
+          "delete": {
+            "title": "Validators roles delete is failed",
+            "description": "Please check your rights"
+          }
+        }
+      }
+    },
+    "galtdex": {
+      "title": "GaltDex",
+      "general_data": "General info",
+      "galt_balance": "GALT Balance:",
+      "eth_balance": "ETH Balance:",
+      "eth_fee": {
+        "title": "ETH exchange commission",
+        "percent": "Commission for the operation:",
+        "payout": "Ready to pay:",
+        "total_payout": "Total commission earned:"
+      },
+      "galt_fee": {
+        "title": "GALT exchange commission",
+        "percent": "Commission for the operation:",
+        "payout": "Ready to pay:",
+        "total_payout": "Total commission earned:"
+      },
+      "edit_fee": {
+        "title": "Indicate exchange commission <%= currency %> as a percentage",
+        "placeholder": "Commission in %"
+      },
+      "success": {
+        "eth_fee_payout": {
+          "title": "You have successfully withdraw ETH commission from the GaltDex contract",
+          "description": "Wait to receive <%= value %> ETH on you account balance."
+        },
+        "galt_fee_payout": {
+          "title": "You have successfully withdraw GALT commission from the GaltDex contract",
+          "description": "Wait to receive <%= value %> GALT on you account balance."
+        }
+      }
+    }
+  },
+  "alt_servers": {
+    "title": "Alternative RPC servers",
+    "description": "If the primary RPC server does not work, try one of the following",
+    "ok": "Ok"
+  },
+  "changelog": {
+    "title": "Changelog",
+    "ok": "Ok"
+  },
+  "confirm_add_geohashes": {
+    "title": "Confirmation for adding geohashes",
+    "description": "Are you sure you want to add <b><%= value %></b> missing geohashes to the application?",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "confirm_modal": {
+    "title": "Confirm",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "enter_geohashes": {
+    "add": {
+      "title": "Entering geohashes for adding",
+      "description": "Enter geohashes you want to add separated by comma or space"
+    },
+    "remove": {
+      "title": "Entering geohashes for removal",
+      "description": "Enter geohashes you want to remove separated by comma or space"
+    },
+    "geohashes": "Geohashes",
+    "error": {
+      "already_in": "Error! Geohashes are already in the application:",
+      "not_permitted_to_application": "Error! Geohashes are not allowed to be added to the application: ",
+      "not_permitted_to_package": "Error! Geohashes are not allowed to be added to the Land plot: ",
+      "not_exist_in_application": "Error! Geohashes are not in the Application: ",
+      "not_exist_in_package": "Error! Geohashes are not in the Land plot: ",
+      "cant_add": "Error! Geohashes can not be added to the application because the are not belong to that Land Plot: "
+    },
+    "cancel": "Cancel",
+    "ok": "Check and send"
+  },
+  "specify_address": {
+    "transfer_space": {
+      "title": "Recipient address",
+      "placeholder": "The address the Land plot token will be sent to",
+      "cancel": "Cancel",
+      "ok": "Ok"
+    }
+  },
+  "specify_address_and_amount": {
+    "transfer_galt": {
+      "title": "Send GALT",
+      "address_placeholder": "Recipient address",
+      "amount_placeholder": "GALT amount",
+      "cancel": "Cancel",
+      "ok": "Ok"
+    }
+  },
+  "specify_precision": {
+    "title": "Please specify Approximation precision",
+    "placeholder": "Approximation precision",
+    "description": "You can change or leave the current approximation precision without changing",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "user_menu": {
+    "eth_address": "Your Ethereum address:",
+    "eth_balance": "ETH balance: ",
+    "galt_balance": "GALT:",
+    "space_balance": "SPACE:",
+    "eth_faucet": "Get testnet ETH",
+    "internal_wallet": {
+      "address": "Built-in wallet: ",
+      "export": "Copy to clipboard",
+      "export_private": "Copy private key",
+      "eth_address": "Your Ethereum address:",
+      "eth_balance": "ETH balance: ",
+      "galt_balance": "GALT:",
+      "space_balance": "SPACE:"
+    },
+    "success": {
+      "internal_wallet_copied": "Built-in wallet address was copied to clipboard",
+      "internal_wallet_private_copied": "Built-in wallet private key was copied to clipboard"
+    },
+    "regenerate_confirm": "Are you sure that you want to regenerate the Built-in wallet and lose access to it from the interface?"
+  },
+  "explorer": {
+    "geohash_copied_to_clipboard": "Geohash copied to clipboard",
+    "space_token_info": "Space token: <a href=\"/#/land/space-token/<%= tokenId %>\" target=\"_self\"><%= tokenId %></a><br/>Type: <%= typeStr %><br/>Owner: <%= owner %><br/>",
+    "multiple_space_tokens_info": "Space tokens: <%= tokensIdsList %><br/>Your Space tokens: <%= ownedTokensIdsList %>",
+    "coordinates_info": "<br/>Area, meters: <%= area %><br/><a onclick='toggle(\"geohash-list\")'>Geohashes</a><div style=\"display:none;\" id=\"geohash-list\"><%=geohashList%></div><br/><a onclick='toggle(\"latlon-list\")'>Lat Lon</a><div style=\"display:none;\" id=\"latlon-list\"><%=latLonList%></div><br/><a onclick='toggle(\"utm-list\")'>UTM</a><div style=\"display:none;\" id=\"utm-list\"><%=utmList%></div><br/><a onclick='toggle(\"heights-list\")'>MAMSL</a><div style=\"display:none;\" id=\"heights-list\"><%= type === 'plot' ? 'Metres above mean sea level:' : 'Height above ground(meters):' %> <%=heightsList%></div>"
+  },
+  "hex_cut": {
+    "address_copied_to_clipboard": "Address copied to clipboard"
+  },
+  "lock_application": {
+    "title": "Validation of application",
+    "description": "Please, select validation role, which will be used for lock application <%= application_id %> for review",
+    "role": "Role for lock application",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "reject_application": {
+    "title": "Reject application",
+    "description": "Please, specify the reason of reject application <%= application_id %> in message",
+    "message": "Message",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "revert_application": {
+    "title": "Revert application",
+    "description": "Please, specify the reason of revert application <%= application_id %> in message",
+    "message": "Message",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "server_not_responding": {
+    "title": "Server is not responding",
+    "description": "Contract <%= contract_name %> with address <%= contract_address %> not responding on call <%= method_name %>"
+  },
+  "boolean": {
+    "true": "Yes",
+    "false": "No"
+  },
+  "extensions": {
+    "title": "Extensions",
+    "split_merge_sandbox": {
+      "widget": {
+        "title": "Split-Merge Sandbox"
+      },
+      "title": "Split-Merge Sandbox",
+      "back": "Back to extensions",
+      "reset": "New operation",
+      "subject_contour": "Subject contour",
+      "clipping_contour": "Clipping contour",
+      "run_split": "Run split",
+      "show_input": "Show input",
+      "show_output": "Show result",
+      "split_operation": {
+        "title": "Split operation: ",
+        "address": "Contract address: ",
+        "status": {
+          "none": "Not exists",
+          "contract_init": "Contract init",
+          "polygons_prepare": "Prepare polygons",
+          "polygons_init": "Init polygons",
+          "segments_add": "Add segments",
+          "martinez_rueda_process": "Martinez-Rueda process",
+          "intersects_points_add": "Add intersection points",
+          "weiler_atherton_build": "Weiler-Atherton build",
+          "polygons_finish": "Finish polygons",
+          "finished": "Finished"
+        }
+      },
+      "continue_split_token": "Continue split operation",
+      "finish_split_token": "Finish and withdraw result Space tokens",
+      "cancel_split_token": "Cancel split operation",
+      "wait_screen": {
+        "subject_token_create": "Subject token creation...",
+        "subject_token_approve": "Subject token approve to for split operation...",
+        "split_operation_start": "Split operation start...",
+        "split_operation_process": "Split operation process..."
+      },
+      "error": {
+        "min_contour": "The number of vertices must be at least <%= value %>",
+        "split_operation": {
+          "title": "Split operation failed.",
+          "description": "Maybe problem in clipping contour. You can cancel Split operation."
+        },
+        "not_active": {
+          "title": "Split operation not active now.",
+          "description": "Maybe its finished or canceled already."
+        },
+        "something_wrong": {
+          "title": "Oops!",
+          "description": "Something went wrong"
+        }
+      },
+      "success": {
+        "split_operation": {
+          "title": "Split operation successfully finished.",
+          "description": "Now you can withdraw result Space tokens"
+        },
+        "finish": {
+          "title": "You have successfully withdrawal Space tokens",
+          "description": " "
+        },
+        "cancel": {
+          "title": "You have successfully cancel Split operation",
+          "description": " "
+        },
+        "split": {
+          "title": "Transaction to split Land plot tokens was sent",
+          "description": " "
+        }
+      }
+    },
+    "geo_toolbox": {
+      "back": "Back to extensions",
+      "title": "Geo Toolbox",
+      "widget": {
+        "title": "Geo Toolbox"
+      },
+      "converting": {
+        "input_title": "Input",
+        "input_type": "Input type",
+        "input_placeholder": "Enter one coordinate per line (use point for decimals, not comma)",
+        "invalid_input": "Invalid input",
+        "already_cached": "All values already cached so you can see output without making transaction",
+        "convert": "Convert and cache",
+        "solidity_output_title": "Solidity output",
+        "output_type": "Output type",
+        "javascript_output_title": "JavaScript output",
+        "transaction": {
+          "title": "Last convert transaction",
+          "description": "Tx hash: "
+        }
+      }
+    },
+    "multisig_control": {
+      "multisigs_list": {
+        "back": "Back to extensions"
+      },
+      "widget": {
+        "title": "Multisig Control"
+      }
+    }
+  },
+  "period_input": {
+    "unit_hours": "Hours",
+    "unit_days": "Days",
+    "period_value": "Value",
+    "period_unit": "Unit"
+  },
+  "reputation": {
+    "sras_registry": {
+      "create_community": "Create community",
+      "title": "Communities registry"
+    },
+    "create_community": {
+      "title": "Create community",
+      "form": {
+        "general_tab": "General info",
+        "name": "Name",
+        "description": "Description",
+        "is_private": "Private community",
+        "fee_period": "Withdrawal limit period",
+        
+        "thresholds_tab": "Thresholds",
+        "threshold_0": "White List voting threshold",
+        "threshold_1": "ModifyConfig voting threshold",
+        "threshold_2": "NewMember voting threshold",
+        "threshold_3": "ExpelMember voting threshold",
+        "threshold_4": "FineMember voting threshold",
+        "threshold_5": "ChangeNameAndDescription voting threshold",
+        "threshold_6": "AddFundRule voting threshold",
+        "threshold_7": "DeactivateFundRule voting threshold",
+        "threshold_8": "ChangeMultiSigOwners voting threshold",
+        "threshold_9": "ModifyFee voting threshold",
+        "threshold_10": "ModifyManagerDetails voting threshold",
+        "threshold_11": "ChangeWithdrawalLimits voting threshold",
+        
+        "initial_owners_tab": "Initial owners",
+        "required_owners": "Required owners for confirm",
+        "initial_owner": "Owner",
+        
+        "initial_space_tokens_tab": "Space tokens",
+        "initial_space_token": "Space token"
+      },
+      "fee_required": "There is a fee required for using community factory for creation: <%= feeAmount %> GALT",
+      "approve_fee": "Approve GALT for fee",
+      "run_creation": "Run creation",
+      "success_creation": "New community successfully created!",
+      "current_step_title": "Current creation step: <%= step %>",
+      "continue_creation": "Continue creation"
+    },
+    "account": {
+      "title": "Account reputation",
+      "space_lockers": {
+        "title": "Account Space lockers list",
+        "address_title": "Address",
+        "space_token_title": "Space token",
+        "reputation_title": "Reputation",
+        "deposited_title": "Deposited",
+        "deposited_true": "Yes",
+        "deposited_false": "No",
+        "not_found": "Space lockers not found"
+      },
+      "sras": {
+        "title": "Account Communities list",
+        "address_title": "Address",
+        "my_lockers_count_title": "My lockers count",
+        "space_owners_title": "Property owners",
+        "total_supply_title": "Total reputation",
+        "not_found": "Communities not found"
+      }
+    },
+    "choose_for_space_locker": {
+      "back": "Back to reputation info",
+      "title": "Choose Space token for locker",
+      "description": "Please choose Space token for mint reputation. Space locker will hold your token until you withdraw it. You will not be able to control your token until you withdraw it. Please select Space for create new Space locker.",
+      "lock_space": "Lock Space token for <%= value %> reputation",
+      "not_found": "You don't have Space tokens on balance for deposit to locker"
+    },
+    "deposit_space_locker": {
+      "back": "Back to choose Space token",
+      "title": "Deposit Space token to locker",
+      "token_for_lock": "Space token for lock:",
+      "space_locker": "Space locker:",
+      "show_on_map": "Show on map",
+      "token_id": "Space token id: ",
+      "reputation": "Reputation: ",
+      "contour": "Contour: ",
+      "lock_attention": "Warning! By this action you will transfer your Space token to your own Space locker contract for receive reputation that equal to Space token area! You will be able to use this reputation until withdraw.",
+      "fee_attention": "There is a fee for creating the locker: <%= value %> GALT. You need to approve this value first to contract to create locker.",
+      "create_space_locker": "Create locker",
+      "approve_galt": "Approve GALT for fee",
+      "approve_space": "Approve SPACE for lock",
+      "deposit": "Deposit to locker",
+      "error": {
+        "something_wrong": {
+          "title": "Oops!",
+          "description": "Something went wrong"
+        }
+      },
+      "success": {
+        "approve_fee": {
+          "title": "You have approved Galt tokens fee for creating Locker contract",
+          "description": " "
+        },
+        "create_space_locker": {
+          "title": "Locker successfully created.",
+          "description": "Now you can approve Space token and deposit to it"
+        },
+        "approve": {
+          "title": "You have approved Space token to Locker contract",
+          "description": " "
+        },
+        "deposit": {
+          "title": "You have successfully deposited Space token",
+          "description": " "
+        }
+      },
+      "end": "Space locker was successfully created, now you can mint reputation in Space locker page"
+    },
+    "space_locker_page": {
+      "title": "Space locker",
+      "space_token": {
+        "title": "Space token",
+        "not_found": "There is no Space token deposited to this locker"
+      },
+      "sra_list": {
+        "title": "Communities list",
+        "add": "Add community",
+        "not_found": "There is no funds minted for this Space locker"
+      },
+      "add_sra_modal": {
+        "title": "Add community for Space locker",
+        "description": "For adding Space locker to community you need to actions: approve mint community to your Space locker contract and mint your Space locker to community contract",
+        "sra": "Community",
+        "private_mark": "[Private]&nbsp;",
+        "new_member_proposal_description": "New member proposal description",
+        "approve": "Add community",
+        "mint": "Join with reputation to community",
+        "new_member_proposal": "Propose for membership",
+        "need_to_approve_first": "You need to approve this community to Space locker contract first",
+        "need_description_for_private_sra": "You cant mint reputation for private communities directly. Instead of this - you should to propose your membership with description and then wait for confirmation.",
+        "cancel": "Cancel",
+        "success": {
+          "approve": {
+            "title": "Successfully approved",
+            "description": "Now you can mint your Space locker to community"
+          },
+          "mint": {
+            "title": "Space locker successfully added to community",
+            "description": " "
+          },
+          "new_member_proposal": {
+            "title": "New member proposal successfully sent to community",
+            "description": "Please wait for results of voting"
+          }
+        },
+        "error": {
+          "approve": {
+            "title": "Error on approving",
+            "description": "Unknown error"
+          },
+          "mint": {
+            "title": "Error on mint",
+            "description": "Unknown error"
+          },
+          "new_member_proposal": {
+            "title": "Error on new sending new member proposal",
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "space_locker_info": {
+      "title": "Space locker ",
+      "owner": "Owner:",
+      "space_token": "Property Token:",
+      "reputation": "Reputation:",
+      "deposited_true": "Property Token <b class=md-warn>locked</b>, you can join Communities",
+      "deposited_false": "Property Token <b class=md-warn>not locked</b>, you need to lock it to join Communities",
+      "sras_count": "You are a member of <b class=md-warn><%= value %> communities</b> with your Property token.",
+      "withdraw": "Withdraw Space token",
+      "deposit": "Deposit Space token",
+      "error": {
+        "sras_should_be_0_for_withdraw": {
+          "title": "Communities count should be 0 for withdraw",
+          "description": "You should burn reputation on all your funds for"
+        },
+        "withdraw": {
+          "title": "Error on withdraw",
+          "description": "Unexpected error"
+        }
+      },
+      "success": {
+        "withdraw": {
+          "title": "Successfully withdrawal Space token from locker",
+          "description": " "
+        }
+      }
+    },
+    "sra_info": {
+      "title": "Community ",
+      "space_owners_count": "Property owners:",
+      "total_supply": "Total Reputation in Community:",
+      "name": "Name:",
+      "description": "Description:",
+      "rules_count": "Number of Rules / Laws:",
+      "is_private": "Community privacy type:",
+      "is_private_false": "Public",
+      "is_private_true": "Private",
+      "is_private_hint": "There are two types of communities: private and public. In private communities, community members approve new members by voting. In public communities, approval of other members is not necessary.",
+      "join_exit": "Join/Exit",
+      "show_on_map": "Show on map",
+      "user_have": {
+        "tokens_count": "Your tokens in this Community:",
+        "join_proposal_null": "...",
+        "join_proposal_false": "Waiting for approval from other members of the Community (if application was sent)",
+        "join_proposal_true": "You have not applied for membership in the Community"
+      }
+    },
+    "fund_rule_info": {
+      "title": "Law #",
+      "ipfs_hash": "Law/Rule Details document IPFS hash:",
+      "description": "Description:"
+    },
+    "sra_locker_control": {
+      "reputation_burn": "Exit community",
+      "reputation_mint": "Join community",
+      "approve_mint": "Add community",
+      "approve_burn": "Remove community",
+      "new_member_proposal": "Propose for membership",
+      "new_member_proposal_description_modal": {
+        "title": "Description for new member proposal",
+        "description": "Please describe additional information for join to this private community",
+        "placeholder": "Description",
+        "ok": "Send new member proposal",
+        "cancel": "Cancel"
+      },
+      "join_proposal_already_sent": "You already sent join proposal, please wait for confirmation.",
+      "success": {
+        "reputation_burn": {
+          "title": "Reputation in this community successfully burned",
+          "description": " "
+        },
+        "reputation_mint": {
+          "title": "Reputation successfully minted in this community",
+          "description": " "
+        },
+        "new_member_proposal": {
+          "title": "New member proposal successfully sent to community",
+          "description": "Please wait for results of voting"
+        },
+        "approve_mint": {
+          "title": "Approve for this sra successfully minted from locker",
+          "description": " "
+        },
+        "approve_burn": {
+          "title": "Approve for this sra successfully burned from locker",
+          "description": " "
+        }
+      },
+      "error": {
+        "reputation_burn": {
+          "title": "Error on reputation burn",
+          "description": "Unexpected error"
+        },
+        "reputation_mint": {
+          "title": "Error on reputation mint",
+          "description": "Unexpected error"
+        },
+        "new_member_proposal": {
+          "title": "Error on new sending new member proposal",
+          "description": "Unexpected error"
+        },
+        "approve_mint": {
+          "title": "Error on approve mint",
+          "description": "Unexpected error"
+        },
+        "approve_burn": {
+          "title": "Error on approve burn",
+          "description": "Unexpected error"
+        }
+      }
+    },
+    "sras": {
+      "space_reputation_accounting": {
+        "title": "Space reputation accounting"
+      }
+    },
+    "sra_section": {
+      "title": "Community <%= sraAddress %>",
+      "tabs": {
+        "overview": "Overview",
+        "overview_general": "General",
+        "space_tokens": "Property Tokens",
+        "whitelist_contracts": "Voting",
+        "fund_rules": "Laws",
+        "join_exit": "Join/Exit",
+        "new_member_proposals": "Join requests",
+        "my_reputation": "My reputation",
+        "multisig_managers": "Multisig Managers",
+        "multisig": "Multisig",
+        "multisig_replenishment": "Multisig replenishment"
+      },
+      "multisig_managers_page": {
+        "propose_new_managers": "Propose new managers",
+        "voting_link": "Voting for proposals page",
+        "propose_new_multisig_managers_modal": {
+          "title": "Propose new MultiSig Managers",
+          "description": "Please verify new managers list, change required number of signatures and set description for send proposal. After that - you can find and vote for proposal in Voting menu.",
+          "new_owners": "New MultiSig Managers",
+          "new_required": "Required number of signatures",
+          "new_description": "Description of proposal",
+          "cancel": "Close",
+          "ok": "Send proposal",
+          "success": {
+            "propose": {
+              "title": "You have successful sent the proposal",
+              "description": " "
+            }
+          },
+          "error": {
+            "pay": {
+              "title": "Error on sending proposal",
+              "description": "<%= error %>"
+            }
+          }
+        }
+      },
+      "withdraw_limits": {
+        "title": "Withdrawal limits for <%= period %> period",
+        "amount_title": "Amount",
+        "currency_title": "Currency",
+        "not_found": "Limits not found",
+        "voting_link": "Voting for proposals page",
+        "remove_limit_description_modal": {
+          "title": "Description for disable limit proposal",
+          "description": "Please describe why community should disable this withdrawal limit",
+          "placeholder": "Description",
+          "ok": "Send disable limit proposal",
+          "cancel": "Cancel"
+        },
+        "success": {
+          "propose_remove": {
+            "title": "Proposal successfully sent",
+            "description": " "
+          }
+        },
+        "error": {
+          "propose_remove": {
+            "title": "Error on sending proposal",
+            "description": "<%= error %>"
+          }
+        }
+      },
+      "space_tokens_page": {
+        "title": "Property tokens",
+        "not_found": "There is no Space tokens in this community yet"
+      },
+      "whitelist_contracts_page": {
+        "title": "Community Voting Contracts",
+        "address_title": "Address",
+        "type_title": "Type",
+        "description_title": "Description",
+        "abi_title": "Abi",
+        "not_found": "Community contracts registry is empty"
+      },
+      "fund_rules_list_page": {
+        "title": "Community laws",
+        "not_found": "There is no laws in this community"
+      },
+      "fund_rule_page": {
+        "back": "Back to Law list",
+        "title": "Community law #<%= id %>"
+      },
+      "join_exit_page": {
+        "title": "Join or Exit Community of Property Owners",
+        "not_found": "You have no Space lockers for join or exit the community. Please create space locker in your reputation page."
+      },
+      "new_member_proposals_page": {
+        "title": "Join requests (<%= count %>)",
+        "proposal_description": "Description:",
+        "not_found": "There is no active join requests for this community"
+      },
+      "multisig_replenishment": {
+        "title_actual": "Actual replenishment tariffs",
+        "not_found_actual": "Tariffs not found",
+        "title_proposals": "Proposals of replenishment tariffs",
+        "not_found_proposals": "Tariffs not found",
+        "tariff_page": {
+          "my_fee": {
+            "title": "My stats",
+            "pay_sum": "Sum for pay:",
+            "paid_until": "Paid until:",
+            "tokens_count": "Tokens count:",
+            "pay_per_period": "Pay per period:",
+            "not_paid_value": "Not paid",
+            "total_paid": "Total paid:"
+          },
+          "disable_tariff_description_modal": {
+            "title": "Description for disable tariff",
+            "description": "Please describe why community should disable this tariff",
+            "placeholder": "Description",
+            "ok": "Send disable tariff proposal",
+            "cancel": "Cancel"
+          },
+          "success": {
+            "propose_disable": {
+              "title": "Proposal successfully sent",
+              "description": " "
+            }
+          },
+          "error": {
+            "propose_disable": {
+              "title": "Error on sending proposal",
+              "description": "<%= error %>"
+            }
+          }
+        }
+      },
+      "tariff_card": {
+        "rate": "Payment: ",
+        "period": "Period: ",
+        "my_fee_title": "My fees",
+        "pay_sum": "Sum for pay: ",
+        "pay": "Pay",
+        "fee_category": {
+          "regular": "Regular",
+          "crowdfunding": "Crowdfunding",
+          "donation": "Donation",
+          "undefined": "Without category"
+        }
+      },
+      "tariff_paying_control": {
+        "sum_for_pay": "Sum for pay",
+        "pay": "Pay",
+        "success": {
+          "pay": {
+            "title": "Success paid",
+            "description": " "
+          }
+        },
+        "error": {
+          "pay": {
+            "title": "Error on paying",
+            "description": "<%= error %>"
+          }
+        }
+      },
+      "create_tariff": {
+        "title": "Create MultiSig replenishment tariff",
+        "form": {
+          "title": "Title",
+          "description": "Description",
+          "doc_link": "Document link",
+          "rate": "Payment: ",
+          "period": "Fee period",
+          "proposal_description": "Proposal description"
+        },
+        "run_creation": "Run creation",
+        "continue_creation": "Continue creation",
+        "create_proposal": "Make a proposal",
+        "success": {
+          "create_tariff": {
+            "title": "Contract created",
+            "description": "Now send transaction for set details"
+          },
+          "set_tariff_details": {
+            "title": "Details set",
+            "description": "Now need to make a proposal for tariff adding"
+          },
+          "create_proposal": {
+            "title": "Proposal created",
+            "description": "Now need to votes enough for accept proposal"
+          }
+        },
+        "error": {
+          "create_tariff": {
+            "title": "Error on contract creation",
+            "description": "<%= error %>"
+          },
+          "set_tariff_details": {
+            "title": "Error on details set",
+            "description": "<%= error %>"
+          },
+          "create_proposal": {
+            "title": "Error on proposal creation",
+            "description": "<%= error %>"
+          }
+        }
+      },
+      "sra_members_fees": {
+        "title": "Community members fees",
+        "lock_all_available_for_lock": "Lock all available for lock tokens",
+        "address_title": "Address",
+        "space_tokens_title": "Space tokens/Locked",
+        "paid_sum": "Paid sum",
+        "pay_sum_title": "Pay sum",
+        "paid_until_title": "Paid until",
+        "not_found": "Members not found",
+        "not_paid_value": "Not paid",
+        "lock_member": "Lock <%= count %> tokens of member",
+        "unlock_member": "Unlock <%= count %> tokens of member",
+        "success": {
+          "lock": {
+            "title": "Successful locked",
+            "description": " "
+          },
+          "unlock": {
+            "title": "Successful unlocked",
+            "description": " "
+          }
+        },
+        "error": {
+          "lock": {
+            "title": "Error on lock",
+            "description": "<%= error %>"
+          },
+          "unlock": {
+            "title": "Error on unlock",
+            "description": "<%= error %>"
+          }
+        }
+      },
+      "voting_contract_page": {
+        "back": "Back to Voting contracts list",
+        "title": "Voting for contract Proposals",
+        "description": "One of the main goals of the Community of Property owners is to make joint, effective decisions by voting. Members with their Reputation can vote for community rules, for including and excluding members from the community, for raising funds, electing professional managers and much more. All operations are performed on smart contracts. The voting process and its results are protected by cryptography, cannot be forged and will forever be recorded on the blockchain.<br>Use this page to create voting proposals and vote.",
+        "new_proposal": "New proposal",
+        "proposals_title": "Active proposals list (<%= count %>)",
+        "not_found": "There is no active proposals in this contract",
+        "tabs": {
+          "overview": "Overview",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        },
+        "approved": {
+          "not_found": "There is no approved proposals in this contract"
+        },
+        "rejected": {
+          "not_found": "There is no rejected proposals in this contract"
+        },
+        "add_proposal_modal": {
+          "title": "Create proposal",
+          "change_ms_withdrawal_limits": "You can create limit to restrict withdrawal amount from MultiSig.",
+          "cancel": "Cancel",
+          "ok": "Create",
+          "success": {
+            "create": {
+              "title": "Proposal successfully created",
+              "description": " "
+            }
+          },
+          "error": {
+            "create": {
+              "title": "Error on proposal creation",
+              "description": "Unexpected error"
+            }
+          }
+        }
+      },
+      "sra_current_account": {
+        "title": "My reputation"
+      },
+      "sra_account": {
+        "title": "Member <%= address %> Reputation",
+        "general_info": {
+          "title": "General info",
+          "wallet": "Account: ",
+          "balance": "Current Reputation: ",
+          "owned_balance": "Basic Owned Reputation: ",
+          "space_tokens_count": "Property Tokens: ",
+          "delegations_count": "Reputation delegations: ",
+          "delegated_by_count": "Reputation delegated by: ",
+          "identification": "FullName Hash: ",
+          "propose_identification": "Provide identity to Community"
+        },
+        "space_tokens": {
+          "title": "Property tokens",
+          "id_title": "Token ID",
+          "area_title": "Token area, sq. m",
+          "not_found": "Space tokens not found"
+        },
+        "delegated_by_members": {
+          "title": "Delegated <%= sum %> reputation by <%= count %> members",
+          "address_title": "Address",
+          "delegated_balance_title": "Delegated reputation",
+          "balance_title": "Current reputation",
+          "owned_balance_title": "Owned reputation",
+          "space_tokens_title": "Property tokens",
+          "delegations_title": "Delegations",
+          "delegated_by_title": "Delegated by",
+          "not_found": "Members not found"
+        },
+        "delegation_members": {
+          "title": "Delegated <%= sum %> reputation to <%= count %> members",
+          "address_title": "Address",
+          "delegated_balance_title": "Delegated reputation",
+          "balance_title": "Current reputation",
+          "owned_balance_title": "Owned reputation",
+          "space_tokens_title": "Property tokens",
+          "delegations_title": "Delegations",
+          "delegated_by_title": "Delegated by",
+          "not_found": "Members not found",
+          "add_delegation_modal": {
+            "title": "Delegate reputation",
+            "from_owner": "From owner",
+            "to_address": "To address",
+            "invalid_to": "Recipient should be the owner of Space Token in this community",
+            "amount": "Amount",
+            "too_much_amount": "You cant delegate amount more then delegated balance of owner: <%= delegatedBalance %>",
+            "cancel": "Cancel",
+            "ok": "Delegate"
+          },
+          "revoke_delegation_modal": {
+            "title": "Revoke delegated reputation",
+            "description": "You can get back your reputation (<%= delegatedBalance %>) from user <%= delegatedAddress %>",
+            "amount": "Amount",
+            "too_much_amount": "You cant revoke more then delegated amount: <%= delegatedBalance %>",
+            "cancel": "Cancel",
+            "ok": "Revoke"
+          }
+        }
+      },
+      "check_identifier_modal": {
+        "title": "Check member identification data",
+        "full_name": "Full name",
+        "status": {
+          "title": "Status: ",
+          "waiting": "Waiting for data entry",
+          "invalid": "Data not valid!",
+          "valid": "Correct!"
+        },
+        "description": "Enter the data in order to verify that the Member have that identification data",
+        "ok": "Close"
+      },
+      "proposal_fields": {
+        "input": {
+          "member_identification": {
+            "member": "Member address",
+            "identification_hash": "FullName for hashing"
+          },
+          "multisig_managers": {
+            "new_owners": "MultiSig Managers",
+            "address": "Address: ",
+            "documents": "Documents: ",
+            "selected_owners": "Selected managers: "
+          },
+          "ms_contract_address": {
+            "currency": "Currency",
+            "contract_address": "Contract address"
+          },
+          "boolean_select": {
+            "true": "Enable",
+            "false": "Disable",
+            "change_ms_withdrawal_limits": {
+              "true": "Enable withdraw limit",
+              "false": "Disable withdraw limit"
+            }
+          },
+          "decimals": {
+            "decimals": "Decimals"
+          }
+        },
+        "output": {
+          "member_identification": {
+            "member": "Member address: ",
+            "identification_hash": "FullName Hash: "
+          },
+          "ms_contract_address": {
+            "currency": "Currency: "
+          },
+          "boolean_select": {
+            "true": "Enable",
+            "false": "Disable"
+          }
+        }
+      }
+    },
+    "sra_members": {
+      "title": "Community member list",
+      "address_title": "Address",
+      "balance_title": "Current / Basic Owned Reputation",
+      "space_tokens_title": "Property Tokens",
+      "delegations_title": "Reputation delegations",
+      "identification_title": "FullName Hash",
+      "not_found": "Members not found"
+    },
+    "voting_members": {
+      "title": "Voting member list",
+      "accepted": "Accepted (<%= count %>)",
+      "declined": "Declined (<%= count %>)",
+      "address_title": "Address",
+      "balance_title": "Total current reputation",
+      "owned_balance_title": "Basic owned reputation",
+      "identification_title": "Full name Hash",
+      "not_found": "Members not found"
+    },
+    "sra_properties": {
+      "title": "Community properties",
+      "name_title": "Name",
+      "value_title": "Value",
+      "thresholds_hint": "Community members unite together to make decisions and manage community funds by voting. By voting in smart contracts, they can make decisions, collect funds, elect managers and change community properties. Each voting contract has a Threshold parameter. Threshold is how much Reputation is needed to make a decision or change Community parameter. For example if threshold is 51% and total Reputation in Community is 2000, you need 1020 points of reputation to Accept or Decline proposal",
+      "titles": {
+        "manage_wl_threshold": "Add or Remove Voting contract in Community",
+        "modify_config_threshold": "Change community type or any voting threshold",
+        "new_member_threshold": "Add new member to Community",
+        "expel_member_threshold": "Expel member from Community",
+        "fine_member_threshold": "Fine a community member",
+        "name_and_description_threshold": "Change community name and description",
+        "add_fund_rule_threshold": "Add Rule / Law in Community",
+        "deactivate_fund_rule_threshold": "Remove Rule / Law in Community",
+        "change_ms_owners_threshold": "Change community multi signature wallet managers",
+        "modify_fee_threshold": "Add or remove Community Fee",
+        "modify_manager_details_threshold": "Multi signature wallet managers identification",
+        "withdrawal_limits_threshold": "Setting multi signature wallet limits for withdrawal",
+        "member_identification_threshold": "Community member identification",
+        "is_private": "Community privacy type"
+      },
+      "values": {
+        "is_private": {
+          "0": "Private",
+          "1": "Public"
+        }
+      },
+      "hints": {
+        "is_private": "There are two types of communities: private and public. In private communities, community members approve new members by voting. In public communities, approval of other members is not necessary."
+      }
+    },
+    "default_whitelist_contracts": {
+      "member_identification": {
+        "type": "Community member identification",
+        "description": "Contract is used by members of Community to identify each other if necessary. Used for more transparent decision making."
+      },
+      "modify_config": {
+        "type": "Change community type or any voting threshold",
+        "description": "Contract is used to create and vote for proposals to change Community parameters, like Voting Thresholds and Community Type"
+      },
+      "new_member": {
+        "type": "Add new member to Community",
+        "description": "Contract is used to create and vote for proposals to add new members in Community."
+      },
+      "fine_member": {
+        "type": "Fine a community member",
+        "description": "Contract is used to impose fine on a community member due to non-compliance with community rules by other members voting."
+      },
+      "white_list": {
+        "type": "Add or Remove Voting contract in Community",
+        "description": "Contract is used for adding and removing voting contracts in Community."
+      },
+      "expel_member": {
+        "type": "Expel member from Community",
+        "description": "Contract is used, when community needs to expel one of its members, due to non-compliance with community rules, by voting."
+      },
+      "change_info": {
+        "type": "Change community name and description",
+        "description": "This contract is used to change Community name and description in configuration smart contract."
+      },
+      "add_rule": {
+        "type": "Add Rule / Law in Community",
+        "description": "Contract is used to set new community rule/law in form of text. For example community members can vote for parking rate or color and height of fences or any other rules, which define life of society."
+      },
+      "deactivate_rule": {
+        "type": "Remove Rule / Law in Community",
+        "description": "Contract is used to cancel active community rules/laws. For example community can cancel current parking rules and define a new ones."
+      },
+      "change_ms_owners": {
+        "type": "Change community multi signature wallet managers",
+        "description": "Community members may collect funds to manage their common property in ERC20 tokens or Ethers. For the storage of these funds used multisig wallet. Community members vote to choose Managers, who can spend these funds. For example to repair a sidewalk."
+      },
+      "modify_fee": {
+        "type": "Add or remove Community Fee",
+        "description": "Community members may collect funds to manage their common property in ERC20 tokens or Ethers. This voting contract is used to approve and launch a new regular or one-time fundraising. For example, Community can vote to collect additional 20 DAI each month for security from each member."
+      },
+      "modify_ms_manager_details": {
+        "type": "Multi signature wallet managers identification",
+        "description": "Community members may collect funds to manage their common property in ERC20 tokens or Ethers. For the storage of these funds used multisig wallet. Community members vote to choose Managers. This Contract is used to verify identity of people, who can be elected to spend funds."
+      },
+      "change_ms_withdrawal_limits": {
+        "type": "Setting multi signature wallet limits for withdrawal",
+        "description": "This contract is used to set withdrawal limits in Ethers and ERC20 tokens to Community multi signature wallet. Managers won't be able to spent funds, if the limit is reached."
+      }
+    },
+    "proposal_control": {
+      "accept_share": "Accept share: ",
+      "decline_share": "Decline share: ",
+      "threshold": "Threshold: ",
+      "user_choice": "Your choice: ",
+      "accept": "Accept",
+      "decline": "Decline",
+      "trigger_approve": "Trigger approve",
+      "trigger_reject": "Trigger reject",
+      "success": {
+        "accept": {
+          "title": "Successful accepted",
+          "description": " "
+        },
+        "decline": {
+          "title": "Successful declined",
+          "description": " "
+        },
+        "trigger_approve": {
+          "title": "Successful approved",
+          "description": " "
+        },
+        "trigger_reject": {
+          "title": "Successful rejected",
+          "description": " "
+        }
+      },
+      "error": {
+        "accept": {
+          "title": "Error on accept",
+          "description": " "
+        },
+        "decline": {
+          "title": "Error on decline",
+          "description": " "
+        },
+        "trigger_approve": {
+          "title": "Error on approve",
+          "description": " "
+        },
+        "trigger_reject": {
+          "title": "Error on reject",
+          "description": " "
+        }
+      }
+    },
+    "proposal_manager_info": {
+      "title": "Voting contract ",
+      "type": "Type: ",
+      "description": "Description: ",
+      "active_proposals_count": "Active proposals: ",
+      "threshold": "Threshold: "
+    },
+    "proposal_info": {
+      "title": "Proposal #"
+    }
+  }
+}

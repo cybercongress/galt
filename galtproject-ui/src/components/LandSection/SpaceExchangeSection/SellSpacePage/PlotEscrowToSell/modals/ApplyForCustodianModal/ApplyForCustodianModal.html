@@ -1,0 +1,47 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-locale="[localeKey + '.description', {tokenId: tokenIdToHex}]"></p>
+
+      <div v-for="(custodian, index) in application.custodians">
+        <div class="md-layout">
+          <div class="md-layout-item md-size-90">
+            <md-autocomplete v-model="application.custodians[index]" :md-options="custodians" @md-opened="getCustodians" :disabled="sending"><!--@md-changed="getCountries"-->
+              <label v-locale="localeKey + '.custodian'"></label>
+
+              <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name || '...' }} - {{ item.position || '...' }} <small>({{ item.address }})</small></template>
+            </md-autocomplete>
+          </div>
+
+          <div class="md-layout-item md-size-10" style="padding-top: 15px;">
+            <md-button class="md-icon-button md-raised" @click="removeCustodian(index)" :disabled="sending">
+              <md-icon>clear</md-icon>
+            </md-button>
+          </div>
+        </div>
+      </div>
+
+      <md-button class="md-icon-button md-raised" @click="addCustodian()" :disabled="sending">
+        <md-icon>add</md-icon>
+      </md-button>
+      
+      <fee-input v-model="application" :disabled="sending" :invalid-fee.sync="invalidFee" application-type="plotCustodian" :for-validation="true"></fee-input>
+      
+      <div class="warn" v-if="warnText">{{warnText}}</div>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="sendDisabled"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

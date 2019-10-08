@@ -1,0 +1,25 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <div class="form-group">
+      <p v-locale="localeKey + '.description'"></p>
+      <md-field>
+        <label><span v-locale="localeKey + '.placeholder'"></span></label>
+        <md-textarea v-model="description"></md-textarea>
+      </md-field>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="!description"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

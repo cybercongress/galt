@@ -1,0 +1,33 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <p v-locale="[localeKey + '.description', {application_id: applicationId}]"></p>
+    
+    <div class="form-group">
+      <md-field v-if="editRole">
+        <label v-locale="localeKey + '.role'"></label>
+        <md-select v-model="resultRole">
+          <md-option v-for="role in rolesList" :value="role.name">{{role.title}}</md-option>
+        </md-select>
+      </md-field>
+
+      <md-field v-if="editMessage">
+        <label v-locale="localeKey + '.message'"></label>
+        <md-input v-model="resultMessage" required></md-input>
+      </md-field>
+    </div>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="ok" class="md-raised md-accent" :disabled="!resultRole"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

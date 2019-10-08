@@ -1,0 +1,9 @@
+<div>
+    <proposal-card v-for="proposal in proposalsList" :proposal-id="proposal.id" :manager-address="$route.params.managerAddress" :sra-address="$route.params.sraAddress">
+    </proposal-card>
+    
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+
+    <div v-if="!loading && !proposalsList.length" v-locale="localeKey + '.not_found'">
+    </div>
+</div>

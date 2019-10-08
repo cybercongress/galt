@@ -1,0 +1,60 @@
+<md-card>
+    <md-card-header>
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <md-subheader v-locale="localeKey + '.oracle_control'"></md-subheader>
+            <md-list-item>
+                <md-field>
+                    <label v-locale="localeKey + '.find_oracle_placeholder'"></label>
+                    <md-input v-model="oracleToFind" required v-on:keyup="findOracle()"></md-input>
+                </md-field>
+            </md-list-item>
+            
+            <md-list-item>
+                <md-table>
+                    <md-table-row>
+                        <md-table-head><span v-locale="localeKey + '.address_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.name_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.position_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.roles_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.active_title'"></span></md-table-head>
+                        <md-table-head></md-table-head>
+                    </md-table-row>
+
+                    <md-table-row v-for="oracle in filteredOracles">
+                        <md-table-cell><oracle-popup :address="oracle.address"></oracle-popup></md-table-cell>
+                        <md-table-cell>{{oracle.name}}</md-table-cell>
+                        <md-table-cell>{{oracle.position}}</md-table-cell>
+                        <md-table-cell><span v-for="role in oracle.allRoles"><span v-locale="'admin_validation_roles.' + role"></span>, </span></md-table-cell>
+                        <md-table-cell><span v-locale="localeKey + '.active_' + oracle.active"></span></md-table-cell>
+                        <md-table-cell>
+                            <md-button class="md-icon-button" @click="editOracle(oracle.address)">
+                                <md-icon class="md-accent">edit</md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" v-if="oracle.active" @click="deactivateOracle(oracle.address)">
+                                <md-icon class="md-accent">clear</md-icon>
+                            </md-button>
+                        </md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </md-list-item>
+
+            <md-list-item v-if="oracleNotFound">
+                <span v-locale="localeKey + '.not_found'"></span>
+            </md-list-item>
+
+            <md-list-item v-if="oracleError">
+                <span v-locale="localeKey + '.invalid_address'"></span>
+            </md-list-item>
+            
+            <md-list-item>
+                <md-button class="md-icon-button md-raised" @click="editOracle()">
+                    <md-icon>add</md-icon>
+                </md-button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

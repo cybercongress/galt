@@ -1,0 +1,12 @@
+<div style="display: flex; height: 100%;">
+    <div style="flex: 1;">
+        <div id="my-territory-page" class="inner-scroll">
+            <md-app-content>
+                <router-view></router-view>
+            </md-app-content>
+        </div>
+    </div>
+    <div style="flex: 2;">
+        <explorer name="main" :hide-surroundings="$route.name === 'my-territory-split-pack' || $route.name === 'my-territory-merge-pack'"></explorer>
+    </div>
+</div>

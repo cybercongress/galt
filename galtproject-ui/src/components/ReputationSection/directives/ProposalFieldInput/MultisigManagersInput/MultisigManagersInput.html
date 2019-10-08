@@ -1,0 +1,29 @@
+<div>
+    <md-list class="md-triple-line" style="background: transparent;">
+        <md-subheader><span v-locale="localeKey + '.new_owners'"></span></md-subheader>
+
+        <md-list-item v-for="manager in allManagers">
+            <md-checkbox v-model="selectedManagers" :value="manager.address"/>
+            
+            <span class="md-list-item-text">
+                <div class="md-layout">
+                    <div class="md-layout-item md-size-70">
+                        <span>{{manager.name}}</span><br>
+                        <span><b v-locale="localeKey + '.address'"></b><pretty-hex :hex="manager.address"></pretty-hex></span>
+                    </div>
+                    
+                    <div class="md-layout-item md-size-30">
+                        <b v-locale="localeKey + '.documents'"></b><br>
+                        <div v-for="doc in manager.documents"><pretty-doc :doc="doc"></pretty-doc></div>
+                    </div>
+                </div>
+            </span>
+        </md-list-item>
+    </md-list>
+    
+    <div v-if="changed" style="margin-left: 15px;">
+        <b v-locale="localeKey + '.selected_owners'"></b><div v-for="manager in selectedManagers"><pretty-hex :hex="manager"></pretty-hex></div>
+    </div>
+    
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading"></md-progress-bar>
+</div>

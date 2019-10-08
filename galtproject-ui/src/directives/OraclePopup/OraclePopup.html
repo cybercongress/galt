@@ -1,0 +1,11 @@
+<span>
+    <pretty-hex :hex="address" :to="'/account/' + address + '/oracle'" @mouseover="showPopup()"></pretty-hex>
+
+    <md-menu md-direction="bottom-end" :md-active.sync="openPopup">
+        <md-menu-content class="info-menu">
+            <oracle-description v-if="oracleInfo" :oracle="oracleInfo"></oracle-description>
+            <md-progress-bar v-if="!oracleInfo" class="md-accent" md-mode="indeterminate"></md-progress-bar>
+        </md-menu-content>
+    </md-menu>
+</span>
+

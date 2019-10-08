@@ -1,0 +1,30 @@
+<modal-item>
+  <template slot="header">
+    <md-button class="md-icon-button close" @click="cancel">
+      <md-icon>clear</md-icon>
+    </md-button>
+    <h4>
+      <div class="modal-title" v-locale="localeKey + '.title'"></div>
+    </h4>
+  </template>
+
+  <div class="modal-body" slot="body">
+    <p v-if="description">{{description}}</p>
+    
+    <proposal-field-input 
+            v-for="field in inputFields" 
+            :field="field" 
+            :value.sync="proposal[field.name]"
+            :contract-type="proposalContract.contractType"
+            :sra-address="$route.params.sraAddress"
+            :manager-address="$route.params.managerAddress">
+    </proposal-field-input>
+
+    <md-progress-bar class="md-accent" md-mode="indeterminate" v-if="loading || sending"></md-progress-bar>
+  </div>
+
+  <template slot="footer">
+    <md-button @click="cancel" class="md-raised"><span v-locale="localeKey + '.cancel'"></span></md-button>
+    <md-button @click="createProposal" class="md-raised md-accent" :disabled="loading || sending || isProposalInvalid"><span v-locale="localeKey + '.ok'"></span></md-button>
+  </template>
+</modal-item>

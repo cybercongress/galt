@@ -1,0 +1,16 @@
+<div class="md-layout">
+    <div class="md-layout-item md-size-70">
+        <md-field>
+            <label>{{placeholder}}</label>
+            <md-input v-model="localValue" type="number"></md-input>
+        </md-field>
+    </div>
+    <div class="md-layout-item md-size-5">
+    </div>
+    <div class="md-layout-item md-size-25">
+        <md-field>
+            <label v-locale="localeKey + '.decimals'"></label>
+            <md-input v-model="decimals" type="number"></md-input>
+        </md-field>
+    </div>
+</div>

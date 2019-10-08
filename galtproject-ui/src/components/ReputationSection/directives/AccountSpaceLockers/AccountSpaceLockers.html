@@ -1,0 +1,43 @@
+<md-card>
+    <md-card-header>
+        <md-button class="md-icon-button md-raised md-accent" style="float: right;" :to="'/reputation/choose-for-space-locker'" v-if="user_wallet === userWallet">
+            <md-icon>add</md-icon>
+        </md-button>
+        
+        <div class="md-title" v-locale="localeKey + '.title'"></div>
+    </md-card-header>
+
+    <md-card-content>
+        <md-list>
+            <!--<md-subheader v-locale="localeKey + '.general_data'"></md-subheader>-->
+
+            <md-list-item>
+                <md-table>
+                    <md-table-row>
+                        <md-table-head><span v-locale="localeKey + '.address_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.space_token_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.reputation_title'"></span></md-table-head>
+                        <md-table-head><span v-locale="localeKey + '.deposited_title'"></span></md-table-head>
+                    </md-table-row>
+
+                    <md-table-row v-for="locker in lockersList">
+                        <md-table-cell><pretty-hex :hex="locker.address" :to="'/reputation/space-locker/' + locker.address"></pretty-hex></md-table-cell>
+                        <md-table-cell><router-link :to="'/land/space-token/' + locker.spaceTokenId">{{locker.spaceTokenId}}</router-link></md-table-cell>
+                        <md-table-cell>{{locker.reputationStr}}</md-table-cell>
+                        <md-table-cell><span v-locale="localeKey + '.deposited_' + locker.tokenDeposited"></span></md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </md-list-item>
+
+            <md-list-item v-if="loading">
+                <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+            </md-list-item>
+            
+            <md-list-item v-if="!loading && !lockersList.length">
+                <span class="md-list-item-text row-direction">
+                    <span v-locale="localeKey + '.not_found'"></span>
+                </span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>
